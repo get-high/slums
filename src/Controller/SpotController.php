@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpotController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="index")
      */
     public function index()
     {
@@ -17,7 +17,7 @@ class SpotController extends AbstractController
     }
 
     /**
-     * @Route("/spot/{slug}")
+     * @Route("/spot/{slug}", name="show_spot")
      */
     public function show($slug)
     {

@@ -1,0 +1,1033 @@
+/* BODY, HTML 
+body
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #ffffff;
+	background-color: #000000;
+	background-image: url("images/bgr.gif");
+	background-repeat: repeat-x;
+	margin: 10px 10px 0px 10px;
+	height: 100%;
+}
+*/
+
+.ny
+{
+height:180px;
+width:566px;
+display:inline-block;
+}
+
+.nyt
+{
+text-indent: -9999px;
+width:566px;
+height:180px;
+background-image: url('http://www.ghetto.ru/images/play.png');
+background-repeat: no-repeat;
+background-position: center top 54px;
+display:block;
+z-index:99;
+}
+
+.nyt:hover
+{
+text-indent: -9999px;
+display:block;
+width:566px;
+height:180px;
+background-position: center top -74px;
+z-index:99;
+}
+
+
+h2
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 12px;
+	color: #ffffff;
+	padding:0;
+	margin:0;
+	display:inline;
+}
+
+.tooltip_templates { display: none; }
+
+#livesearch
+{ 
+	position:relative;
+	top:-10px;
+	right:-190px;
+	width:250px;
+	background-color: rgba(50,73,88,0.9);
+	z-index:10000;
+	font-size: 17px;
+	text-align:left;
+	font-weight:bold;
+}
+
+.b-popup{
+    width:100%;
+    min-height:100%;
+    background-color: rgba(0,0,0,0.5);
+    overflow:hidden;
+    position:fixed;
+    top:0px;
+}
+.b-popup .b-popup-content{
+    margin:40px auto 0px auto;
+    width:50%;
+    height: 40%;
+    padding:10px;
+    font-size: 30px;
+    background-color: #c5c5c5;
+    box-shadow: 0px 0px 10px #000;
+}
+
+a.menu, a.menu:link, a.menu:visited, a.menu:active
+{
+border-top:1px solid #708498;
+padding:6px;
+background-color: #455e70;
+color: #ffffff;
+font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+font-weight:bold;
+
+display:inline-block;
+width:188px;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+}
+
+a.menu:hover
+{
+background: #3c5464 url(http://www.ghetto.ru/images/gradients/gd_up.gif);
+background-repeat:repeat-x;
+text-decoration: none;
+text-shadow: 1px 1px 1px rgba(0,0,0,1);
+}
+
+
+a.m, a.m:link, a.m:visited, a.m:active
+{
+font-size: 20px;
+padding:6px;
+color: #ffffff;
+font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+font-weight:bold;
+display:inline;
+width:188px;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+}
+
+a.me:hover
+{
+/*background: #3c5464 url(http://www.ghetto.ru/images/gradients/gd_up.gif);*/
+background-repeat:repeat-x;
+text-decoration: none;
+text-shadow: 1px 1px 1px rgba(0,0,0,1);
+}
+
+
+a.aalt1, a.aalt1:link, a.aalt1:visited, a.aalt1:active, a.aalt1:hover
+{
+width:192px;
+background-color: #455e70;
+font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+font-weight:bold;
+font-size: 13px;
+display:inline-block;
+padding:4px;
+text-decoration: none;
+color:#ffffff;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+}
+
+a.aalt2, a.aalt2:link, a.aalt2:visited, a.aalt2:active, a.aalt2:hover
+{
+width:192px;;
+background-color: #324e61;
+font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+font-weight:bold;
+font-size: 13px;
+display:inline-block;
+padding:4px;
+text-decoration: none;
+color:#ffffff;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+}
+
+.ann
+{
+z-index:11;
+width:190px;
+bottom:0;
+padding:5px;
+position:absolute;
+background-image: url('http://www.ghetto.ru/images/t.png');
+font-size:15px;
+font-weight:bold;
+text-shadow: 2px 4px 3px rgba(0,0,0,1);
+color:#ffffff
+}
+
+.tdvideo
+{
+text-align:center;
+width:265px;
+padding:6px;
+position:absolute;
+left:9px;
+bottom:9px;
+background-image: url('http://www.ghetto.ru/images/t.png');
+text-shadow: 1px 2px 2px rgba(0,0,0,1);
+}
+
+.tdvd
+{
+float:left;
+padding-left:8px;
+padding-bottom:8px;
+width:279px;
+position:relative;
+}
+
+.vidsm
+{
+display:inline-block;
+text-align:center;
+position:relative;
+}
+
+.vidsmm
+{
+width:192px;
+padding:4px;
+position:absolute;
+bottom:0;
+left:0;
+background-image: url('http://www.ghetto.ru/images/t.png');
+border-bottom: 1px solid #000000;
+text-shadow: 1px 2px 1px rgba(0,0,0,1);
+color:#ffffff;
+font-weight:bold;
+}
+
+#slideshowmag > div { 
+    position: absolute;
+}
+
+.logo {
+  width: 320px;
+}
+
+.logo2 {
+  width: 120px;
+}
+
+.logo,
+.logo2 {
+  margin-bottom:10px;
+}
+
+#ss_menu {
+  width: 100%;
+}
+
+.ss_button {
+  background-color: #324e61;
+  border-bottom: 1px solid #708498;
+  cursor: pointer;
+  padding: 10px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.ss_content {
+  background-color: #455e70;
+  display: none;
+  padding: 10px;
+}
+
+.ss_content img {
+  width: 132px;
+}
+
+
+
+.tooltip_templates { display: none; }
+
+.tabhead
+{
+	background: #3f5768 url(http://www.ghetto.ru/images/gradients/gd_down.gif);
+	background-repeat:repeat-x;
+	padding: 4px;
+}
+
+
+html
+{
+	scrollbar-face-color: #1e1e1e;
+	scrollbar-highlight-color: #000000;
+	scrollbar-shadow-color: #000000;
+	scrollbar-3dlight-color: #000000;
+	scrollbar-arrow-color: #000000;
+	scrollbar-track-color: #000000;
+	scrollbar-darkshadow-color: #000000;
+	height: 100%;
+}
+
+
+/* BORDERS */
+.tborder
+{
+	background-color: #708498;
+	color: #ffffff;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	border: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+.imgborder
+{
+	border: solid;
+	border-color: #ffc300;
+	border-width: 1px;
+}
+
+.tb
+{
+	background-color: #708498;
+	color: #ffffff;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	border: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+
+/* TEXT */
+a:link
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+
+a:visited
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+a:hover
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+a:active
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+
+.cont
+{
+	background-color: #455e70;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	font-size: 12px;
+	text-align: justify;
+}
+
+.bigwhite
+{
+	font-size: 10px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	text-align: left;
+	font-weight: bold;
+}
+
+.year
+{
+	color: #dce7ef;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight:normal;
+}
+
+
+.smallfont
+{
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	font-size: 9px;
+}
+ 
+td.tiny, p.tiny
+{
+	color: #353535;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	text-align: center;
+}
+
+tr.head, td.head, table.head
+{
+	background: #000000;
+}
+
+tr.bgr, td.bgr, table.bgr
+{
+	background: #0a0a0a;
+}
+
+tr.item, td.item
+{
+	background: #353535;
+}
+
+tr.item_alt, td.item_alt
+{
+	background: #1e1e1e;
+}
+
+tr.item_alt2, td.item_alt2
+{
+	background: #ffc300;
+}
+
+
+/* PADDING */
+
+.paddingbottom
+{
+	padding-bottom: 4px;
+}
+
+.paddingtop
+{
+	padding-top: 4px;
+}
+
+.nopadding
+{
+	padding: 0px;
+}
+
+/* OTHERS */
+.navlink
+{
+	font: bold 13px verdana;
+	padding-top: 30px;
+	text-align: center;
+}
+
+.lang
+{
+	text-align: right;
+}
+
+
+.right
+{
+	text-align: right;
+}
+
+.left
+{
+	text-align: left;
+}
+
+.page
+{
+	background-color: #324e61;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+
+
+.tcat
+{
+	background: #3c5464 url(http://www.ghetto.ru/images/gradients/gd_up.gif);
+	color: #c0d0e0;
+	font: bold 12px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	background-repeat:repeat-x;
+}
+.tcat a:link
+{
+	color: #dce7ef;
+	text-decoration: underline;
+}
+.tcat a:visited
+{
+	color: #dce7ef;
+	text-decoration: underline;
+}
+.tcat a:hover, .tcat a:active
+{
+	color: #dce7ef;
+	text-decoration: underline;
+}
+.thead
+{
+	background: #3f5768 url(http://www.ghetto.ru/images/gradients/gd_down.gif);
+	color: #ffffff;
+	font: bold 13px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	background-repeat:repeat-x;
+	padding: 4px;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+}
+.thead a:link
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.thead a:visited
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.thead a:hover, .thead a:active
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.tfooter, td.tfooter
+{
+	background: #3f5768 url(http://www.ghetto.ru/images/gradients/gd_down.gif);
+	color: #c0d0e0;
+	font: bold 10px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	background-repeat:repeat-x;
+	border: solid;
+	border-color: #708498;
+	border-width: 1px;
+	padding: 4px;
+}
+
+.tfoot
+{
+	background: #3f5768 url(http://www.ghetto.ru/images/gradients/gd_down.gif);
+	color: #c0d0e0;
+	font: bold 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	background-repeat:repeat-x;
+}
+.tfoot a:link
+{
+	color: #dce7ef;
+	text-decoration: none;
+}
+.tfoot a:visited
+{
+	color: #dce7ef;
+	text-decoration: none;
+}
+.tfoot a:hover, .tfoot a:active
+{
+	color: #dce7ef;
+	text-decoration: underline;
+}
+.alt1, .alt1Active
+{
+	background-color: #455e70;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt1 a:link, .alt1Active a:link
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+.alt1 a:visited, .alt1Active a:visited
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+.alt1 a:hover, .alt1 a:active, .alt1Active a:hover, .alt1Active a:active
+{
+	color: #ffffff;
+	text-decoration: underline;
+}
+.alt2, .alt2Active
+{
+	background-color: #324e61;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.alt3
+{
+	background-color: #D5D8E5;
+	color: #000000;
+}
+.alt4
+{
+	color: #dce7ef;
+	text-align: justify;
+}
+
+.wysiwyg
+{
+	background-color: #324958;
+	color: #c0d0e0;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.bginput
+{
+	background-color: #324958;
+	color: #c0d0e0;
+	font: 12px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	border:1px solid #708498;
+	margin-bottom:3px;
+}
+.button
+{
+	background: #324e61 url('http://www.ghetto.ru/images/gradients/btnbgr.gif');
+	color: #708498;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	border:1px solid #708498;
+	margin-bottom:3px;
+}
+select
+{
+	background-color: #324e61;
+	color: #c0d0e0;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin-bottom:3px;
+}
+option, optgroup
+{
+	font-size: 11px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+
+.time
+{
+	color: #ffffff;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.navbar
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.highlight
+{
+	color: #ffffff;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	font-weight: bold;
+}
+.panel
+{
+	background-color: #324e61;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.panel a:link
+{
+	color: #dce7ef;
+	text-decoration: none;
+}
+.panel a:visited
+{
+	color: #dce7ef;
+	text-decoration: none;
+}
+.panel a:hover, .panel a:active
+{
+	color: #dce7ef;
+	text-decoration: underline;
+}
+.panelsurround
+{
+	background-color: #324E61;
+	color: #c0d0e0;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+legend
+{
+	color: #708498;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.bigusername { font-size: 11px; }
+
+
+
+/*td.thead, div.thead { padding: 4px; }*/
+.pagenav a { text-decoration: none; }
+.pagenav td { padding: 2px 4px 2px 4px; }
+.fieldset { margin-bottom: 6px; border:1px solid #708498; }
+.fieldset, .fieldset td, .fieldset p, .fieldset li { font-size: 11px; }
+form { display: inline; }
+label { cursor: default; }
+.normal { font-weight: normal; }
+.inlineimg { vertical-align: middle; }
+.bordaz { margin: 6px 4px 4px 4px; }
+h3
+{
+margin-top: 27px;
+color: #c0d0e0;
+font: 12px verdana;
+font-weight: bold;
+white-space: nowrap;
+}
+
+.oldmenu
+{
+	visibility:hidden;
+}
+
+.videos
+{
+	background-color: #000000;
+	border:1px solid #708498;
+}
+
+.videosalt
+{
+	background-color: #000000;
+	border:1px solid #000000;
+}
+
+.biglink, a.biglink, div.biglink
+{
+ font-size: 14px;
+ font-weight: bold;
+ padding:4px;
+ position:relative;
+ text-align:center;
+}
+
+.biglinkalt, div.biglinkalt
+{
+ position:relative;
+ text-align:center;
+ font-size: 14px;
+ font-weight: bold;
+ background-color: #324e61;
+ padding:3px;
+ border:1px solid #708498;
+ letter-spacing: 0px;
+}
+
+img{border:0;}
+
+.gray{filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");}
+
+@font-face {
+	font-family: 'Akrobat Bold';
+	src: url('$siteaddress/fonts/Akrobat-Bold.eot');
+	src: url('$siteaddress/fonts/Akrobat-Bold.eot?#iefix') format('embedded-opentype'),
+	url('$siteaddress/fonts/Akrobat-Bold.woff') format('woff'),
+	url('$siteaddress/fonts/Akrobat-Bold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Akrobat Regular';
+	src: url('$siteaddress/fonts/Akrobat-Regular.eot');
+	src: url('$siteaddress/fonts/Akrobat-Regular.eot?#iefix') format('embedded-opentype'),
+	url('$siteaddress/fonts/Akrobat-Regular.woff') format('woff'),
+	url('$siteaddress/fonts/Akrobat-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+a.hh, a.hh:link, a.hh:visited, a.hh:active
+{
+	line-height: 0.9;
+	color: #fff;
+	font-family: 'Akrobat Regular', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:32px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+a.hh:hover
+{
+	color: #ccc;
+}
+
+a.mp, a.mp:link, a.mp:visited, a.mp:active
+{
+	color: #fff;
+	font-family: 'Akrobat Regular', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:16px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+a.mp:hover
+{
+	color: #ccc;
+}
+
+a.title, a.title:link, a.title:visited, a.title:active
+{
+	line-height: 0.7;
+	color: #fff;
+	font-family:  'Akrobat Bold', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:50px;
+	padding:4px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+
+
+input, select, textarea
+{
+	border: solid;
+	border-color: #000000;
+	border-width: 1px;
+	background: #444444;
+	color: #ffffff;
+	font-weight: bold;
+	font-family: 'Akrobat Bold', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	font-size: 18px;
+}
+
+.loadmore {border:0;background-color:#333333;width:700px;height:50px;font-size:28px;outline:none;}
+.loadmore:hover {background-color:#444444;cursor:pointer;}
+
+a.rbar, a.rbar:link, a.rbar:visited, a.rbar:active
+{
+	line-height: 0.9;
+	color: #464646;
+	font-family: font-family: 'Akrobat Regular', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:28px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+a.rbar:hover
+{
+	color: #fff;
+}
+
+.x1 {
+	width:100%;
+	height:200px;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.x1:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+
+.bx-controls-direction a {
+	opacity: 0;
+	transition: opacity .25s ease-in-out;
+	-moz-transition: opacity .25s ease-in-out;
+	-webkit-transition: opacity .25s ease-in-out;
+}
+
+.bx-wrapper:hover .bx-controls-direction a {
+	opacity: 1;
+}
+
+.bgr{background-color: rgba(0, 0, 0, 0.8);width:100%;}
+.body1
+{
+	height:100%;
+	width:1000px;
+	margin:auto;
+	background-color: rgba(0, 0, 0, 0.8);
+	border-right: 1px solid #000;
+	border-left: 1px solid #000;
+	/* box-shadow: 0 15px 15px #000; */
+}
+
+#sidebar{
+	float:right;
+
+	will-change: min-height;
+}
+
+#sidebar .sidebar__inner{
+	position:relative;width:379px;
+
+	height:calc(100vh - 90px);
+	background-color:#444444;
+	background-image: url('$siteaddress/images/pattern.png');
+	transform: translate(0, 0);
+	transform: translate3d(0, 0, 0);
+	will-change: position, transform;
+}
+
+
+@font-face {
+	font-family: 'KazmannSans';
+	src: url('https://slums.ru/fonts/KazmannSans.eot');
+	src: local('&#9786;'), url('https://slums.ru/fonts/KazmannSans.woff') format('woff'), url('https://slums.ru/fonts/KazmannSans.ttf') format('truetype'), url('https://slums.ru/fonts/KazmannSans.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+a.menulink, a.menulink:link, a.menulink:visited, a.menulink:active
+{
+	margin-top:6px;
+	padding:6px;
+	color: #fff;
+	font-family: 'Akrobat Regular', KazmannSans, 'Condensed-Bold', 'PostScriptum-Light', "Franklin Gothic Medium", Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:32px;
+	line-height: 0.9;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+a.menulinks, a.menulinks:link, a.menulinks:visited, a.menulinks:active
+{
+	margin-top:6px;
+	padding:6px;
+	background-color:#ddd;
+	color: black;
+	font-family: 'Akrobat Regular', KazmannSans, 'Condensed-Bold', 'PostScriptum-Light', "Franklin Gothic Medium", Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,1);
+	font-size:32px;
+	line-height: 0.9;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+a.menulinks:hover {background-color:#ddd;color: black;}
+
+h1{font-family: 'Akrobat Regular';font-size:36px;color:#ffffff;text-align:center;margin-top:-20px;}
+
+p{
+	text-align: justify;
+	font-family: 'Akrobat Regular';
+}
+
+div{font-family: 'Akrobat Regular';}
+
+
+html,
+body {
+	height: 100%;
+	padding:0;
+	margin:0;
+	color:#ffffff;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding:0;
+	overflow-x:visible;
+}
+.footer {
+	flex: 0 0 auto;
+	margin:20px 0 0 0;
+}
+
+.dsc {font-family: 'Akrobat Regular';font-size:24px;text-align:justify;color:#cccccc;}
+a.menulink:hover {background-color:#ddd;color: black;}
+a.icon:hover {background-color: #ddd;color: black;}
+.mn {display:inline-block;position:relative;}
+.bd{width:1100px;overflow:hidden;padding-top:70px;flex: 1 0 auto;margin:0 auto;}
+.container{width:1100px;margin:0 auto;margin-top:20px;}
+.s1{height:470px;width:700px;}
+.menu {height:51px;background-color:#333333;color:#ccc;position:fixed;width:100%;z-index:999;box-shadow: 1px 3px 6px #000;}
+.rightbar{display:inline-block;margin-left:20px;width:379px;height:470px;background-color:#444444;background-image: url('/images/pattern.png');}
+.rightbar2{position:relative;margin:20px 0 0 20px;width:379px;height:calc(100vh - 90px);background-color:#444444;background-image: url('$siteaddress/images/pattern.png');float:right;}
+.obrightbar {display:inline-block;margin-left:20px;width:359px;height:450px;background-color:#444444;background-image: url('/images/pattern.png');font-size:24px;padding:10px;}
+.objdescr{display:inline-block;font-size:24px;padding:10px;width:359px;display:block;}
+.objbar{position:relative;display:inline-block;margin-left:20px;width:379px;height:470px;}
+.sl{display:inline-block;width:700px;float:left;}
+.soc{display:block;position:absolute;right:0px;width:130px;white-space:nowrap;padding:0;margin:14px 65px 0 0;}
+.bbit{padding-top:0;}
+.topnav {overflow: hidden;background-color: #333;position:relative;width:1100px;margin:0 auto;min-width:550px;min-height:50px;}
+.topnav a {float: left;display: block;color: #f2f2f2;text-align: center;text-decoration: none;}
+.topnav .icon {display: none;}
+.objcont{display:inline-block;width:700px;text-align:justify;font-size:24px;padding:10px 10px 10px 0;}
+.objimg{height:255px;}
+.foot{width:1100px;margin:0 auto;}
+.obj0 {display:none;}
+
+@media screen and (max-width: 700px) {
+	.topnav a.menulink {display:none;}
+	.topnav a.menulinks {display:none;}
+	.topnav a.icon {float:left;display:inline-block;width:70px;height:70px;}
+	.topnav div.soc {position: absolute;right: 0;top: 0;padding:0;margin:22px 27px 0 0;width:200px;height:70px;vertical-align: middle;}
+	.topnav {position: relative;margin:0 auto;width:100%;}
+	.topnav a.title {font-size:56px;padding:10px;}
+	.topnav .searchstr {height:64px;font-size:48px;}
+	.topnav .search {position:absolute;margin:-22px 0 0 29px;padding:0;display:inline-block;width:70px;height:70px;background-image: url('/images/pattern.png');}
+	.topnav .key {position:relative;margin:22px 22px 0 29px;padding:0;display:inline-block;width:70px;height:70px;background-image: url('/images/pattern.png');}
+	.topnav .srch{display:block;margin:21px;}
+	.obj0 {display:table;background-image: url('/images/pattern.png');width:100%;padding:10px;}
+	.obj1 {display:table-cell;width:48%;font-size:19px;}
+	.obj2 {display:table-cell;width:48%;font-size:19px;}
+	.topnav.responsive .srch {display:block;margin:21px;}
+	.topnav.responsive .search {position:absolute;margin:-22px 0 0 29px;padding:0;display:inline-block;width:70px;height:70px;background-image: url('/images/pattern.png');}
+	.topnav.responsive {position: relative;margin:0 auto;width:100%;}
+	.topnav.responsive .searchstr {height:64px;font-size:48px;}
+	.topnav.responsive .icon {position: absolute;left: 0;top: 0;margin:0 auto;width:70px;height:70px;}
+	.topnav.responsive .soc{vertical-align: middle;display:block;position:absolute;right:0;white-space:nowrap;padding:0;margin:22px 27px 0 0;height:70px;}
+	.topnav.responsive a.menulink {float: none;display: block;text-align: left;font-size:46px;}
+	.topnav.responsive a.menulinks {float: none;display: block;text-align: left;font-size:46px;}
+	.topnav.responsive a.title {float: none;display: block;margin-left:70px;text-align: left;font-size:56px;padding:10px;height:50px;}
+	.menu {width:100%;height:70px;}
+	.bigmap {padding-top:20px;}
+	a.mp, a.mp:link, a.mp:visited, a.mp:active {color: #fff;font-family: 'Akrobat Regular', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;text-shadow: 0 1px 1px rgba(0,0,0,1);font-size:26px;text-transform:uppercase;text-decoration: none;}
+	.topbtns {display:table;position:absolute;right:0px;padding-top:5px;}
+	.topnav.responsive .topbtns {display:table;position:absolute;right:0px;top:0;}
+	img.micon {margin:8px 5px 5px 5px;height:44px;}
+
+	.obrightbar {width:100%;margin:0;height:unset;}
+
+	.obbar1 {display:table;width:680px;}
+	.obbar2 {display:table-cell;width:50%;}
+	.obbar3 {display:table-cell;width:50%;}
+	.obbar4 {font-size:52px;margin-bottom:20px;}
+	.commentbox {position:relative;margin-left:-20px;}
+}
+
+.commentbox {position:relative;}
+.obbar4 {font-size:27px;margin-bottom:20px;}
+
+@media (max-width: 700px) {
+	h1{margin-top:20px;}
+	.menu {width:100%;height:70px;}
+	.rightbar{display:none;margin:10px;width:680px;height:470px;background-color:#444444;}
+	#sidebar{display:none;}
+	.mn {display:none;}
+	.container {width:700px;padding:0;flex: 1 0 auto;margin:0 auto;}
+	.sl{display:inline-block;width:100%;padding:0;margin:0;float:none;}
+	.bx-slider{padding:0;margin:0;}
+	.bbit{padding:0;}
+	.footer {margin:0;}
+	.objop{display:inline-block;float:right;width:330px;font-size:20px;line-height:1.0;padding:0;}
+	.objimg{display:inline-block;width:350px;margin:0;padding:0;height:235px;}
+	.objimg img{width:350px;}
+	.objbar{display:block;margin:0;width:100%;padding:0;height:100%;}
+	.objdescr{font-size:38px;width:660px;display:inline-block;background-color:#111111;text-align:left;padding:20px;}
+	.objcont{display:inline-block;width:660px;padding:20px;}
+	.wrapper {overflow-x:hidden;}
+	.bd{width:700px;padding-top:70px;}
+	.foot{width:700px;margin:0 auto;}
+	.bigmap {width:100%;height:90%;position:fixed;top:70px;z-index:998;}
+}
+
+.search {position:absolute;margin:-14px 0 0 14px;padding:0;display:inline-block;width:50px;height:50px;background-image: url('/images/pattern.png');}
+.key {position:absolute;margin:-14px 0 0 -45px;padding:0;display:inline-block;width:50px;height:50px;background-image: url('/images/pattern.png');}
+.srch{display:block;margin:11px;}
+.objop{position:relative;padding:10px;font-size:27px;line-height:1.0;}
+
+
+.searchstr {outline:none;text-transform:uppercase;width:100%;height:44px;left:0;top:0;margin-top:2px;background-color:#000;border:0;font-family:'Akrobat Regular';font-size:38px;}
+
+.bigmap {width:100%;height:95%;position:fixed;top:50px;z-index:998;}
+.topbtns {display:table;position:absolute;right:0px;padding-top:3px;}
+.cell {display:table-cell;}
+.micon {display:block;margin:8px 5px 5px 5px;height:30px;}
