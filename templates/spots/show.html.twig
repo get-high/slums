@@ -5,3 +5,8 @@
 {% block body %}
     <h1>{{ spot }}</h1>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    свой скрипт
+{% endblock %}
