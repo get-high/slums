@@ -13,7 +13,7 @@ class SpotController extends AbstractController
      * @Route("/", name="index")
      * @return Response
      */
-    public function index()
+    public function index(): Response
     {
         return new Response('Hello Word');
     }
@@ -23,7 +23,7 @@ class SpotController extends AbstractController
      * @param string $slug
      * @return Response
      */
-    public function show(string $slug)
+    public function show(string $slug): Response
     {
         return $this->render('spots/show.html.twig', [
              'spot' => $slug
@@ -35,7 +35,7 @@ class SpotController extends AbstractController
      * @param int $id
      * @return JsonResponse
      */
-    public function was(int $id)
+    public function was(int $id): JsonResponse
     {
         $likes = $id;
 
@@ -47,7 +47,7 @@ class SpotController extends AbstractController
      * @param int $id
      * @return JsonResponse
      */
-    public function will(int $id)
+    public function will(int $id): JsonResponse
     {
         $likes = $id;
 
