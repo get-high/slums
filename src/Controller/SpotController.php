@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SpotController
+class SpotController extends AbstractController
 {
     /**
      * @Route("/")
@@ -18,8 +19,10 @@ class SpotController
     /**
      * @Route("/spot/{slug}")
      */
-    public function spot($slug)
+    public function show($slug)
     {
-        return new Response(sprintf('Spot: %s', $slug));
+        return $this->render('spots/show.html.twig', [
+             'spot' => $slug
+        ]);
     }
 }
