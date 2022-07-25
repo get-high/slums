@@ -2,24 +2,23 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
-        <link href="/js/lity/dist/lity.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('js/lity/dist/lity.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('js/tooltipster/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('js/tooltipster/css/tooltipster.bundle.min.css') }}" />
     {% endblock %}
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        <script type="text/javascript">ymaps.ready(init);function init () {var myMap;$('#openmap').bind({click: function () {if (!myMap) {myMap = new ymaps.Map('map', {center: [$mapcenter],zoom: $zoom,controls: ['zoomControl', 'fullscreenControl']}, {autoFitToViewport: 'always',balloonPanelMaxMapArea: 0}),objectManager = new ymaps.ObjectManager({clusterize: false,geoObjectOpenBalloonOnClick: true,});myMap.geoObjects.add(objectManager);$.ajax({url: "https://slums.ru/index.php?do=mapjson&c=$ocid"}).done(function(data) {objectManager.add(data);objectManager.objects.balloon.open($ppid);});$("#map").show();var geolocButton = new ymaps.control.Button({data: {title: "Определить ваше местоположение",image: "https://slums.ru/images/geoloc.png"}});geolocButton.events.add('press',function () {ymaps.geolocation.get({mapStateAutoApply: true,autoReverseGeocode: true}).then(function (result) {myMap.geoObjects.add(result.geoObjects);});});myMap.controls.add(geolocButton, {float: "left"});var myButton = new ymaps.control.Button({data: {title: "Закрыть карту",image: "https://slums.ru/images/x.png"}});myButton.events.add('press',function () {myMap.destroy();myMap = null;$( "#map" ).hide();});myMap.controls.add(myButton, {float: "left"});}else {myMap.destroy();myMap = null;$( "#map" ).hide();}}});}</script>
-        <link rel="stylesheet" type="text/css" href="/js/tooltipster/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-light.min.css" />
-        <link rel="stylesheet" type="text/css" href="/js/tooltipster/css/tooltipster.bundle.min.css" />
-        <script type="text/javascript" src="/js/tooltipster/js/tooltipster.bundle.min.js"></script>
-        <script type="text/javascript" src="/js/lity/dist/lity.min.js"></script>
+        <script type="text/javascript">ymaps.ready(init);function init () {var myMap;$('#openmap').bind({click: function () {if (!myMap) {myMap = new ymaps.Map('map', {center: [$mapcenter],zoom: $zoom,controls: ['zoomControl', 'fullscreenControl']}, {autoFitToViewport: 'always',balloonPanelMaxMapArea: 0}),objectManager = new ymaps.ObjectManager({clusterize: false,geoObjectOpenBalloonOnClick: true,});myMap.geoObjects.add(objectManager);$.ajax({url: "https://slums.ru/index.php?do=mapjson&c=$ocid"}).done(function(data) {objectManager.add(data);objectManager.objects.balloon.open($ppid);});$("#map").show();var geolocButton = new ymaps.control.Button({data: {title: "Определить ваше местоположение",image: "https://slums.ru/images/geoloc.png"}});geolocButton.events.add('press',function () {ymaps.geolocation.get({mapStateAutoApply: true,autoReverseGeocode: true}).then(function (result) {myMap.geoObjects.add(result.geoObjects);});});myMap.controls.add(geolocButton, {float: "left"});var myButton = new ymaps.control.Button({data: {title: "Закрыть карту",image: "https://slums.ru/images/x.png"}});myButton.events.add('press',function () {myMap.destroy();myMap = null;$( "#map" ).hide();});myMap.controls.add(myButton, {float: "left"});}else {myMap.destroy();myMap = null;$( "#map" ).hide();}}});</script>
+        <script type="text/javascript" src="{{ asset('js/tooltipster/js/tooltipster.bundle.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/lity/dist/lity.min.js') }}"></script>
         <script src="https://api-maps.yandex.ru/2.1.27/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
-
 
         <script type="text/javascript">
             $(function() {
@@ -29,9 +28,9 @@
                 $('#rating').rating({
                     fx: 'float',
                     stars: 5,
-                    image: '$siteaddress/images/stars.png',
-                    loader: '$siteaddress/images/ajax-loader.gif',
-                    url: '$siteaddress/index.php?do=vote'
+                    image: '/images/stars.png',
+                    loader: '/images/ajax-loader.gif',
+                    url: '/index.php?do=vote'
                 });
             });
         </script>
@@ -55,7 +54,7 @@
                     $('#loadmore').hide();
                     $('#loader').show();
                     $.ajax({
-                        url: '$siteaddress/index.php?do=ajax&c=$cid',
+                        url: '/index.php?do=ajax&c=$cid',
                         method: 'POST',
                         data: {"startFrom" : startFrom},
                         beforeSend: function() { inProgress = true;}
@@ -145,7 +144,7 @@
     <div class="menu">
         <div class="topnav" id="myTopnav">
 
-            <form role="search" method="post" id="searchform" action="$siteaddress/index.php?do=search">
+            <form role="search" method="post" id="searchform" action="{{ path('search') }}">
                 <div id="searchbar" style="position:absolute;display:none;width:100%;z-index:4;white-space:nowrap;"><input type="text" class="searchstr" placeholder="Введите фразу и нажмите enter" name="s" id="s"></div>
             </form>
 
@@ -154,11 +153,11 @@
             $menufull
 
             <div class="topbtns">
-                <div class="cell"><a href="https://vk.com/trushchoby" target="_blank"><img src="$siteaddress/images/icons/vk.png" height="27" alt="Трущобы в контакте" class="micon"></a></div>
-                <div class="cell"><a href="https://twitter.com/trushchoby" target="_blank"><img src="$siteaddress/images/icons/twitter.png" height="27" alt="Трущобы в Twitter" class="micon"></a></div>
-                <div class="cell"><a href="https://instagram.com/trushchoby" target="_blank"><img src="$siteaddress/images/icons/instagram.png" height="28" alt="Трущобы в Instagram" class="micon"></a></div>
-                <div class="cell"><a href="https://t.me/trushchoby" target="_blank"><img src="$siteaddress/images/icons/telegram.png" height="28" alt="Трущобы в Telegram" class="micon"></a></div>
-                <div class="cell"><a href="#" onclick="return false" class="tooltip" data-tooltip-content="#tooltip_content" id="authtooltip"><img src="$siteaddress/images/icons/key.png" class="micon" alt="Авторизоваться"></a>
+                <div class="cell"><a href="https://vk.com/trushchoby" target="_blank"><img src="/images/icons/vk.png" height="27" alt="Трущобы в контакте" class="micon"></a></div>
+                <div class="cell"><a href="https://twitter.com/trushchoby" target="_blank"><img src="/images/icons/twitter.png" height="27" alt="Трущобы в Twitter" class="micon"></a></div>
+                <div class="cell"><a href="https://instagram.com/trushchoby" target="_blank"><img src="/images/icons/instagram.png" height="28" alt="Трущобы в Instagram" class="micon"></a></div>
+                <div class="cell"><a href="https://t.me/trushchoby" target="_blank"><img src="/images/icons/telegram.png" height="28" alt="Трущобы в Telegram" class="micon"></a></div>
+                <div class="cell"><a href="#" onclick="return false" class="tooltip" data-tooltip-content="#tooltip_content" id="authtooltip"><img src="/images/icons/key.png" class="micon" alt="Авторизоваться"></a>
                     <div class="tooltip_templates" style="width:250px;height:150px;"><span id="tooltip_content">$userauth</span></div>
                 </div>
                 <div class="cell"><a href="#" id="openmap" class="tooltip" title="$maptooltip"><img src="/images/icons/spot.png" class="micon" alt="Открыть карту"></a></div>
@@ -172,7 +171,7 @@
 
     <div class="bd">
 
-        $bodyhead
+        {% block header %}{% endblock %}
 
     </div>
 
@@ -185,14 +184,13 @@
     <div class="footer" style="width:100%;padding:0;background-image: url('/images/pattern.png');height:120px;">
         <div class="foot">
             <ul style="margin:0 auto;list-style:none;padding:10px;overflow:visible;width:100%;">
-                <li style="float:left;width: calc(100% / 3 + 10px);height:80px;margin-right:20px;"><a href="/"><img src="$siteaddress/admin/images/logo.png"></a></li>
-                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="{{ path('show_spot', { slug: 'abandoned' }) }}">Заброшенное</a><br /><a href="$siteaddress/category/roof.htm">Крыши</a><br /><a href="$siteaddress/category/doma.htm">Дома</a><br /><a href="$siteaddress/category/dvory.htm">Дворы, колодцы</a><br /><a href="$siteaddress/category/paradnye.htm">Парадные</a></li>
-                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="/category/official.htm">Официально</a><br /><a href="$siteaddress/category/money.htm">За деньги</a><br /><a href="$siteaddress/category/risk.htm">С риском</a><br /><a href="$siteaddress/category/free.htm">Бесплатно</a><br /><a href="$siteaddress/add.htm">Добавить объект</a></li>
+                <li style="float:left;width: calc(100% / 3 + 10px);height:80px;margin-right:20px;"><a href="/"><img src="{{ asset('images/logo.png') }}"></a></li>
+                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="{{ path('category', { slug: 'abandoned' }) }}">Заброшенное</a><br /><a href="/category/roof.htm">Крыши</a><br /><a href="$siteaddress/category/doma.htm">Дома</a><br /><a href="$siteaddress/category/dvory.htm">Дворы, колодцы</a><br /><a href="$siteaddress/category/paradnye.htm">Парадные</a></li>
+                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="/category/official.htm">Официально</a><br /><a href="/category/money.htm">За деньги</a><br /><a href="/category/risk.htm">С риском</a><br /><a href="$siteaddress/category/free.htm">Бесплатно</a><br /><a href="$siteaddress/add.htm">Добавить объект</a></li>
                 <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:0;">Социальные сети:<br /><a href="https://vk.com/trushchoby" target="_blank">Трущобы в VK</a><br /><a href="https://twitter.com/trushchoby" target="_blank">Трущобы в Twitter</a><br /><a href="https://t.me/trushchoby" target="_blank">Трущобы в Telegram</a><br /><a href="https://instagram.com/trushchoby" target="_blank">Трущобы в Instagram</a></li>
             </ul>
         </div>
     </div>
-
 </div>
 
 </body>

@@ -15,7 +15,9 @@ class SpotController extends AbstractController
      */
     public function index(): Response
     {
-        return new Response('Hello Word');
+        return $this->render('spots/index.html.twig', [
+            'spot' => 'main'
+        ]);
     }
 
     /**
@@ -28,6 +30,27 @@ class SpotController extends AbstractController
         return $this->render('spots/show.html.twig', [
              'spot' => $slug
         ]);
+    }
+
+    /**
+     * @Route("/category/{slug}", name="category")
+     * @param string $slug
+     * @return Response
+     */
+    public function category(string $slug): Response
+    {
+        return $this->render('spots/category.html.twig', [
+            'category' => $slug
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="search")
+     * @return Response
+     */
+    public function search(): Response
+    {
+        return new Response('Hello Word');
     }
 
     /**

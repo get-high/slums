@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Главная {% endblock %}
+
+{% block body %}
+    <h1>{{ category }}</h1>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    свой скрипт
+{% endblock %}

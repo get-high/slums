@@ -716,20 +716,20 @@ img{border:0;}
 
 @font-face {
 	font-family: 'Akrobat Bold';
-	src: url('$siteaddress/fonts/Akrobat-Bold.eot');
-	src: url('$siteaddress/fonts/Akrobat-Bold.eot?#iefix') format('embedded-opentype'),
-	url('$siteaddress/fonts/Akrobat-Bold.woff') format('woff'),
-	url('$siteaddress/fonts/Akrobat-Bold.ttf') format('truetype');
+	src: url('/fonts/Akrobat-Bold.eot');
+	src: url('/fonts/Akrobat-Bold.eot?#iefix') format('embedded-opentype'),
+	url('/fonts/Akrobat-Bold.woff') format('woff'),
+	url('/fonts/Akrobat-Bold.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Akrobat Regular';
-	src: url('$siteaddress/fonts/Akrobat-Regular.eot');
-	src: url('$siteaddress/fonts/Akrobat-Regular.eot?#iefix') format('embedded-opentype'),
-	url('$siteaddress/fonts/Akrobat-Regular.woff') format('woff'),
-	url('$siteaddress/fonts/Akrobat-Regular.ttf') format('truetype');
+	src: url('/fonts/Akrobat-Regular.eot');
+	src: url('/fonts/Akrobat-Regular.eot?#iefix') format('embedded-opentype'),
+	url('/fonts/Akrobat-Regular.woff') format('woff'),
+	url('/fonts/Akrobat-Regular.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -856,7 +856,7 @@ a.rbar:hover
 
 	height:calc(100vh - 90px);
 	background-color:#444444;
-	background-image: url('$siteaddress/images/pattern.png');
+	background-image: url('/images/pattern.png');
 	transform: translate(0, 0);
 	transform: translate3d(0, 0, 0);
 	will-change: position, transform;
@@ -865,8 +865,8 @@ a.rbar:hover
 
 @font-face {
 	font-family: 'KazmannSans';
-	src: url('https://slums.ru/fonts/KazmannSans.eot');
-	src: local('&#9786;'), url('https://slums.ru/fonts/KazmannSans.woff') format('woff'), url('https://slums.ru/fonts/KazmannSans.ttf') format('truetype'), url('https://slums.ru/fonts/KazmannSans.svg') format('svg');
+	src: url('/fonts/KazmannSans.eot');
+	src: local('&#9786;'), url('/fonts/KazmannSans.woff') format('woff'), url('/fonts/KazmannSans.ttf') format('truetype'), url('/fonts/KazmannSans.svg') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
