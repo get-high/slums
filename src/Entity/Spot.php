@@ -5,22 +5,27 @@ namespace App\Entity;
 use App\Repository\SpotRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
 class Spot
 {
+    use TimestampableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $slug = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['title'])]
+    private ?string $slug = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -29,27 +34,45 @@ class Spot
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $architector = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $how_to_get = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $rating = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $lat = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $lng = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_main = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $views = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $year = null;
+    private ?string $years = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $authors = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $style_id = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $security_level_id = null;
+
+    #[ORM\Column]
+    private ?int $published_by = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $published_at = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getTitle(): ?string
@@ -60,6 +83,18 @@ class Spot
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
@@ -100,26 +135,146 @@ class Spot
         return $this;
     }
 
-    public function getArchitector(): ?string
+    public function getHowToGet(): ?string
     {
-        return $this->architector;
+        return $this->how_to_get;
     }
 
-    public function setArchitector(?string $architector): self
+    public function setHowToGet(?string $how_to_get): self
     {
-        $this->architector = $architector;
+        $this->how_to_get = $how_to_get;
 
         return $this;
     }
 
-    public function getYear(): ?string
+    public function getRating(): ?float
     {
-        return $this->year;
+        return $this->rating;
     }
 
-    public function setYear(?string $year): self
+    public function setRating(?float $rating): self
     {
-        $this->year = $year;
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(?float $lng): self
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function isIsMain(): ?bool
+    {
+        return $this->is_main;
+    }
+
+    public function setIsMain(?bool $is_main): self
+    {
+        $this->is_main = $is_main;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): self
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    public function getYears(): ?string
+    {
+        return $this->years;
+    }
+
+    public function setYears(?string $years): self
+    {
+        $this->years = $years;
+
+        return $this;
+    }
+
+    public function getAuthors(): ?string
+    {
+        return $this->authors;
+    }
+
+    public function setAuthors(?string $authors): self
+    {
+        $this->authors = $authors;
+
+        return $this;
+    }
+
+    public function getStyleId(): ?int
+    {
+        return $this->style_id;
+    }
+
+    public function setStyleId(?int $style_id): self
+    {
+        $this->style_id = $style_id;
+
+        return $this;
+    }
+
+    public function getSecurityLevelId(): ?int
+    {
+        return $this->security_level_id;
+    }
+
+    public function setSecurityLevelId(?int $security_level_id): self
+    {
+        $this->security_level_id = $security_level_id;
+
+        return $this;
+    }
+
+    public function getPublishedBy(): ?int
+    {
+        return $this->published_by;
+    }
+
+    public function setPublishedBy(int $published_by): self
+    {
+        $this->published_by = $published_by;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeImmutable
+    {
+        return $this->published_at;
+    }
+
+    public function setPublishedAt(?\DateTimeImmutable $published_at): self
+    {
+        $this->published_at = $published_at;
 
         return $this;
     }
