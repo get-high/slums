@@ -59,19 +59,11 @@ class Spot
     private ?string $authors = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $style = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $type = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $security_level = null;
-
-    #[ORM\Column]
-    private ?int $published_by = null;
-
-    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $published_at = null;
+
+    #[ORM\ManyToOne(inversedBy: 'spots')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $published_by = null;
 
     public function getId(): ?int
     {
@@ -234,54 +226,6 @@ class Spot
         return $this;
     }
 
-    public function getStyle(): ?int
-    {
-        return $this->style;
-    }
-
-    public function setStyle(?int $style): self
-    {
-        $this->style = $style;
-
-        return $this;
-    }
-
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    public function setType(?int $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getSecurityLevel(): ?int
-    {
-        return $this->security_level;
-    }
-
-    public function setSecurityLevel(?int $security_level): self
-    {
-        $this->security_level = $security_level;
-
-        return $this;
-    }
-
-    public function getPublishedBy(): ?int
-    {
-        return $this->published_by;
-    }
-
-    public function setPublishedBy(int $published_by): self
-    {
-        $this->published_by = $published_by;
-
-        return $this;
-    }
-
     public function getPublishedAt(): ?\DateTimeImmutable
     {
         return $this->published_at;
@@ -290,6 +234,18 @@ class Spot
     public function setPublishedAt(?\DateTimeImmutable $published_at): self
     {
         $this->published_at = $published_at;
+
+        return $this;
+    }
+
+    public function getPublishedBy(): ?User
+    {
+        return $this->published_by;
+    }
+
+    public function setPublishedBy(?User $published_by): self
+    {
+        $this->published_by = $published_by;
 
         return $this;
     }

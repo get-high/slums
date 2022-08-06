@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -47,6 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $last_login = null;
+
+    #[ORM\OneToMany(mappedBy: 'published_by', targetEntity: Spot::class)]
+    private Collection $spots;
+
+    public function __construct()
+    {
+        $this->spots = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(?\DateTimeInterface $last_login): self
     {
         $this->last_login = $last_login;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Spot>
+     */
+    public function getSpots(): Collection
+    {
+        return $this->spots;
+    }
+
+    public function addSpot(Spot $spot): self
+    {
+        if (!$this->spots->contains($spot)) {
+            $this->spots[] = $spot;
+            $spot->setPublishedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpot(Spot $spot): self
+    {
+        if ($this->spots->removeElement($spot)) {
+            // set the owning side to null (unless already changed)
+            if ($spot->getPublishedBy() === $this) {
+                $spot->setPublishedBy(null);
+            }
+        }
 
         return $this;
     }
