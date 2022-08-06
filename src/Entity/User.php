@@ -44,9 +44,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $provider = null;
 
-    #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
-    private ?bool $is_admin = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $last_login = null;
 
@@ -160,18 +157,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setProvider(?string $provider): self
     {
         $this->provider = $provider;
-
-        return $this;
-    }
-
-    public function isIsAdmin(): ?bool
-    {
-        return $this->is_admin;
-    }
-
-    public function setIsAdmin(?bool $is_admin): self
-    {
-        $this->is_admin = $is_admin;
 
         return $this;
     }
