@@ -9,6 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
+#[ORM\Index(columns: ["slug"], name: 'UNIQ_SLUG')]
 class Spot
 {
     use TimestampableEntity;
@@ -45,7 +46,7 @@ class Spot
     #[ORM\Column(nullable: true)]
     private ?float $lng = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
     private ?bool $is_main = null;
 
     #[ORM\Column(nullable: true)]
@@ -59,6 +60,9 @@ class Spot
 
     #[ORM\Column(nullable: true)]
     private ?int $style = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $type = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $security_level = null;
@@ -238,6 +242,18 @@ class Spot
     public function setStyle(?int $style): self
     {
         $this->style = $style;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
