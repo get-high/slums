@@ -5,9 +5,9 @@ namespace App\Entity;
 use App\Repository\SpotRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+#[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
 class Spot
 {
@@ -22,7 +22,6 @@ class Spot
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -59,10 +58,10 @@ class Spot
     private ?string $authors = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $style_id = null;
+    private ?int $style = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $security_level_id = null;
+    private ?int $security_level = null;
 
     #[ORM\Column]
     private ?int $published_by = null;
@@ -231,26 +230,26 @@ class Spot
         return $this;
     }
 
-    public function getStyleId(): ?int
+    public function getStyle(): ?int
     {
-        return $this->style_id;
+        return $this->style;
     }
 
-    public function setStyleId(?int $style_id): self
+    public function setStyle(?int $style): self
     {
-        $this->style_id = $style_id;
+        $this->style = $style;
 
         return $this;
     }
 
-    public function getSecurityLevelId(): ?int
+    public function getSecurityLevel(): ?int
     {
-        return $this->security_level_id;
+        return $this->security_level;
     }
 
-    public function setSecurityLevelId(?int $security_level_id): self
+    public function setSecurityLevel(?int $security_level): self
     {
-        $this->security_level_id = $security_level_id;
+        $this->security_level = $security_level;
 
         return $this;
     }
