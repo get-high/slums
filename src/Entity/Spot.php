@@ -6,6 +6,7 @@ use App\Repository\SpotRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
@@ -20,6 +21,7 @@ class Spot
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('main')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
