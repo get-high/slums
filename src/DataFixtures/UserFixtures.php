@@ -20,6 +20,16 @@ class UserFixtures extends BaseFixtures
 
     public function loadData(ObjectManager $manager): void
     {
+        $this->create(User::class, function (User $user) {
+            $user
+                ->setName('Admin')
+                ->setEmail('admin@mail.ru')
+                ->setPassword($this->hasher->hashPassword($user, '123456'))
+                ->setUid($this->faker->uuid)
+                ->setProvider('provider')
+                ->setRoles(['ROLE_ADMIN']);
+        });
+
         $this->createMany(User::class, 10, function (User $user) {
             $user
                 ->setName($this->faker->userName)
@@ -27,7 +37,9 @@ class UserFixtures extends BaseFixtures
                 ->setPassword($this->hasher->hashPassword($user, '123456'))
                 ->setUid($this->faker->uuid)
                 ->setProvider('provider')
-                ->setRoles($this->faker->randomElement([['ROLE_ADMIN'], ['ROLE_USER']]));
+                ->setRoles(['ROLE_USER']);
         });
+
+        $manager->flush();
     }
 }

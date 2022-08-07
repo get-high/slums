@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SpotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -10,7 +12,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
-#[ORM\Index(columns: ["slug"], name: 'UNIQ_SLUG')]
 class Spot
 {
     use TimestampableEntity;
@@ -18,54 +19,77 @@ class Spot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups('main')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups('main')]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Groups('main')]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('main')]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups('main')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups('main')]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups('main')]
     private ?string $how_to_get = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('main')]
     private ?float $rating = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('main')]
     private ?float $lat = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('main')]
     private ?float $lng = null;
 
     #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
+    #[Groups('main')]
     private ?bool $is_main = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('main')]
     private ?int $views = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('main')]
     private ?string $years = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups('main')]
     private ?string $authors = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $published_at = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups('main')]
+    private ?\DateTimeInterface $published_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'spots')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $published_by = null;
+    #[Groups('main')]
+    private ?User $creator = null;
+
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'spots')]
+    private Collection $category;
+
+    public function __construct()
+    {
+        $this->category = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -228,26 +252,50 @@ class Spot
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeImmutable
+    public function getPublishedAt(): ?\DateTimeInterface
     {
         return $this->published_at;
     }
 
-    public function setPublishedAt(?\DateTimeImmutable $published_at): self
+    public function setPublishedAt(?\DateTimeInterface $published_at): self
     {
         $this->published_at = $published_at;
 
         return $this;
     }
 
-    public function getPublishedBy(): ?User
+    public function getCreator(): ?User
     {
-        return $this->published_by;
+        return $this->creator;
     }
 
-    public function setPublishedBy(?User $published_by): self
+    public function setCreator(?User $creator): self
     {
-        $this->published_by = $published_by;
+        $this->creator = $creator;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategory(): Collection
+    {
+        return $this->category;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->category->removeElement($category);
 
         return $this;
     }
