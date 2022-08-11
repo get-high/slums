@@ -60,7 +60,7 @@ class Spot
 
     #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
     #[Groups('main')]
-    private ?bool $is_main = null;
+    private ?bool $main = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups('main')]
@@ -86,9 +86,13 @@ class Spot
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'spots')]
     private Collection $category;
 
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Comment::class, orphanRemoval: true)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,14 +208,14 @@ class Spot
         return $this;
     }
 
-    public function isIsMain(): ?bool
+    public function isMain(): ?bool
     {
-        return $this->is_main;
+        return $this->main;
     }
 
-    public function setIsMain(?bool $is_main): self
+    public function setMain(bool $main): self
     {
-        $this->is_main = $is_main;
+        $this->main = $main;
 
         return $this;
     }
@@ -296,6 +300,36 @@ class Spot
     public function removeCategory(Category $category): self
     {
         $this->category->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getSpot() === $this) {
+                $comment->setSpot(null);
+            }
+        }
 
         return $this;
     }

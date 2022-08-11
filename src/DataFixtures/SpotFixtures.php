@@ -16,7 +16,7 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
             $spot
                 ->setTitle($this->faker->sentence)
                 ->setSlug($this->faker->slug)
-                ->setIsMain($this->faker->numberBetween(0, 1))
+                ->setMain($this->faker->numberBetween(0, 1))
                 ->setAddress($this->faker->address)
                 ->setDescription($this->faker->text(50))
                 ->setContent($this->faker->paragraphs(3,true))
