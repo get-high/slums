@@ -95,12 +95,22 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Vote::class, orphanRemoval: true)]
     private Collection $votes;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots')]
+    #[ORM\JoinTable(name: "spot_user_was")]
+    private Collection $user_was;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots')]
+    #[ORM\JoinTable(name: "spot_user_will")]
+    private Collection $user_will;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->user_was = new ArrayCollection();
+        $this->user_will = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,6 +408,54 @@ class Spot
                 $vote->setSpot(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserWas(): Collection
+    {
+        return $this->user_was;
+    }
+
+    public function addUserWas(User $userWas): self
+    {
+        if (!$this->user_was->contains($userWas)) {
+            $this->user_was->add($userWas);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWas(User $userWas): self
+    {
+        $this->user_was->removeElement($userWas);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserWill(): Collection
+    {
+        return $this->user_will;
+    }
+
+    public function addUserWill(User $userWill): self
+    {
+        if (!$this->user_will->contains($userWill)) {
+            $this->user_will->add($userWill);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWill(User $userWill): self
+    {
+        $this->user_will->removeElement($userWill);
 
         return $this;
     }

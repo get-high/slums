@@ -20,7 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column()]
+    #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, nullable: true)]
@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $last_login = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Spot::class)]
-    private Collection $spots;
+    private Collection $spots_user_created;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -56,11 +56,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Vote::class, orphanRemoval: true)]
     private Collection $votes;
 
+    #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: 'user_was')]
+    private Collection $spots_user_was;
+
+    #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: 'user_will')]
+    private Collection $spots_user_will;
+
     public function __construct()
     {
-        $this->spots = new ArrayCollection();
+        $this->spots_user_created = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->spots_user_was = new ArrayCollection();
+        $this->spots_user_will = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,24 +191,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Spot>
      */
-    public function getSpots(): Collection
+    public function getSpotsUserCreated(): Collection
     {
-        return $this->spots;
+        return $this->spots_user_created;
     }
 
-    public function addSpot(Spot $spot): self
+    public function addSpotUserCreated(Spot $spot): self
     {
-        if (!$this->spots->contains($spot)) {
-            $this->spots[] = $spot;
+        if (!$this->spots_user_created->contains($spot)) {
+            $this->spots_user_created[] = $spot;
             $spot->setCreator($this);
         }
 
         return $this;
     }
 
-    public function removeSpot(Spot $spot): self
+    public function removeSpotUserCreated(Spot $spot): self
     {
-        if ($this->spots->removeElement($spot)) {
+        if ($this->spots_user_created->removeElement($spot)) {
             // set the owning side to null (unless already changed)
             if ($spot->setCreator() === $this) {
                 $spot->setCreator(null);
@@ -265,6 +273,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($vote->getUser() === $this) {
                 $vote->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Spot>
+     */
+    public function getSpotsUserWas(): Collection
+    {
+        return $this->spots_user_was;
+    }
+
+    public function addSpotUserWas(Spot $spot): self
+    {
+        if (!$this->spots_user_was->contains($spot)) {
+            $this->spots_user_was->add($spot);
+            $spot->addUserWas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpotUserWas(Spot $spot): self
+    {
+        if ($this->spots_user_was->removeElement($spot)) {
+            $spot->removeUserWas($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Spot>
+     */
+    public function getSpotsUserWill(): Collection
+    {
+        return $this->spots_user_will;
+    }
+
+    public function addSpotUserWill(Spot $spot): self
+    {
+        if (!$this->spots_user_will->contains($spot)) {
+            $this->spots_user_will->add($spot);
+            $spot->addUserWill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpotUserWill(Spot $spot): self
+    {
+        if ($this->spots_user_will->removeElement($spot)) {
+            $spot->removeUserWill($this);
         }
 
         return $this;
