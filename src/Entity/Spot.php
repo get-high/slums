@@ -89,10 +89,14 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Photo::class, orphanRemoval: true)]
+    private Collection $photos;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -328,6 +332,36 @@ class Spot
             // set the owning side to null (unless already changed)
             if ($comment->getSpot() === $this) {
                 $comment->setSpot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getSpot() === $this) {
+                $photo->setSpot(null);
             }
         }
 
