@@ -47,7 +47,6 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
         $manager->flush();
     }
 
-
     public function getDependencies()
     {
         return [
