@@ -3,19 +3,24 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
+use App\Service\ImageUploader;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends BaseFixtures
 {
-    /**
-     * @var UserPasswordHasherInterface
-     */
     private UserPasswordHasherInterface $hasher;
 
-    public function __construct(UserPasswordHasherInterface $hasher)
+    private ImageUploader $avatarUploader;
+
+    private UserRepository $repository;
+
+    public function __construct(UserRepository $repository, ImageUploader $avatarUploader, UserPasswordHasherInterface $hasher)
     {
         $this->hasher = $hasher;
+        $this->repository = $repository;
+        $this->avatarUploader = $avatarUploader;
     }
 
     public function loadData(ObjectManager $manager): void

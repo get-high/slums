@@ -5,11 +5,38 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Spot;
 use App\Entity\User;
+use App\Repository\SpotRepository;
+use App\Service\ImageUploader;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
 {
+    private SpotRepository $repository;
+
+    private ImageUploader $spotUploader;
+
+    private static $spotImages = [
+        '1-big.jpg',
+        '2-big.jpg',
+        '3-big.jpg',
+        '4-big.jpg',
+        '5-big.jpg',
+        '6-big.jpg',
+        '7-big.jpg',
+        '8-big.jpg',
+        '9-big.jpg',
+        '10-big.jpg',
+    ];
+
+    public function __construct(SpotRepository $repository, ImageUploader $spotUploader)
+    {
+        $this->repository = $repository;
+        $this->spotUploader = $spotUploader;
+    }
+
     public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Spot::class, 50, function (Spot $spot) {
@@ -45,6 +72,18 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
         });
 
         $manager->flush();
+
+        $spots = $this->repository->findAll();
+
+        foreach ($spots as $spot) {
+            $fileName = $this->faker->randomElement(self::$spotImages);
+
+            $tmpFileName = sys_get_temp_dir().'/'.$fileName;
+
+            (new Filesystem())->copy(dirname(dirname(__DIR__)).'/public/images/objects/'.$fileName, $tmpFileName, true);
+
+            $this->spotUploader->uploadImage(new File($tmpFileName), $spot);
+        }
     }
 
     public function getDependencies()

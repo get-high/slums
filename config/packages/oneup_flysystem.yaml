@@ -1,10 +1,19 @@
 # Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle
 oneup_flysystem:
     adapters:
-        default_adapter:
+        spot_uploads:
             local:
-                location: '%kernel.cache_dir%/flysystem'
+                location: '%spot_images%'
+        photo_uploads:
+            local:
+                location: '%photos%'
+        avatar_uploads:
+            local:
+                location: '%avatars%'
     filesystems:
-        default_filesystem:
-            adapter: default_adapter
-            alias: League\Flysystem\Filesystem
+        spot_uploads:
+            adapter: spot_uploads
+        photo_uploads:
+            adapter: photo_uploads
+        avatar_uploads:
+            adapter: avatar_uploads

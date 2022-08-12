@@ -2,3 +2,46 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+
+    resolvers:
+        default:
+            web_path: ~
+
+    loaders:
+        spot_image:
+            flysystem:
+                filesystem_service: oneup_flysystem.spot_uploads_filesystem
+        photo_image:
+            flysystem:
+                filesystem_service: oneup_flysystem.photo_uploads_filesystem
+        avatar_image:
+            flysystem:
+                filesystem_service: oneup_flysystem.avatar_uploads_filesystem
+
+    filter_sets:
+        cache: ~
+        spot_preview:
+            data_loader: spot_image
+            quality: 100
+            filters:
+                thumbnail: { size: [ 120, 90 ], mode: outbound }
+        spot_medium:
+            data_loader: spot_image
+            quality: 100
+            filters:
+                thumbnail: { size: [ 300, 150 ], mode: outbound }
+        photo_preview:
+            data_loader: photo_image
+            quality: 100
+            filters:
+                thumbnail: { size: [ 120, 90 ], mode: outbound }
+        photo_medium:
+            data_loader: photo_image
+            quality: 100
+            filters:
+                thumbnail: { size: [ 300, 150 ], mode: outbound }
+        avatar_preview:
+            data_loader: avatar_image
+            quality: 100
+            filters:
+                thumbnail: { size: [ 50, 50 ], mode: outbound }

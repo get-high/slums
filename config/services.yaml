@@ -4,12 +4,21 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    public_dir: '%kernel.project_dir%/public'
+    spot_images: '%public_dir%/images/spots'
+    photos: '%public_dir%/images/photos'
+    avatars: '%public_dir%/images/users'
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+        bind:
+            App\Service\ImageUploader $spotUploader: '@image_uploader.spot'
+            App\Service\ImageUploader $photoUploader: '@image_uploader.photo'
+            App\Service\ImageUploader $avatarUploader: '@image_uploader.avatar'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -22,3 +31,26 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    image_uploader.spot:
+        class: App\Service\ImageUploader
+        arguments:
+            $filesystem: '@oneup_flysystem.spot_uploads_filesystem'
+            $filters:
+                preview: 'spot'
+                medium: 'spot'
+
+    image_uploader.photo:
+        class: App\Service\ImageUploader
+        arguments:
+            $filesystem: '@oneup_flysystem.photo_uploads_filesystem'
+            $filters:
+                preview: 'photo'
+                medium: 'photo'
+
+    image_uploader.avatar:
+        class: App\Service\ImageUploader
+        arguments:
+            $filesystem: '@oneup_flysystem.avatar_uploads_filesystem'
+            $filters:
+                preview: 'avatar'
