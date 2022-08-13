@@ -7,7 +7,7 @@ parameters:
     public_dir: '%kernel.project_dir%/public'
     spot_images: '%public_dir%/images/spots'
     photos: '%public_dir%/images/photos'
-    avatars: '%public_dir%/images/users'
+    avatars: '%public_dir%/images/avatars'
 
 services:
     # default configuration for services in *this* file

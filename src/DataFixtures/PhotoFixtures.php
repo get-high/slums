@@ -53,11 +53,7 @@ class PhotoFixtures extends BaseFixtures implements DependentFixtureInterface
         foreach ($photos as $photo) {
             $fileName = $this->faker->randomElement(self::$photoImages);
 
-            $tmpFileName = sys_get_temp_dir().'/'.$fileName;
-
-            (new Filesystem())->copy(dirname(dirname(__DIR__)).'/public/images/objects/photos/'.$fileName, $tmpFileName, true);
-
-            $this->photoUploader->uploadImage(new File($tmpFileName), $photo);
+            $this->photoUploader->uploadImage(new File(dirname(dirname(__DIR__)).'/public/images/objects/photos/'.$fileName), $photo);
         }
     }
 

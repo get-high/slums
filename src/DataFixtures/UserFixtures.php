@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\ImageUploader;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends BaseFixtures
@@ -15,6 +16,11 @@ class UserFixtures extends BaseFixtures
     private ImageUploader $avatarUploader;
 
     private UserRepository $repository;
+
+    private static $userImages = [
+        '4.jpg',
+        '5.jpg',
+    ];
 
     public function __construct(UserRepository $repository, ImageUploader $avatarUploader, UserPasswordHasherInterface $hasher)
     {
@@ -46,5 +52,13 @@ class UserFixtures extends BaseFixtures
         });
 
         $manager->flush();
+
+        $users = $this->repository->findAll();
+
+        foreach ($users as $user) {
+            $fileName = $this->faker->randomElement(self::$userImages);
+
+            $this->avatarUploader->uploadImage(new File(dirname(dirname(__DIR__)).'/public/images/users/'.$fileName), $user);
+        }
     }
 }
