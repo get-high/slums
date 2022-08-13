@@ -22,15 +22,13 @@ class VoteFixtures extends BaseFixtures implements DependentFixtureInterface
     {
         $this->createMany(Vote::class, 200, function (Vote $vote) {
             $vote
-                ->setRating($this->faker->randomFloat(2, 0, 5))
+                ->setRating($this->faker->randomFloat(2, 2, 5))
                 ->setUser($this->getRandomReference(User::class))
                 ->setSpot($this->getRandomReference(Spot::class))
             ;
         });
 
         $manager->flush();
-
-        //$votes = $this
     }
 
     public function getDependencies()

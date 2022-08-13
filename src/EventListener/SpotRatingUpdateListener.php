@@ -2,36 +2,33 @@
 
 namespace App\EventListener;
 
-use App\Entity\Spot;
 use App\Entity\Vote;
 use App\Repository\SpotRepository;
 use App\Repository\VoteRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Doctrine\Persistence\ManagerRegistry;
-
 
 class SpotRatingUpdateListener
 {
-    private VoteRepository $repository;
+    private VoteRepository $voteRepository;
 
     private SpotRepository $spotRepository;
 
-    private ManagerRegistry $doctrine;
+    private EntityManagerInterface $em;
 
-    public function __construct(VoteRepository $repository, SpotRepository $spotRepository, ManagerRegistry $doctrine)
+    public function __construct(VoteRepository $voteRepository, SpotRepository $spotRepository, EntityManagerInterface $em)
     {
-        $this->repository = $repository;
+        $this->voteRepository = $voteRepository;
         $this->spotRepository = $spotRepository;
-        $this->doctrine = $doctrine;
+        $this->em = $em;
     }
 
     public function updateSpotRating(Vote $vote, LifecycleEventArgs $event): void
     {
-        $votes = array_column($this->repository->findAllVotesOfSpot($vote), 'rating');
+        $votes = array_column($this->voteRepository->findAllVotesOfSpot($vote), 'rating');
         $rating = array_sum($votes) / count($votes);
-        $entityManager = $this->doctrine->getManager();
-        $spot = $entityManager->getRepository(Spot::class)->find($vote->getSpot());
+        $spot = $this->spotRepository->find($vote->getSpot());
         $spot->setRating($rating);
-        $entityManager->flush();
+        $this->em->flush();
     }
 }
