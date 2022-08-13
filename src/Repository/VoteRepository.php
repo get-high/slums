@@ -39,6 +39,17 @@ class VoteRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllVotesOfSpot(Vote $entity)
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->select('v.rating')
+            ->where('v.spot = :spot')
+            ->setParameter('spot', $entity->getSpot())
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
 //    /**
 //     * @return Vote[] Returns an array of Vote objects
 //     */

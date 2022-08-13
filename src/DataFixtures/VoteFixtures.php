@@ -5,11 +5,19 @@ namespace App\DataFixtures;
 use App\Entity\Spot;
 use App\Entity\User;
 use App\Entity\Vote;
+use App\Repository\VoteRepository;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class VoteFixtures extends BaseFixtures implements DependentFixtureInterface
 {
+    private VoteRepository $repository;
+
+    public function __construct(VoteRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Vote::class, 200, function (Vote $vote) {
@@ -21,6 +29,8 @@ class VoteFixtures extends BaseFixtures implements DependentFixtureInterface
         });
 
         $manager->flush();
+
+        //$votes = $this
     }
 
     public function getDependencies()

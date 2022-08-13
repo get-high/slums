@@ -9,7 +9,6 @@ use App\Repository\SpotRepository;
 use App\Service\ImageUploader;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
 class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
@@ -48,7 +47,6 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setDescription($this->faker->text(50))
                 ->setContent($this->faker->paragraphs(3,true))
                 ->setHowToGet($this->faker->text(50))
-                ->setRating($this->faker->randomFloat(2, 0, 5))
                 ->setLat($this->faker->randomFloat(14, 59, 60))
                 ->setLng($this->faker->randomFloat(14, 30, 31))
                 ->setViews($this->faker->numberBetween(0, 500))

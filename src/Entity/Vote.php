@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Table(name: 'votes')]
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
@@ -18,9 +19,10 @@ class Vote
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups('main')]
     private ?float $rating = null;
 
-    #[ORM\ManyToOne(inversedBy: 'votes')]
+    #[ORM\ManyToOne(fetch: 'EXTRA_LAZY', inversedBy: 'votes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Spot $spot = null;
 

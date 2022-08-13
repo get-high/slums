@@ -8,7 +8,6 @@ use App\Repository\PhotoRepository;
 use App\Service\ImageUploader;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
 class PhotoFixtures extends BaseFixtures implements DependentFixtureInterface

@@ -38,7 +38,8 @@ class UserFixtures extends BaseFixtures
                 ->setPassword($this->hasher->hashPassword($user, '123456'))
                 ->setUid($this->faker->uuid)
                 ->setProvider('provider')
-                ->setRoles(['ROLE_ADMIN']);
+                ->setRoles(['ROLE_ADMIN'])
+            ;
         });
 
         $this->createMany(User::class, 10, function (User $user) {
@@ -48,7 +49,8 @@ class UserFixtures extends BaseFixtures
                 ->setPassword($this->hasher->hashPassword($user, '123456'))
                 ->setUid($this->faker->uuid)
                 ->setProvider('provider')
-                ->setRoles(['ROLE_USER']);
+                ->setRoles(['ROLE_USER'])
+            ;
         });
 
         $manager->flush();
