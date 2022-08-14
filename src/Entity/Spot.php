@@ -84,7 +84,7 @@ class Spot
     private ?User $creator = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'spots')]
-    private Collection $category;
+    private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -95,17 +95,17 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Vote::class, orphanRemoval: true)]
     private Collection $votes;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots_user_was')]
     #[ORM\JoinTable(name: "spot_user_was")]
     private Collection $user_was;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots_user_will')]
     #[ORM\JoinTable(name: "spot_user_will")]
     private Collection $user_will;
 
     public function __construct()
     {
-        $this->category = new ArrayCollection();
+        $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->votes = new ArrayCollection();
@@ -301,15 +301,15 @@ class Spot
     /**
      * @return Collection<int, Category>
      */
-    public function getCategory(): Collection
+    public function getCategories(): Collection
     {
-        return $this->category;
+        return $this->categories;
     }
 
     public function addCategory(Category $category): self
     {
-        if (!$this->category->contains($category)) {
-            $this->category[] = $category;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
 
         return $this;
@@ -317,7 +317,7 @@ class Spot
 
     public function removeCategory(Category $category): self
     {
-        $this->category->removeElement($category);
+        $this->categories->removeElement($category);
 
         return $this;
     }

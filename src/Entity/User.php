@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $last_login = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Spot::class)]
-    private Collection $spots_user_created;
+    private Collection $spots;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->spots_user_created = new ArrayCollection();
+        $this->spots = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->spots_user_was = new ArrayCollection();
