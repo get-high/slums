@@ -39,7 +39,7 @@ class VoteRepository extends ServiceEntityRepository
         }
     }
 
-    public function arrayAllVotesOfSpot(Vote $entity)
+    public function arraySpotVotes(Vote $entity)
     {
         $qb = $this->createQueryBuilder('v')
             ->select('v.rating')
