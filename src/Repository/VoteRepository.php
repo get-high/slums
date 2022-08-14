@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Vote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,15 +40,15 @@ class VoteRepository extends ServiceEntityRepository
         }
     }
 
-    public function arraySpotVotes(Vote $entity)
+    public function arraySpotVotes(Vote $entity, QueryBuilder $builder = null)
     {
-        $qb = $this->createQueryBuilder('v')
+        return $this->getOrCreateQueryBuilder($builder)
             ->select('v.rating')
             ->where('v.spot = :spot')
             ->setParameter('spot', $entity->getSpot())
-            ->getQuery();
-
-        return $qb->getArrayResult();
+            ->getQuery()
+            ->getArrayResult()
+        ;
     }
 
 //    /**
@@ -74,4 +75,12 @@ class VoteRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+     * @param QueryBuilder|null $builder
+     * @return QueryBuilder
+     */
+    private function getOrCreateQueryBuilder(?QueryBuilder $builder): QueryBuilder
+    {
+        return $builder ?? $this->createQueryBuilder('v');
+    }
 }
