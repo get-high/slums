@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Entity\Spot;
+use App\Service\SpotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,38 +12,46 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SpotController extends AbstractController
 {
+    private SpotService $spotService;
+
+    public function __construct(SpotService $spotService)
+    {
+        $this->spotService = $spotService;
+    }
     /**
      * @Route("/", name="index")
      * @return Response
      */
     public function index(): Response
     {
+        $spots = $this->spotService->getLatesPublishedSpots(10);
+
         return $this->render('spots/index.html.twig', [
-            'spot' => 'main'
+            'spots' => $spots
         ]);
     }
 
     /**
      * @Route("/spot/{slug}", name="show_spot")
-     * @param string $slug
+     * @param Spot $spot
      * @return Response
      */
-    public function show(string $slug): Response
+    public function show(Spot $spot): Response
     {
         return $this->render('spots/show.html.twig', [
-             'spot' => $slug
+             'spot' => $spot
         ]);
     }
 
     /**
      * @Route("/category/{slug}", name="category")
-     * @param string $slug
+     * @param Category $category
      * @return Response
      */
-    public function category(string $slug): Response
+    public function category(Category $category): Response
     {
         return $this->render('spots/category.html.twig', [
-            'category' => $slug
+            'category' => $category
         ]);
     }
 

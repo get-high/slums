@@ -15,6 +15,16 @@
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script src="{{ asset('js/bxslider/jquery.bxslider.min.js') }}" type="text/javascript"></script>
+        <link href="{{ asset('js/bxslider/jquery.bxslider.css') }}" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="{{ asset('js/fresco/js/fresco/fresco.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('js/fresco/css/fresco/fresco.css') }}"/>
+        <script type="text/javascript" src="{{ asset('js/jquery.sticky-kit.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.rating-2.0.js') }}"></script>
+
         <script type="text/javascript">ymaps.ready(init);function init () {var myMap;$('#openmap').bind({click: function () {if (!myMap) {myMap = new ymaps.Map('map', {center: [$mapcenter],zoom: $zoom,controls: ['zoomControl', 'fullscreenControl']}, {autoFitToViewport: 'always',balloonPanelMaxMapArea: 0}),objectManager = new ymaps.ObjectManager({clusterize: false,geoObjectOpenBalloonOnClick: true,});myMap.geoObjects.add(objectManager);$.ajax({url: "https://slums.ru/index.php?do=mapjson&c=$ocid"}).done(function(data) {objectManager.add(data);objectManager.objects.balloon.open($ppid);});$("#map").show();var geolocButton = new ymaps.control.Button({data: {title: "Определить ваше местоположение",image: "https://slums.ru/images/geoloc.png"}});geolocButton.events.add('press',function () {ymaps.geolocation.get({mapStateAutoApply: true,autoReverseGeocode: true}).then(function (result) {myMap.geoObjects.add(result.geoObjects);});});myMap.controls.add(geolocButton, {float: "left"});var myButton = new ymaps.control.Button({data: {title: "Закрыть карту",image: "https://slums.ru/images/x.png"}});myButton.events.add('press',function () {myMap.destroy();myMap = null;$( "#map" ).hide();});myMap.controls.add(myButton, {float: "left"});}else {myMap.destroy();myMap = null;$( "#map" ).hide();}}});</script>
         <script type="text/javascript" src="{{ asset('js/tooltipster/js/tooltipster.bundle.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/lity/dist/lity.min.js') }}"></script>
@@ -38,7 +48,7 @@
         <script type="text/javascript" charset="utf-8">
             jQuery(document).ready(function($) {
                 $("#sidebar").stick_in_parent({offset_top: 70});
-                $('.bxslider').bxSlider({adaptiveHeight:true,infiniteLoop:$infloop,pager:false,auto:true,autoStart:true});
+                $('.bxslider').bxSlider({adaptiveHeight:true,infiniteLoop:true,pager:false,auto:true,autoStart:true});
                 $("#was").click(function() {
                     $("#was").prop( "checked", true );
                     $("#will").prop( "checked", false );
@@ -138,7 +148,7 @@
         </script>
     {% endblock %}
 </head>
-<body>
+<body style="background-color:#111;">
 <div id="map" style="display:none;" class="bigmap"></div>
 <div class="wrapper">
     <div class="menu">
@@ -199,7 +209,12 @@
                         <a href="{{ path('category', { slug: category.slug }) }}">{{ category.title }}</a><br />
                     {% endfor %}
                 </li>
-                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:0;">Социальные сети:<br /><a href="https://vk.com/trushchoby" target="_blank">Трущобы в VK</a><br /><a href="https://twitter.com/trushchoby" target="_blank">Трущобы в Twitter</a><br /><a href="https://t.me/trushchoby" target="_blank">Трущобы в Telegram</a><br /><a href="https://instagram.com/trushchoby" target="_blank">Трущобы в Instagram</a></li>
+                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:0;">
+                    Социальные сети:<br /><a href="https://vk.com/trushchoby" target="_blank">Трущобы в VK</a><br />
+                    <a href="https://twitter.com/trushchoby" target="_blank">Трущобы в Twitter</a><br />
+                    <a href="https://t.me/trushchoby" target="_blank">Трущобы в Telegram</a><br />
+                    <a href="https://instagram.com/trushchoby" target="_blank">Трущобы в Instagram</a>
+                </li>
             </ul>
         </div>
     </div>

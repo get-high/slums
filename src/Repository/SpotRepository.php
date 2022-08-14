@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Spot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +40,36 @@ class SpotRepository extends ServiceEntityRepository
         }
     }
 
+    public function getLatestPublished(int $num)
+    {
+        return $this->published($this->latest($num))->getQuery()->getResult();
+    }
+
+    public function getLatest(int $num)
+    {
+        return $this->latest($num)->getQuery()->getResult();
+    }
+
+    public function getPublished()
+    {
+        return $this->published()->getQuery()->getResult();
+    }
+
+    private function latest(int $num = 10, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->orderBy('s.published_at', 'DESC')
+            ->setMaxResults($num)
+            ;
+    }
+
+    private function published(QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)->andWhere('s.published_at IS NOT NULL');
+    }
+
+
+
 //    /**
 //     * @return Spot[] Returns an array of Spot objects
 //     */
@@ -63,4 +94,12 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+     * @param QueryBuilder|null $builder
+     * @return QueryBuilder
+     */
+    private function getOrCreateQueryBuilder(?QueryBuilder $builder): QueryBuilder
+    {
+        return $builder ?? $this->createQueryBuilder('s');
+    }
 }
