@@ -34,6 +34,10 @@ class Category
     #[Groups('main')]
     private ?string $description = null;
 
+    #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
+    #[Groups('main')]
+    private ?bool $main = null;
+
     #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: 'categories')]
     private Collection $spots;
 
@@ -79,6 +83,18 @@ class Category
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function isMain(): ?bool
+    {
+        return $this->main;
+    }
+
+    public function setMain(bool $main): self
+    {
+        $this->main = $main;
 
         return $this;
     }

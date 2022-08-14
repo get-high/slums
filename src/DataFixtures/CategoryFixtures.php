@@ -11,9 +11,10 @@ class CategoryFixtures extends BaseFixtures
     {
         $this->createMany(Category::class, 10, function (Category $category) {
             $category
-                ->setTitle($this->faker->sentence)
-                ->setSlug($this->faker->slug)
+                ->setTitle($this->faker->word)
+                ->setSlug($this->faker->word)
                 ->setDescription($this->faker->text(100))
+                ->setMain($this->faker->numberBetween(0, 1))
             ;
         });
 
