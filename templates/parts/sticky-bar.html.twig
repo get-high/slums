@@ -1,0 +1,12 @@
+<div id="sidebar">
+    <div class="sidebar__inner">
+        {% for spot in mostVisitedSpots %}
+            <div style="display:inline-block;padding:10px;">
+                <a href="{{ path('show_spot', {slug: spot.slug}) }}">
+                    <img src="{{ asset('images/spots/' ~ spot.id ~ '-preview.jpg') }}" width="120" align="left" style="padding-right:10px;">
+                </a>
+                <a href="{{ path('show_spot', {slug: spot.slug}) }}" class="rbar">{{ spot.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>

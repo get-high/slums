@@ -22,4 +22,14 @@ class SpotService
     {
         return $this->spotRepository->getLatestPublished($num);
     }
+
+    public function getTopRatedSpots(int $num)
+    {
+        return $this->spotRepository->getTopRated($num);
+    }
+
+    public function getMostVisitedSpots(int $num)
+    {
+        return $this->spotRepository->getMostVisited($num);
+    }
 }

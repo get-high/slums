@@ -5,14 +5,17 @@
 {% block header %}
 
     {% include 'parts/slider.html.twig' %}
+    {% include 'parts/right-bar.html.twig' %}
 
 {% endblock %}
 
 {% block body %}
 
+    {% include 'parts/sticky-bar.html.twig' %}
+
     <div id="content">
         <div class="bbit" id="bodycont">
-            {% for spot in spots %}
+            {% for spot in latestSpots %}
                 <div style="position:relative;width:700px;min-height:200px;">
                     <div class="gray" style="position:absolute;z-index:1;filter: gray;-webkit-filter:grayscale(100%);width:100%;height:200px;background-image: url('{{ asset('images/spots/' ~ spot.id ~ '.jpg') }}');background-position:center;background-size:cover;"></div>
 

@@ -45,6 +45,16 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->latest($num))->getQuery()->getResult();
     }
 
+    public function getTopRated(int $num)
+    {
+        return $this->published($this->topRated($num))->getQuery()->getResult();
+    }
+
+    public function getMostVisited(int $num)
+    {
+        return $this->published($this->mostVisited($num))->getQuery()->getResult();
+    }
+
     public function getLatest(int $num)
     {
         return $this->latest($num)->getQuery()->getResult();
@@ -59,8 +69,26 @@ class SpotRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder($builder)
             ->orderBy('s.published_at', 'DESC')
+            ->setMaxResults($num);
+    }
+
+    private function topRated(int $num = 4, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->orderBy('s.rating', 'DESC')
+            ->setMaxResults($num);
+    }
+
+    private function mostVisited(int $num = 6, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->select('s')
+            ->leftJoin('s.user_was', 'u')
+            ->addSelect('COUNT(u.id) as HIDDEN visitors')
+            ->orderBy('visitors', 'DESC')
             ->setMaxResults($num)
-            ;
+            ->setFirstResult(0)
+            ->groupBy('s');
     }
 
     private function published(QueryBuilder $builder = null)

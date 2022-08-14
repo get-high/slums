@@ -24,10 +24,14 @@ class SpotController extends AbstractController
      */
     public function index(): Response
     {
-        $spots = $this->spotService->getLatesPublishedSpots(10);
+        $latestSpots = $this->spotService->getLatesPublishedSpots(10);
+        $topRatedSpots = $this->spotService->getTopRatedSpots(4);
+        $mostVisitedSpots = $this->spotService->getMostVisitedSpots(6);
 
         return $this->render('spots/index.html.twig', [
-            'spots' => $spots
+            'latestSpots' => $latestSpots,
+            'topRatedSpots' => $topRatedSpots,
+            'mostVisitedSpots' => $mostVisitedSpots,
         ]);
     }
 
