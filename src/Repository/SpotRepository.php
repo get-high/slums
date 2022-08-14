@@ -87,7 +87,6 @@ class SpotRepository extends ServiceEntityRepository
             ->addSelect('COUNT(u.id) as HIDDEN visitors')
             ->orderBy('visitors', 'DESC')
             ->setMaxResults($num)
-            ->setFirstResult(0)
             ->groupBy('s');
     }
 
