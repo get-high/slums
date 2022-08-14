@@ -25,10 +25,9 @@ class SpotRatingUpdateListener
 
     public function updateSpotRating(Vote $vote, LifecycleEventArgs $event): void
     {
-        $votes = array_column($this->voteRepository->findAllVotesOfSpot($vote), 'rating');
-        $rating = array_sum($votes) / count($votes);
+        $votes = array_column($this->voteRepository->arrayAllVotesOfSpot($vote), 'rating');
         $spot = $this->spotRepository->find($vote->getSpot());
-        $spot->setRating($rating);
-        $this->em->flush();
+        $spot->setRating(array_sum($votes) / count($votes));
+        $this->spotRepository->add($spot, true);
     }
 }
