@@ -150,7 +150,11 @@
 
             <a href="javascript:void(0);" style="font-size:46px;" class="icon" onclick="myFunction();">&#9776;</a>
             <a href="{{ path('index') }}" class="title">ТРУЩОБЫ</a>
-            $menufull
+
+            {% for category in menu.topMenu %}
+                <a href="{{ path('category', { slug: category.slug }) }}" class="menulink">{{ category.title }}</a>
+            {% endfor %}
+
 
             <div class="topbtns">
                 <div class="cell"><a href="https://vk.com/trushchoby" target="_blank"><img src="/images/icons/vk.png" height="27" alt="Трущобы в контакте" class="micon"></a></div>
@@ -185,8 +189,16 @@
         <div class="foot">
             <ul style="margin:0 auto;list-style:none;padding:10px;overflow:visible;width:100%;">
                 <li style="float:left;width: calc(100% / 3 + 10px);height:80px;margin-right:20px;"><a href="/"><img src="{{ asset('images/logo.png') }}"></a></li>
-                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="{{ path('category', { slug: 'abandoned' }) }}">Заброшенное</a><br /><a href="/category/roof.htm">Крыши</a><br /><a href="$siteaddress/category/doma.htm">Дома</a><br /><a href="$siteaddress/category/dvory.htm">Дворы, колодцы</a><br /><a href="$siteaddress/category/paradnye.htm">Парадные</a></li>
-                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;"><a href="/category/official.htm">Официально</a><br /><a href="/category/money.htm">За деньги</a><br /><a href="/category/risk.htm">С риском</a><br /><a href="$siteaddress/category/free.htm">Бесплатно</a><br /><a href="$siteaddress/add.htm">Добавить объект</a></li>
+                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;">
+                    {% for category in menu.topMenu %}
+                        <a href="{{ path('category', { slug: category.slug }) }}">{{ category.title }}</a><br />
+                    {% endfor %}
+                </li>
+                <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:20px;">
+                    {% for category in menu.bottomMenu %}
+                        <a href="{{ path('category', { slug: category.slug }) }}">{{ category.title }}</a><br />
+                    {% endfor %}
+                </li>
                 <li style="float:left;width: calc(100% / 5 - 20px);height:80px;margin-right:0;">Социальные сети:<br /><a href="https://vk.com/trushchoby" target="_blank">Трущобы в VK</a><br /><a href="https://twitter.com/trushchoby" target="_blank">Трущобы в Twitter</a><br /><a href="https://t.me/trushchoby" target="_blank">Трущобы в Telegram</a><br /><a href="https://instagram.com/trushchoby" target="_blank">Трущобы в Instagram</a></li>
             </ul>
         </div>
