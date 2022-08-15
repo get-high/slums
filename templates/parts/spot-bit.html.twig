@@ -7,7 +7,11 @@
                 <a href="{{ path('show_spot', {slug: spot.slug}) }}">
                     <img src="{{ asset('images/spots/' ~ spot.id ~ '.jpg') }}" width="250" align="left" style="margin-right:10px;">
                 </a>
-                $objecttags<br />
+                {% for category in spot.categories %}
+                    <a href="{{ path('category', {slug: category.slug}) }}">{{ category.title }}</a>
+                    {{ not loop.last ? ',' }}
+                {% endfor %}
+                <br />
                 <a href="{{ path('show_spot', {slug: spot.slug}) }}" class="hh">{{ spot.title }}</a>
                 <br />
                 <br />
