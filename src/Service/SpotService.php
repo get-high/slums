@@ -3,23 +3,19 @@
 namespace App\Service;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SpotService
 {
-    private CategoryRepository $categoryRepository;
-
     private SpotRepository $spotRepository;
 
     private PaginatorInterface $paginator;
 
-    public function __construct(SpotRepository $spotRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator)
+    public function __construct(SpotRepository $spotRepository, PaginatorInterface $paginator)
     {
         $this->spotRepository = $spotRepository;
-        $this->categoryRepository = $categoryRepository;
         $this->paginator = $paginator;
     }
 
