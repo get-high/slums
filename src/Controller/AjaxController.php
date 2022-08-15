@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Spot;
 use App\Service\SpotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +43,42 @@ class AjaxController extends AbstractController
         $latestSpots = $this->spotService->paginateCategoryLatestPublishedSpots($category, $request);
 
         return $this->latestSpots($latestSpots);
+    }
+
+    /**
+     * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function was(Spot $spot, Request $request): JsonResponse
+    {
+        $likes = $spot;
+
+        return $this->json(['likes' => $likes]);
+    }
+
+    /**
+     * @Route("/api/will/{id}", name="will", methods={"POST"})
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function will(Spot $spot, Request $reques): JsonResponse
+    {
+        $likes = $spot;
+
+        return $this->json(['likes' => $likes]);
+    }
+
+    /**
+     * @Route("/api/rate/{id}", name="will", methods={"POST"})
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function rate(Spot $spot, Request $reques): JsonResponse
+    {
+        $likes = $spot;
+
+        return $this->json(['likes' => $likes]);
     }
 
     private function latestSpots($latestSpots)

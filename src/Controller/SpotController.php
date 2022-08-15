@@ -82,28 +82,4 @@ class SpotController extends AbstractController
     {
         return new Response('Hello Word');
     }
-
-    /**
-     * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function was(int $id): JsonResponse
-    {
-        $likes = $id;
-
-        return $this->json(['likes' => $likes]);
-    }
-
-    /**
-     * @Route("/api/will/{id}", name="will", methods={"POST"})
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function will(int $id): JsonResponse
-    {
-        $likes = $id;
-
-        return $this->json(['likes' => $likes]);
-    }
 }
