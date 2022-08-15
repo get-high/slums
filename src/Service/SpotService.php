@@ -56,6 +56,11 @@ class SpotService
         return $this->spotRepository->getTopRated($num);
     }
 
+    public function getRandomSpots(int $num = 6)
+    {
+        return $this->spotRepository->getRandom($num);
+    }
+
     public function getCategoryTopRatedSpots(Category $category, int $num = 4)
     {
         return $this->spotRepository->getCategoryTopRated($category, $num);

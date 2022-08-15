@@ -51,6 +51,11 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->topRated($num))->getQuery()->getResult();
     }
 
+    public function getRandom(int $num = 6)
+    {
+        return $this->published($this->random($num))->getQuery()->getResult();
+    }
+
     public function getCategoryTopRated(Category $category, int $num = 4)
     {
         return $this->published($this->topRated($num, $this->category($category)))->getQuery()->getResult();
@@ -91,6 +96,13 @@ class SpotRepository extends ServiceEntityRepository
             ->andWhere('c.id IN (:category)')
             ->setParameter('category', $category)
             ->groupBy('s');
+    }
+
+    private function random(int $num = 6, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->orderBy('RAND()')
+            ->setMaxResults($num);
     }
 
     private function main(QueryBuilder $builder = null)
