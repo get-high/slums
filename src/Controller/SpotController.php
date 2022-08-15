@@ -28,7 +28,7 @@ class SpotController extends AbstractController
     public function index(Request $request): Response
     {
         $latestSpots = $this->spotService->paginateLatestPublishedSpots($request, 10);
-        $topRatedSpots = $this->spotService->getRandomSpots(7);
+        $topRatedSpots = $this->spotService->getTopRatedSpots(4);
         $mostVisitedSpots = $this->spotService->getMostVisitedSpots(6);
         $more = ($latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount()) ? false : true;
 
