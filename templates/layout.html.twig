@@ -140,7 +140,7 @@
             <a href="{{ path('index') }}" class="title">ТРУЩОБЫ</a>
 
             {% for category in menu.topMenu %}
-                <a href="{{ path('category', { slug: category.slug }) }}" class="menulink">{{ category.title }}</a>
+                <a href="{{ path('category', { slug: category.slug }) }}" class="{% if path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) == path('category', { slug: category.slug }) %}menulinks{% else %}menulink{% endif %}">{{ category.title }}</a>
             {% endfor %}
 
 
