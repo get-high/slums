@@ -47,7 +47,8 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
-     * @param int $id
+     * @param Spot $spot
+     * @param Request $request
      * @return JsonResponse
      */
     public function was(Spot $spot, Request $request): JsonResponse
@@ -59,10 +60,11 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/api/will/{id}", name="will", methods={"POST"})
-     * @param int $id
+     * @param Spot $spot
+     * @param Request $request
      * @return JsonResponse
      */
-    public function will(Spot $spot, Request $reques): JsonResponse
+    public function will(Spot $spot, Request $request): JsonResponse
     {
         $likes = $spot;
 
@@ -71,10 +73,11 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/api/rate/{id}", name="will", methods={"POST"})
-     * @param int $id
+     * @param Spot $spot
+     * @param Request $request
      * @return JsonResponse
      */
-    public function rate(Spot $spot, Request $reques): JsonResponse
+    public function rate(Spot $spot, Request $request): JsonResponse
     {
         $likes = $spot;
 
