@@ -6,6 +6,7 @@ use App\Entity\Spot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Spot>
@@ -40,11 +41,6 @@ class SpotRepository extends ServiceEntityRepository
         }
     }
 
-    public function getLatestPublished(int $num)
-    {
-        return $this->published($this->latest($num))->getQuery()->getResult();
-    }
-
     public function getTopRated(int $num)
     {
         return $this->published($this->topRated($num))->getQuery()->getResult();
@@ -55,21 +51,15 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->mostVisited($num))->getQuery()->getResult();
     }
 
-    public function getLatest(int $num)
-    {
-        return $this->latest($num)->getQuery()->getResult();
-    }
-
     public function getPublished()
     {
         return $this->published()->getQuery()->getResult();
     }
 
-    private function latest(int $num = 10, QueryBuilder $builder = null)
+    private function latest(QueryBuilder $builder = null)
     {
         return $this->getOrCreateQueryBuilder($builder)
-            ->orderBy('s.published_at', 'DESC')
-            ->setMaxResults($num);
+            ->orderBy('s.published_at', 'DESC');
     }
 
     private function topRated(int $num = 4, QueryBuilder $builder = null)
@@ -95,7 +85,10 @@ class SpotRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder($builder)->andWhere('s.published_at IS NOT NULL');
     }
 
-
+    public function paginateLatestPublished()
+    {
+        return $this->published($this->latest());
+    }
 
 //    /**
 //     * @return Spot[] Returns an array of Spot objects

@@ -15,29 +15,43 @@
 
     <div id="content">
         <div class="bbit" id="bodycont">
-            {% for spot in latestSpots %}
-                <div style="position:relative;width:700px;min-height:200px;">
-                    <div class="gray" style="position:absolute;z-index:1;filter: gray;-webkit-filter:grayscale(100%);width:100%;height:200px;background-image: url('{{ asset('images/spots/' ~ spot.id ~ '.jpg') }}');background-position:center;background-size:cover;"></div>
-
-                    <div class="x1" style="position:absolute;z-index:3;">
-                        <div style="padding:15px;">
-                            <a href="{{ path('show_spot', {slug: spot.slug}) }}">
-                                <img src="{{ asset('images/spots/' ~ spot.id ~ '.jpg') }}" width="250" align="left" style="margin-right:10px;">
-                                $objecttags<br />
-                                <a href="{{ path('show_spot', {slug: spot.slug}) }}" class="hh">{{ spot.title }}</a>
-                                <br />
-                                <br />
-                                <span class="dsc">{{ spot.description }}</span>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+            {% include 'parts/spot-bit.html.twig' %}
         </div>
-        $loadmore
+
+        <div>
+            <div id="loader" style="display:none;width:700px;text-align:center;">
+                <img src="{{ asset('images/loader.svg') }}" alt="Загрузка" width="70" height="70">
+            </div>
+            <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
+        </div>
+
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/javascript" charset="utf-8">
+        jQuery(document).ready(function($) {
+            var page = 2;
+            $("#loadmore").click(function() {
+                $('#loadmore').hide();
+                $('#loader').show();
+                $.ajax({
+                    url: '{{ path('ajax_index') }}',
+                    method: 'POST',
+                    data: {'page' : page},
+                    beforeSend: function() { inProgress = true;}
+                }).done(function(data){
+                    $("#bodycont").append(data.spots.content);
+                    inProgress = false;
+                    $('#loader').hide();
+                    if (data.more) { $('#loadmore').show(); }
+                    page += 1;
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

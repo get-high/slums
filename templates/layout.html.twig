@@ -59,28 +59,6 @@
                     $("#will").prop( "checked", true);
                     $jswill
                 });
-                var startFrom = 10;
-                $("#loadmore").click(function() {
-                    $('#loadmore').hide();
-                    $('#loader').show();
-                    $.ajax({
-                        url: '/index.php?do=ajax&c=$cid',
-                        method: 'POST',
-                        data: {"startFrom" : startFrom},
-                        beforeSend: function() { inProgress = true;}
-                    }).done(function(data){
-                        $("#bodycont").append(data);
-                        inProgress = false;
-                        $('#loader').hide();
-                        if (data === "") {
-                            $('#loadmore').hide();
-                        }
-                        else {
-                            $('#loadmore').show();
-                        }
-                        startFrom += 10;
-                    });
-                });
             });
         </script>
 

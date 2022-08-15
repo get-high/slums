@@ -7,6 +7,7 @@ use App\Entity\Spot;
 use App\Service\SpotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,9 +23,9 @@ class SpotController extends AbstractController
      * @Route("/", name="index")
      * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $latestSpots = $this->spotService->getLatesPublishedSpots(10);
+        $latestSpots = $this->spotService->paginateLatesPublishedSpots($request, 10);
         $topRatedSpots = $this->spotService->getTopRatedSpots(4);
         $mostVisitedSpots = $this->spotService->getMostVisitedSpots(6);
 
