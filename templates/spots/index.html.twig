@@ -18,12 +18,14 @@
             {% include 'parts/spot-bit.html.twig' %}
         </div>
 
-        <div>
-            <div id="loader" style="display:none;width:700px;text-align:center;">
-                <img src="{{ asset('images/loader.svg') }}" alt="Загрузка" width="70" height="70">
+        {% if more %}
+            <div>
+                <div id="loader" style="display:none;width:700px;text-align:center;">
+                    <img src="{{ asset('images/loader.svg') }}" alt="Загрузка" width="70" height="70">
+                </div>
+                <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
             </div>
-            <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
-        </div>
+        {% endif %}
 
     </div>
 
@@ -32,6 +34,12 @@
 {% block javascripts %}
     {{ parent() }}
 
+    {% if category is defined %}
+        {% set path = path('ajax_category', { id: category.id }) %}
+    {% else %}
+        {% set path = path('ajax_index') %}
+    {% endif %}
+
     <script type="text/javascript" charset="utf-8">
         jQuery(document).ready(function($) {
             var page = 2;
@@ -39,12 +47,12 @@
                 $('#loadmore').hide();
                 $('#loader').show();
                 $.ajax({
-                    url: '{{ path('ajax_index') }}',
+                    url: '{{ path }}',
                     method: 'POST',
                     data: {'page' : page},
                     beforeSend: function() { inProgress = true;}
                 }).done(function(data){
-                    $("#bodycont").append(data.spots.content);
+                    $("#bodycont").append(data.spots);
                     inProgress = false;
                     $('#loader').hide();
                     if (data.more) { $('#loadmore').show(); }

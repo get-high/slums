@@ -27,11 +27,13 @@ class SpotController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $latestSpots = $this->spotService->paginateLatesPublishedSpots($request, 10);
+        $latestSpots = $this->spotService->paginateLatestPublishedSpots($request, 10);
         $topRatedSpots = $this->spotService->getTopRatedSpots(4);
         $mostVisitedSpots = $this->spotService->getMostVisitedSpots(6);
+        $more = ($latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount()) ? false : true;
 
         return $this->render('spots/index.html.twig', [
+            'more' => $more,
             'latestSpots' => $latestSpots,
             'topRatedSpots' => $topRatedSpots,
             'mostVisitedSpots' => $mostVisitedSpots,
@@ -52,13 +54,23 @@ class SpotController extends AbstractController
 
     /**
      * @Route("/category/{slug}", name="category")
+     * @param Request $request
      * @param Category $category
      * @return Response
      */
-    public function category(Category $category): Response
+    public function category(Category $category, Request $request): Response
     {
-        return $this->render('spots/category.html.twig', [
-            'category' => $category
+        $latestSpots = $this->spotService->paginateCategoryLatestPublishedSpots($category, $request, 10);
+        $topRatedSpots = $this->spotService->getCategoryTopRatedSpots($category, 4);
+        $mostVisitedSpots = $this->spotService->getCategoryMostVisitedSpots($category, 6);
+        $more = $latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount() ? false : true;
+
+        return $this->render('spots/index.html.twig', [
+            'more' => $more,
+            'category' => $category,
+            'latestSpots' => $latestSpots,
+            'topRatedSpots' => $topRatedSpots,
+            'mostVisitedSpots' => $mostVisitedSpots,
         ]);
     }
 

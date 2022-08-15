@@ -25,27 +25,35 @@ class AjaxController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $latestSpots = $this->spotService->paginateLatesPublishedSpots($request, 10);
+        $latestSpots = $this->spotService->paginateLatestPublishedSpots($request);
 
+        return $this->latestSpots($latestSpots);
+    }
+
+    /**
+     * @Route("/api/category/{id}", name="ajax_category", methods={"POST"})
+     * @param Category $category
+     * @param Request $request
+     * @return Response
+     */
+    public function category(Category $category, Request $request): Response
+    {
+        $latestSpots = $this->spotService->paginateCategoryLatestPublishedSpots($category, $request);
+
+        return $this->latestSpots($latestSpots);
+    }
+
+    private function latestSpots($latestSpots)
+    {
         $spots = $this->render('parts/spot-bit.html.twig', [
             'latestSpots' => $latestSpots,
         ]);
 
-        $more = ($latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount()) ? false : true;
+        $more = $latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount() ? false : true;
 
         return $this->json([
-            'spots' => $spots,
+            'spots' => $spots->getContent(),
             'more' => $more,
         ]);
-    }
-
-    /**
-     * @Route("/api/category/{slug}", name="ajax_category", methods={"POST"})
-     * @param Category $category
-     * @return Response
-     */
-    public function category(Category $category): Response
-    {
-
     }
 }

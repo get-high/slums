@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Spot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -40,14 +41,29 @@ class SpotRepository extends ServiceEntityRepository
         }
     }
 
-    public function getTopRated(int $num)
+    public function getCategoryMainSpots(Category $category)
+    {
+        return $this->published($this->main($this->category($category)))->getQuery()->getResult();
+    }
+
+    public function getTopRated(int $num = 4)
     {
         return $this->published($this->topRated($num))->getQuery()->getResult();
     }
 
-    public function getMostVisited(int $num)
+    public function getCategoryTopRated(Category $category, int $num = 4)
+    {
+        return $this->published($this->topRated($num, $this->category($category)))->getQuery()->getResult();
+    }
+
+    public function getMostVisited(int $num = 6)
     {
         return $this->published($this->mostVisited($num))->getQuery()->getResult();
+    }
+
+    public function getCategoryMostVisited(Category $category, int $num = 6)
+    {
+        return $this->published($this->mostVisited($num, $this->category($category)))->getQuery()->getResult();
     }
 
     public function getPublished()
@@ -66,6 +82,20 @@ class SpotRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder($builder)
             ->orderBy('s.rating', 'DESC')
             ->setMaxResults($num);
+    }
+
+    private function category(Category $category, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->leftJoin('s.categories', 'c')
+            ->andWhere('c.id IN (:category)')
+            ->setParameter('category', $category)
+            ->groupBy('s');
+    }
+
+    private function main(QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)->andWhere('s.main = 1');
     }
 
     private function mostVisited(int $num = 6, QueryBuilder $builder = null)
@@ -87,6 +117,11 @@ class SpotRepository extends ServiceEntityRepository
     public function paginateLatestPublished()
     {
         return $this->published($this->latest());
+    }
+
+    public function paginateCategoryLatestPublished(Category $category)
+    {
+        return $this->published($this->latest($this->category($category)));
     }
 
 //    /**
@@ -113,6 +148,7 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
     /**
      * @param QueryBuilder|null $builder
      * @return QueryBuilder

@@ -2,28 +2,38 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SpotService
 {
+    private CategoryRepository $categoryRepository;
+
     private SpotRepository $spotRepository;
 
     private PaginatorInterface $paginator;
 
-    public function __construct(SpotRepository $spotRepository, PaginatorInterface $paginator)
+    public function __construct(SpotRepository $spotRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator)
     {
         $this->spotRepository = $spotRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->paginator = $paginator;
     }
 
-    public function getAllMainSpots()
+    public function getMainSpots()
     {
         return $this->spotRepository->findBy(['main' => true]);
     }
 
-    public function paginateLatesPublishedSpots(Request $request,  int $num = 10)
+    public function getCategoryMainSpots(Category $category)
+    {
+        return $this->spotRepository->getCategoryMainSpots($category);
+    }
+
+    public function paginateLatestPublishedSpots(Request $request,  int $num = 10)
     {
          return $this->paginator->paginate(
             $this->spotRepository->paginateLatestPublished(),
@@ -32,13 +42,33 @@ class SpotService
         );
     }
 
-    public function getTopRatedSpots(int $num)
+    public function paginateCategoryLatestPublishedSpots(Category $category, Request $request,  int $num = 10)
+    {
+        return $this->paginator->paginate(
+            $this->spotRepository->paginateCategoryLatestPublished($category),
+            $request->get('page', 1),
+            $num
+        );
+    }
+
+    public function getTopRatedSpots(int $num = 4)
     {
         return $this->spotRepository->getTopRated($num);
     }
 
-    public function getMostVisitedSpots(int $num)
+    public function getCategoryTopRatedSpots(Category $category, int $num = 4)
+    {
+        return $this->spotRepository->getCategoryTopRated($category, $num);
+    }
+
+    public function getMostVisitedSpots(int $num = 6)
     {
         return $this->spotRepository->getMostVisited($num);
     }
+
+    public function getCategoryMostVisitedSpots(Category $category, int $num = 6)
+    {
+        return $this->spotRepository->getCategoryMostVisited($category, $num);
+    }
+
 }
