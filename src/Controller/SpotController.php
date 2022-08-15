@@ -19,8 +19,10 @@ class SpotController extends AbstractController
     {
         $this->spotService = $spotService;
     }
+
     /**
      * @Route("/", name="index")
+     * @param Request $request
      * @return Response
      */
     public function index(Request $request): Response
