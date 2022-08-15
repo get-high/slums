@@ -1,6 +1,14 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %} Главная {% endblock %}
+{% if category is defined %}
+    {% set path = path('ajax_category', { id: category.id }) %}
+    {% set title = category.title ~ ' - ' ~ category.description ~ ' - Проект Трущобы' %}
+{% else %}
+    {% set path = path('ajax_index') %}
+    {% set title = 'Проект Трущобы - гид интересных прогулок. Заброшенные дома, открытые крыши Питера, дворы-колодцы, парадные и другие интересные места Санкт-Петербурга' %}
+{% endif %}
+
+{% block title %} {{ title }} {% endblock %}
 
 {% block header %}
 
@@ -33,12 +41,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    {% if category is defined %}
-        {% set path = path('ajax_category', { id: category.id }) %}
-    {% else %}
-        {% set path = path('ajax_index') %}
-    {% endif %}
 
     <script type="text/javascript" charset="utf-8">
         jQuery(document).ready(function($) {
