@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Spot;
 use App\Service\SpotService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class AjaxController extends AbstractController
 {
@@ -47,32 +49,43 @@ class AjaxController extends AbstractController
 
     /**
      * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @param Request $request
      * @return JsonResponse
      */
     public function was(Spot $spot, Request $request): JsonResponse
     {
-        $likes = $spot;
+        $user = $this->getUser();
+        $spot = $this->spotService->find($spot->getId());
+        $spot->addUserWas($user);
+        $spot->removeUserWill($user);
+        $this->spotService->update($spot);
 
-        return $this->json(['likes' => $likes]);
+        return $this->json(['success' => 'ok']);
     }
 
     /**
-     * @Route("/api/will/{id}", name="will", methods={"POST"})
+     * @Route("/api/will/{id<\d+>}", name="will", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @param Request $request
      * @return JsonResponse
      */
     public function will(Spot $spot, Request $request): JsonResponse
     {
-        $likes = $spot;
+        $user = $this->getUser();
+        $spot = $this->spotService->find($spot->getId());
+        $spot->addUserWill($user);
+        $spot->removeUserWas($user);
+        $this->spotService->update($spot);
 
-        return $this->json(['likes' => $likes]);
+        return $this->json(['success' => 'ok']);
     }
 
     /**
-     * @Route("/api/rate/{id}", name="will", methods={"POST"})
+     * @Route("/api/rate/{id<\d+>}", name="rate", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @param Request $request
      * @return JsonResponse

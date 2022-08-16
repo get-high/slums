@@ -191,24 +191,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Spot>
      */
-    public function getSpotsUserCreated(): Collection
+    public function getSpots(): Collection
     {
-        return $this->spots_user_created;
+        return $this->spots;
     }
 
-    public function addSpotUserCreated(Spot $spot): self
+    public function addSpot(Spot $spot): self
     {
-        if (!$this->spots_user_created->contains($spot)) {
-            $this->spots_user_created[] = $spot;
+        if (!$this->spots->contains($spot)) {
+            $this->spots[] = $spot;
             $spot->setCreator($this);
         }
 
         return $this;
     }
 
-    public function removeSpotUserCreated(Spot $spot): self
+    public function removeSpot(Spot $spot): self
     {
-        if ($this->spots_user_created->removeElement($spot)) {
+        if ($this->spots->removeElement($spot)) {
             // set the owning side to null (unless already changed)
             if ($spot->setCreator() === $this) {
                 $spot->setCreator(null);

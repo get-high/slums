@@ -50,4 +50,35 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/javascript" charset="utf-8">
+        jQuery(document).ready(function($) {
+            $("#was").click(function() {
+                {% if app.user %}
+                    $("#was").prop( "checked", true );
+                    $("#will").prop( "checked", false );
+                    $.ajax({
+                        url: '{{ path('was', {id: spot.id}) }}',
+                        method: 'POST',
+                    })
+                {% else %}
+                    window.location.href = '{{ path('app_login') }}';
+                {% endif %}
+            });
+
+            $("#will").click(function() {
+                {% if app.user %}
+                    $("#was").prop( "checked", false );
+                    $("#will").prop( "checked", true);
+                    $.ajax({
+                        url: '{{ path('will', {id: spot.id}) }}',
+                        method: 'POST',
+                    })
+                {% else %}
+                    window.location.href = '{{ path('app_login') }}';
+                {% endif %}
+            });
+        });
+    </script>
+
 {% endblock %}

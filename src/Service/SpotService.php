@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Category;
+use App\Entity\Spot;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,4 +73,13 @@ class SpotService
         return $this->spotRepository->getCategoryMostVisited($category, $num);
     }
 
+    public function find(int $id)
+    {
+        return $this->spotRepository->find($id);
+    }
+
+    public function update(Spot $spot)
+    {
+        $this->spotRepository->add($spot, true);
+    }
 }
