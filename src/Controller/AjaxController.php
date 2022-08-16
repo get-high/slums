@@ -89,9 +89,7 @@ class AjaxController extends AbstractController
      */
     public function rate(Spot $spot, Request $request): JsonResponse
     {
-        $likes = $spot;
-
-        return $this->json(['likes' => $likes]);
+        return $this->json(['success' => 'ok']);
     }
 
     private function latestSpots($latestSpots)

@@ -29,21 +29,6 @@
         <script type="text/javascript" src="{{ asset('js/lity/dist/lity.min.js') }}"></script>
         <script src="https://api-maps.yandex.ru/2.1.27/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
 
-        <script type="text/javascript">
-            $(function() {
-                $(".waswill").checkboxradio({
-                    icon: false
-                });
-                $('#rating').rating({
-                    fx: 'float',
-                    stars: 5,
-                    image: '/images/stars.png',
-                    loader: '/images/ajax-loader.gif',
-                    url: '/index.php?do=vote'
-                });
-            });
-        </script>
-
         <script type="text/javascript" charset="utf-8">
             jQuery(document).ready(function($) {
                 $("#sidebar").stick_in_parent({offset_top: 70});

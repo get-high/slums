@@ -21,9 +21,9 @@
         <div style="display:table;width:100%;">
             <div style="display:table-cell;vertical-align:top;">
                 <div id="rating">
-                    <input type="hidden" name="val" value="$vote"/>
-                    <input type="hidden" name="votes" value="$voters"/>
-                    <input type="hidden" name="vote-id" value="$artistid"/>
+                    <input type="hidden" name="val" value="{{ spot.rating }}"/>
+                    <input type="hidden" name="votes" value="{{ spot.votes.count() }}"/>
+                    <input type="hidden" name="vote-id" value="{{ spot.id }}"/>
                 </div>
             </div>
             <div style="display:table-cell;float:right;">
@@ -38,7 +38,7 @@
             <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <span itemprop="ratingValue">{{ spot.rating }}</span>
                 <span itemprop="bestRating">5.00</span>
-                <span itemprop="reviewCount">$voters</span>
+                <span itemprop="reviewCount">{{ spot.votes.count() }}</span>
             </div>
         </div>
         {{ spot.content }}
@@ -77,6 +77,21 @@
                 {% else %}
                     window.location.href = '{{ path('app_login') }}';
                 {% endif %}
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".waswill").checkboxradio({
+                icon: false
+            });
+            $('#rating').rating({
+                fx: 'float',
+                stars: 5,
+                image: '{{ asset('images/stars.png') }}',
+                loader: '{{ asset('images/ajax-loader.gif') }}',
+                url: '{{ path('rate', {id: spot.id}) }}'
             });
         });
     </script>
