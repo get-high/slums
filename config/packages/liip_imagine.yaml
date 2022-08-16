@@ -24,22 +24,22 @@ liip_imagine:
             data_loader: spot_image
             quality: 100
             filters:
-                thumbnail: { size: [ 120, 90 ], mode: outbound }
+                thumbnail: { size: [ 120, 80 ], mode: outbound }
         spot_medium:
             data_loader: spot_image
             quality: 100
             filters:
-                thumbnail: { size: [ 300, 150 ], mode: outbound }
+                thumbnail: { size: [ 700, 470 ], mode: outbound }
         photo_preview:
             data_loader: photo_image
             quality: 100
             filters:
-                thumbnail: { size: [ 120, 90 ], mode: outbound }
+                thumbnail: { size: [ 120, 80 ], mode: outbound }
         photo_medium:
             data_loader: photo_image
             quality: 100
             filters:
-                thumbnail: { size: [ 300, 150 ], mode: outbound }
+                thumbnail: { size: [ 700, 470 ], mode: outbound }
         avatar_preview:
             data_loader: avatar_image
             quality: 100
