@@ -1,12 +1,53 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %} Статья {% endblock %}
+{% block title %}{{ spot.description }} - адрес объекта,как попасть, фото, история - Проект Трущобы{% endblock %}
+
+{% block header %}
+    {% include 'parts/spot-slider.html.twig' %}
+    {% include 'parts/spot-right-bar.html.twig' %}
+{% endblock %}
 
 {% block body %}
-    <h1>{{ spot }}</h1>
+    {% embed "parts/sticky-bar.html.twig" %}
+        {% block spots_bit %}
+            {% for spot in randomSpots %}
+                {% include 'parts/spot-preview.html.twig' %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+
+    <div class="objcont">
+
+        <div style="display:table;width:100%;">
+            <div style="display:table-cell;vertical-align:top;">
+                <div id="rating">
+                    <input type="hidden" name="val" value="$vote"/>
+                    <input type="hidden" name="votes" value="$voters"/>
+                    <input type="hidden" name="vote-id" value="$artistid"/>
+                </div>
+            </div>
+            <div style="display:table-cell;float:right;">
+                {% for category in spot.categories %}
+                    <a href="{{ path('category', {slug: category.slug}) }}">{{ category.title }}</a>
+                    {{ not loop.last ? ',' }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div itemprop="location" itemscope itemtype="http://schema.org/Place" style="display:none;">
+            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                <span itemprop="ratingValue">{{ spot.rating }}</span>
+                <span itemprop="bestRating">5.00</span>
+                <span itemprop="reviewCount">$voters</span>
+            </div>
+        </div>
+        {{ spot.content }}
+        <br />
+        $comms
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    свой скрипт
 {% endblock %}

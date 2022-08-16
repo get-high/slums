@@ -8,24 +8,25 @@
     {% set title = 'Проект Трущобы - гид интересных прогулок. Заброшенные дома, открытые крыши Питера, дворы-колодцы, парадные и другие интересные места Санкт-Петербурга' %}
 {% endif %}
 
-{% block title %} {{ title }} {% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block header %}
-
-    {% include 'parts/slider.html.twig' %}
+    {% include 'parts/main-slider.html.twig' %}
     {% include 'parts/right-bar.html.twig' %}
-
 {% endblock %}
 
 {% block body %}
-
-    {% include 'parts/sticky-bar.html.twig' %}
-
+    {% embed "parts/sticky-bar.html.twig" %}
+        {% block spots_bit %}
+            {% for spot in mostVisitedSpots %}
+                {% include 'parts/spot-preview.html.twig' %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
     <div id="content">
         <div class="bbit" id="bodycont">
-            {% include 'spots/spot-bit.html.twig' %}
+            {% include 'parts/spot-bit.html.twig' %}
         </div>
-
         {% if more %}
             <div>
                 <div id="loader" style="display:none;width:700px;text-align:center;">
@@ -34,14 +35,11 @@
                 <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
             </div>
         {% endif %}
-
     </div>
-
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
     <script type="text/javascript" charset="utf-8">
         jQuery(document).ready(function($) {
             var page = 2;
@@ -63,5 +61,4 @@
             });
         });
     </script>
-
 {% endblock %}

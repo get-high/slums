@@ -1,0 +1,21 @@
+{% if category is defined %}
+    {% set spots = spot_service.getCategoryMainSpots(category) %}
+{% else %}
+    {% set spots = spot_service.getMainSpots() %}
+{% endif %}
+
+<div class="sl">
+    <ul class="bxslider" style="padding:0;margin:0;">
+        {% for spot in spots %}
+            <li>
+                <a href="{{ path('show_spot', {slug: spot.slug}) }}" class="hh" style="font-size:44px;">
+                    <div class="s1" style="background-image: url('{{ asset('images/spots/' ~ spot.id ~ '.jpg') }}');background-position:center;background-size:cover;">
+                        <div style="background-color: rgba(100, 100, 100, 0.3);display:block;width:700px;padding:200px 0 0 0;margin:0 auto;text-align: center;height:470px;">
+                            {{ spot.description }}
+                        </div>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
