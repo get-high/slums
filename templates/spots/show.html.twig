@@ -20,12 +20,8 @@
 
         <div style="display:table;width:100%;">
             <div style="display:table-cell;vertical-align:top;">
-
-                <ul id="response">
-
-                </ul>
-                <div data-productid="653" data-rateit-value="{{ spot.rating }}" class="rateit"></div>
-
+                <div data-rateit-mode="font" style="font-size:30px" data-spotid="{{ spot.id }}" data-rateit-value="{{ spot.rating }}" data-rateit-resetable="false" class="rateit"></div>
+                <div id="response"></div>
             </div>
             <div style="display:table-cell;float:right;">
                 {% for category in spot.categories %}
@@ -88,29 +84,23 @@
 
     <script type ="text/javascript">
         jQuery(document).ready(function($) {
-            //we bind only to the rateit controls within the products div
             $('.rateit').bind('rated reset', function (e) {
                 var ri = $(this);
-
-                //if the use pressed reset, it will get value: 0 (to be compatible with the HTML range control), we could check if e.type == 'reset', and then set the value to  null .
                 var value = ri.rateit('value');
-                var productID = ri.data('productid'); // if the product id was in some hidden field: ri.closest('li').find('input[name="productid"]').val()
+                var spotId = ri.data('spotid');
 
-                //maybe we want to disable voting?
                 ri.rateit('readonly', true);
 
-                $('.rateit').rateit('value', 5)
-
                 $.ajax({
-                    url: '{{ path('rate', {id: spot.id}) }}', //your server side script
-                    data: { id: productID, value: value }, //our data
+                    url: '{{ path('rate', {id: spot.id}) }}',
+                    data: { id: spotId, value: value },
                     type: 'POST',
                     success: function (data) {
-                        $('#response').append('<li>' + data + '</li>');
-
+                        $('.rateit').rateit('value', 5)
+                        $('#response').append('<span style="color:green">' + data + '</span>');
                     },
                     error: function (jxhr, msg, err) {
-                        $('#response').append('<li style="color:red">' + msg + '</li>');
+                        $('#response').append('<span style="color:red">' + msg + '</span>');
                     }
                 });
             });
