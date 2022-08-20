@@ -36,5 +36,7 @@ class CreateSpotFormModel
 
     public $authors;
 
+    public $image;
+
     public $categories;
 }

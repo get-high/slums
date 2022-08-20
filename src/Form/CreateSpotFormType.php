@@ -47,7 +47,6 @@ class CreateSpotFormType extends AbstractType
             ->add('years')
             ->add('authors')
             ->add('image', FileType::class, [
-                'mapped' => false,
                 'constraints' => new Image([
                     'mimeTypes' => [
                         'image/jpeg'
@@ -56,7 +55,6 @@ class CreateSpotFormType extends AbstractType
                     'minHeight' => 500,
                 ]),
             ])
-            //->add('creator')
             ->add('categories', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'title',
