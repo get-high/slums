@@ -35,4 +35,6 @@ class CreateSpotFormModel
     public $years;
 
     public $authors;
+
+    public $categories;
 }

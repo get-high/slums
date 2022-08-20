@@ -57,6 +57,10 @@ class SpotController extends AbstractController
                 ->setPublishedAt(new \DateTime())
             ;
 
+            foreach ($spotModel->categories as $category) {
+                $spot->addCategory($category);
+            }
+
             $spot = $repository->add($spot, true);
 
             $this->spotUploader->uploadImage($image, $spot);
