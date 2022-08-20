@@ -26,9 +26,9 @@ class SpotRepository extends ServiceEntityRepository
     /**
      * @param Spot $entity
      * @param bool $flush
-     * @return int|null
+     * @return Spot|null
      */
-    public function add(Spot $entity, bool $flush = false): ?int
+    public function add(Spot $entity, bool $flush = false): ?Spot
     {
         $this->getEntityManager()->persist($entity);
 
@@ -36,7 +36,7 @@ class SpotRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
 
-        return $entity->getId();
+        return $entity;
     }
 
     public function remove(Spot $entity, bool $flush = false): void

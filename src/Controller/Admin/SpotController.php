@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Spot;
 use App\Form\CreateSpotFormType;
 use App\Repository\SpotRepository;
+use App\Service\ImageUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SpotController extends AbstractController
 {
+    private ImageUploader $spotUploader;
+
+    public function __construct(ImageUploader $spotUploader)
+    {
+        $this->spotUploader = $spotUploader;
+    }
+
     #[Route("admin/spots", name: "admin_spots", methods: ["GET"])]
     public function index(SpotRepository $repository): JsonResponse
     {
@@ -49,10 +57,9 @@ class SpotController extends AbstractController
                 ->setPublishedAt(new \DateTime())
             ;
 
+            $spot = $repository->add($spot, true);
 
-            $id = $repository->add($spot, true);
-
-            dd($id);
+            $this->spotUploader->uploadImage($image, $spot);
         }
 
         return $this->render(
