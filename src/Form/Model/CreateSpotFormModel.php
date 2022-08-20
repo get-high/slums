@@ -15,11 +15,13 @@ class CreateSpotFormModel
     #[UniqueSpot]
     public $slug;
 
+    #[Assert\NotBlank(message: "Поле address не может быть пустым")]
     public $address;
 
     #[Assert\NotBlank(message: "Поле description не может быть пустым")]
     public $description;
 
+    #[Assert\NotBlank(message: "Поле content не может быть пустым")]
     public $content;
 
     public $how_to_get;
