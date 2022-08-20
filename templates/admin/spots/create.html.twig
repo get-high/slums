@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Добавление объекта - Проект Трущобы{% endblock %}
+
+
+{% block body %}
+
+    {{ form_start(CreateSpotForm) }}
+    {{ form_row(CreateSpotForm.title) }}
+    {{ form_row(CreateSpotForm.slug) }}
+    {{ form_row(CreateSpotForm.address) }}
+    {{ form_row(CreateSpotForm.description) }}
+    {{ form_row(CreateSpotForm.content) }}
+    {{ form_row(CreateSpotForm.how_to_get) }}
+    {{ form_row(CreateSpotForm.lat) }}
+    {{ form_row(CreateSpotForm.lng) }}
+    {{ form_row(CreateSpotForm.main) }}
+    {{ form_row(CreateSpotForm.years) }}
+    {{ form_row(CreateSpotForm.authors) }}
+    {{ form_row(CreateSpotForm.image) }}
+    <input type="submit" value="Добавить" />
+    {{ form_end(CreateSpotForm) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

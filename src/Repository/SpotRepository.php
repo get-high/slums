@@ -23,13 +23,20 @@ class SpotRepository extends ServiceEntityRepository
         parent::__construct($registry, Spot::class);
     }
 
-    public function add(Spot $entity, bool $flush = false): void
+    /**
+     * @param Spot $entity
+     * @param bool $flush
+     * @return int|null
+     */
+    public function add(Spot $entity, bool $flush = false): ?int
     {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+
+        return $entity->getId();
     }
 
     public function remove(Spot $entity, bool $flush = false): void

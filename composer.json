@@ -25,6 +25,7 @@
         "symfony/dotenv": "6.0.*",
         "symfony/filesystem": "6.0.*",
         "symfony/flex": "^2",
+        "symfony/form": "6.0.*",
         "symfony/framework-bundle": "6.0.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/property-access": "6.0.*",

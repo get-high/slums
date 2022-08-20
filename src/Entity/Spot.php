@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
@@ -23,10 +24,14 @@ class Spot
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Поле title не может быть пустым")]
     #[Groups('main')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Поле slug не может быть пустым")]
+    #[Assert\Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
+    #[Assert\Unique(message: "Данный slug уже используется в системе")]
     #[Groups('main')]
     private ?string $slug = null;
 
@@ -51,10 +56,12 @@ class Spot
     private ?float $rating = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Type(type: "float")]
     #[Groups('main')]
     private ?float $lat = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Type(type: "float")]
     #[Groups('main')]
     private ?float $lng = null;
 
