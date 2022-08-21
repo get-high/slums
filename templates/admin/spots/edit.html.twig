@@ -1,0 +1,61 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Редактирование объекта - Проект Трущобы{% endblock %}
+
+{% block heading %}Редактирование объекта{% endblock %}
+
+{% block body %}
+
+    {{ form_start(EditSpotForm) }}
+    {{ form_row(EditSpotForm.title, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.slug, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.address, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.description, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.content) }}
+    {{ form_row(EditSpotForm.how_to_get, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.lat, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.lng, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.main) }}
+    {{ form_row(EditSpotForm.years, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.authors, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditSpotForm.image, {
+        attr: { class: 'text' }
+    }) }}
+
+    <img src="{{ asset('images/spots/' ~ spot.id ~ '-preview.jpg')  }}" width="270" class="imgborder" alt="" />
+
+    {{ form_row(EditSpotForm.categories, {
+        attr: { class: 'select-category text' }
+    }) }}
+    <input type="submit" value="Сохранить" style="margin-top: 10px;" />
+    {{ form_end(EditSpotForm) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".select-category").select2();
+        });
+    </script>
+{% endblock %}

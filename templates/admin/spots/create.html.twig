@@ -2,28 +2,57 @@
 
 {% block title %}Добавление объекта - Проект Трущобы{% endblock %}
 
+{% block heading %}Добавление объекта{% endblock %}
 
 {% block body %}
 
     {{ form_start(CreateSpotForm) }}
-    {{ form_row(CreateSpotForm.title) }}
-    {{ form_row(CreateSpotForm.slug) }}
-    {{ form_row(CreateSpotForm.address) }}
-    {{ form_row(CreateSpotForm.description) }}
+    {{ form_row(CreateSpotForm.title, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.slug, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.address, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.description, {
+        attr: { class: 'text' }
+    }) }}
     {{ form_row(CreateSpotForm.content) }}
-    {{ form_row(CreateSpotForm.how_to_get) }}
-    {{ form_row(CreateSpotForm.lat) }}
-    {{ form_row(CreateSpotForm.lng) }}
+    {{ form_row(CreateSpotForm.how_to_get, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.lat, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.lng, {
+        attr: { class: 'text' }
+    }) }}
     {{ form_row(CreateSpotForm.main) }}
-    {{ form_row(CreateSpotForm.years) }}
-    {{ form_row(CreateSpotForm.authors) }}
-    {{ form_row(CreateSpotForm.image) }}
-    {{ form_row(CreateSpotForm.categories) }}
-    <input type="submit" value="Добавить" />
+    {{ form_row(CreateSpotForm.years, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.authors, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.image, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateSpotForm.categories, {
+        attr: { class: 'select-category text' }
+    }) }}
+    <input type="submit" value="Добавить" style="margin-top: 10px;" />
     {{ form_end(CreateSpotForm) }}
 
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".select-category").select2();
+        });
+    </script>
 {% endblock %}

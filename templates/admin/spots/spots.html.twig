@@ -1,0 +1,25 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Управление объектами - Проект Трущобы{% endblock %}
+
+{% block heading %}Управление объектами{% endblock %}
+
+{% block body %}
+    <table border="0" width="100%" cellpadding="3" cellspacing="1" class="head">
+        <tr>
+            <td><b>Объект</b></td>
+            <td><b>Опции</b></td>
+        </tr>
+        {% for spot in spots %}
+            <tr class="item">
+                <td>{{ spot.title }} ()</td>
+                <td align="center"><a href="{{ path('admin_edit_spot', {id: spot.id}) }}">[Изменить]</a> <a href="index.php?do=photomanager&nid=$nid&where=objects">[Фото]</a> <a href="index.php?do=comments&nid=$nid">[Комментарии: $commz]</a> <a href="index.php?do=repost&nid=$nid">[Репост]</a> <a href="index.php?do=removeobject&nid=$nid">[Удалить]</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

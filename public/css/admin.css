@@ -1,0 +1,180 @@
+/* BODY, HTML */
+body
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	background-color:#111;
+	position: relative;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding:0;
+  overflow-x:visible;
+}
+.menu {height:51px;background-color:#333333;color:#ccc;position:fixed;width:100%;z-index:999;box-shadow: 1px 3px 6px #000;}
+.topnav {overflow: hidden;background-color: #333;position:relative;width:1100px;margin:0 auto;min-width:550px;min-height:50px;}
+.bd{width:1100px;overflow:hidden;padding-top:70px;flex: 1 0 auto;margin:0 auto;}
+.sl{display:inline-block;width:880px;float:right;}
+.leftbar{display:inline-block;margin-right:20px;width:200px;height:100%;}
+.thead {background-color:#444444;background-image: url('https://slums.ru/images/pattern.png');border: 1px solid #000000;padding:3px;}
+a.aalt2, a.aalt2:link, a.aalt2:visited, a.aalt2:active
+{
+width:190px;
+background-color: #333333;
+font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+font-size: 14px;
+display:inline-block;
+padding:4px;
+text-decoration: none;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+border-bottom:1px solid #000000;
+border-left:1px solid #000000;
+border-right:1px solid #000000;
+}
+a.aalt2:hover {text-decoration: underline;}
+a.title, a.title:link, a.title:visited, a.title:active
+{
+line-height: 0.8;
+color: #fff;
+font-family:  'Akrobat Bold', Impact, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
+text-shadow: 0 1px 1px rgba(0,0,0,1);
+font-size:50px;
+padding:4px;
+text-transform:uppercase;
+text-decoration: none;
+}
+@font-face {
+font-family: 'Akrobat Bold';
+src: url('https://slums.ru/fonts/Akrobat-Bold.eot');
+src: url('https://slums.ru/fonts/Akrobat-Bold.eot?#iefix') format('embedded-opentype'),
+url('https://slums.ru/fonts/Akrobat-Bold.woff') format('woff'),
+url('https://slums.ru/fonts/Akrobat-Bold.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'Akrobat Regular';
+src: url('https://slums.ru/fonts/Akrobat-Regular.eot');
+src: url('https://slums.ru/fonts/Akrobat-Regular.eot?#iefix') format('embedded-opentype'),
+url('https://slums.ru/fonts/Akrobat-Regular.woff') format('woff'),
+url('https://slums.ru/fonts/Akrobat-Regular.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+
+/* BORDERS */
+.tborder
+{
+	border: solid;
+	border-color: #000000;
+	border-width: 1px;
+}
+
+.imgborder
+{
+	border: solid;
+	border-color: #ffc300;
+	border-width: 1px;
+}
+
+
+/* TEXT */
+a:link
+{
+	color: #c0c0c0;
+	text-decoration: none
+}
+
+a:visited
+{
+	color: #c0c0c0;
+	text-decoration: none
+}
+a:hover
+{
+	color: #c0c0c0;
+	text-decoration: underline
+}
+
+a:active
+{
+	color: #ffffff;
+	text-decoration: underline
+}
+
+h1
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 16px;
+	color: #ffffff;
+	font-weight: bold;
+	padding-top: 20px;
+	text-align: center;
+}
+
+
+/* INPUT, SELECT, TEXTAREA */
+input, select, textarea
+{
+	border: solid;
+	border-color: #515151;
+	border-width: 1px;
+	background: #0a0a0a;
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+input.text, textarea.text, select.text
+{
+	width: 100%;
+	background: #0a0a0a;
+	color: #ffffff;
+}
+
+
+/* TR, TD */
+tr, td
+{
+	font-family: verdana, geneva, arial, helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+}
+
+tr.head, td.head, table.head
+{
+	background: #000000;
+}
+
+tr.bgr, td.bgr, table.bgr
+{
+	background: #0a0a0a;
+}
+
+tr.item, td.item, .alt1
+{
+	background: #353535;
+}
+
+tr.item_alt, td.item_alt, table.item_alt, .alt2
+{
+	background: #1e1e1e;
+}
+
+
+/* PADDING */
+
+.paddingbottom
+{
+	padding-bottom: 4px;
+}
+
+.paddingtop
+{
+	padding-top: 4px;
+}

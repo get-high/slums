@@ -8,11 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'spots')]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
+#[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 class Spot
 {
     use TimestampableEntity;
@@ -31,7 +33,6 @@ class Spot
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(message: "Поле slug не может быть пустым")]
     #[Assert\Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[Assert\Unique(message: "Данный slug уже используется в системе")]
     #[Groups('main')]
     private ?string $slug = null;
 

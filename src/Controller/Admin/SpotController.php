@@ -3,13 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Spot;
-use App\Form\CreateSpotFormType;
+use App\Form\Model\SpotFormModel;
+use App\Form\SpotFormType;
 use App\Repository\SpotRepository;
 use App\Service\ImageUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,25 +21,33 @@ class SpotController extends AbstractController
 {
     private ImageUploader $spotUploader;
 
-    public function __construct(ImageUploader $spotUploader)
+    private SpotRepository $repository;
+
+    public function __construct(ImageUploader $spotUploader, SpotRepository $repository)
     {
         $this->spotUploader = $spotUploader;
+        $this->repository = $repository;
     }
 
     #[Route("admin/spots", name: "admin_spots", methods: ["GET"])]
-    public function index(SpotRepository $repository): JsonResponse
+    public function index()
     {
+        $spots = $this->repository->findAll();
 
+        return $this->render(
+            'admin/spots/spots.html.twig', [
+            'spots' => $spots,
+        ]);
     }
 
     #[Route("admin/spots/create", name: "admin_create_spot")]
-    public function create(Request $request, SpotRepository $repository)
+    public function create(Request $request)
     {
-        $form = $this->createForm(CreateSpotFormType::class);
+        $form = $this->createForm(SpotFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $spotModel = $form->getData();
+            $spot = $form->getData();
             $user = $this->getUser();
 
             /**
@@ -46,24 +55,24 @@ class SpotController extends AbstractController
              */
             $image = $form->get('image')->getData();
 
-            $spot = new Spot();
+            //$spot = new Spot();
 
             $spot
-                ->setTitle($spotModel->title)
-                ->setSlug($spotModel->slug)
-                ->setDescription($spotModel->description)
-                ->setMain($spotModel->main)
                 ->setCreator($user)
                 ->setPublishedAt(new \DateTime())
             ;
 
-            foreach ($spotModel->categories as $category) {
+            foreach ($spot->getCategories() as $category) {
                 $spot->addCategory($category);
             }
 
-            $spot = $repository->add($spot, true);
+            $spot = $this->repository->add($spot, true);
 
             $this->spotUploader->uploadImage($image, $spot);
+
+            $this->addFlash('message', 'Объект успешно добавлен');
+
+            return $this->redirectToRoute('admin_edit_spot', ['id' => $spot->getId()]);
         }
 
         return $this->render(
@@ -72,33 +81,69 @@ class SpotController extends AbstractController
             ]);
     }
 
-    #[Route("admin/spots", name: "admin_store_spot", methods: ["POST"])]
-    public function store(SpotRepository $repository): JsonResponse
+    #[Route("admin/spots/{id<\d+>}/edit", name: "admin_edit_spot")]
+    public function edit(Spot $spot, Request $request)
     {
+        $form = $this->createForm(SpotFormType::class, $spot);
+        $form->handleRequest($request);
 
-    }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $spot = $form->getData();
 
-    #[Route("admin/spots/{id<\d+>}", name: "admin_show_spot", methods: ["GET"])]
-    public function show(Spot $spot, SpotRepository $repository): JsonResponse
-    {
+            /**
+             * @var UploadedFile|null $image
+             */
+            $image = $form->get('image')->getData();
 
-    }
+          /*  $spot
+                ->setTitle($spotModel->title)
+                ->setSlug($spotModel->slug)
+                ->setDescription($spotModel->description)
+                ->setMain($spotModel->main)
+                //->setCreator($user)
+                //->setPublishedAt(new \DateTime())
+            ;*/
 
-    #[Route("admin/spots/{id<\d+>}/edit", name: "admin_edit_spot", methods: ["GET"])]
-    public function edit(Spot $spot, SpotRepository $repository): JsonResponse
-    {
+            foreach ($spot->getCategories() as $category) {
+                $spot->addCategory($category);
+            }
 
-    }
+            $spot = $this->repository->add($spot, true);
 
-    #[Route("admin/spots/{id<\d+>}", name: 'admin_update_spot', methods: ["PUT", "PATCH"])]
-    public function update(Spot $spot, SpotRepository $repository): JsonResponse
-    {
+            //$this->spotUploader->uploadImage($image, $spot);
 
+            $this->addFlash('message', 'Объект успешно изменен');
+
+            return $this->redirectToRoute('admin_edit_spot', ['id' => $spot->getId()]);
+        }
+
+        //dd($form->createView());
+
+        return $this->render(
+            'admin/spots/edit.html.twig', [
+            'EditSpotForm' => $form->createView(),
+            'spot' => $spot,
+        ]);
     }
 
     #[Route("admin/spots/{id<\d+>}", name: "admin_destroy_spot", methods: ["DELETE"])]
-    public function destroy(Spot $spot, SpotRepository $repository): JsonResponse
+    public function destroy(Spot $spot, SpotRepository $repository)
     {
 
+    }
+
+    private function handleFormRequest(FormInterface $form, Request $request)
+    {
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $spot = $form->getData();
+
+            $this->repository->add($spot, true);
+
+            return $spot;
+        }
+
+        return null;
     }
 }
