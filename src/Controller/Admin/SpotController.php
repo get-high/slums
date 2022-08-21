@@ -3,14 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Spot;
-use App\Form\Model\SpotFormModel;
 use App\Form\SpotFormType;
 use App\Repository\SpotRepository;
 use App\Service\ImageUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -44,35 +42,17 @@ class SpotController extends AbstractController
     public function create(Request $request)
     {
         $form = $this->createForm(SpotFormType::class);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $spot = $form->getData();
-            $user = $this->getUser();
+        if ($spot = $this->handleFormRequest($form, $request)) {
 
-            /**
-             * @var UploadedFile|null $image
-             */
             $image = $form->get('image')->getData();
-
-            //$spot = new Spot();
-
-            $spot
-                ->setCreator($user)
-                ->setPublishedAt(new \DateTime())
-            ;
-
-            foreach ($spot->getCategories() as $category) {
-                $spot->addCategory($category);
-            }
-
-            $spot = $this->repository->add($spot, true);
-
             $this->spotUploader->uploadImage($image, $spot);
 
             $this->addFlash('message', 'Объект успешно добавлен');
 
-            return $this->redirectToRoute('admin_edit_spot', ['id' => $spot->getId()]);
+            return $this->redirectToRoute('admin_edit_spot', [
+                'id' => $spot->getId()
+            ]);
         }
 
         return $this->render(
@@ -85,44 +65,23 @@ class SpotController extends AbstractController
     public function edit(Spot $spot, Request $request)
     {
         $form = $this->createForm(SpotFormType::class, $spot);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $spot = $form->getData();
-
-            /**
-             * @var UploadedFile|null $image
-             */
-            $image = $form->get('image')->getData();
-
-          /*  $spot
-                ->setTitle($spotModel->title)
-                ->setSlug($spotModel->slug)
-                ->setDescription($spotModel->description)
-                ->setMain($spotModel->main)
-                //->setCreator($user)
-                //->setPublishedAt(new \DateTime())
-            ;*/
-
-            foreach ($spot->getCategories() as $category) {
-                $spot->addCategory($category);
+        if ($this->handleFormRequest($form, $request)) {
+            if ($image = $form->get('image')->getData()) {
+                $this->spotUploader->uploadImage($image, $spot);
             }
 
-            $spot = $this->repository->add($spot, true);
+            $this->addFlash('message', 'Объект успешно обновлен');
 
-            //$this->spotUploader->uploadImage($image, $spot);
-
-            $this->addFlash('message', 'Объект успешно изменен');
-
-            return $this->redirectToRoute('admin_edit_spot', ['id' => $spot->getId()]);
+            return $this->redirectToRoute('admin_edit_spot', [
+                'id' => $spot->getId()
+            ]);
         }
-
-        //dd($form->createView());
 
         return $this->render(
             'admin/spots/edit.html.twig', [
             'EditSpotForm' => $form->createView(),
-            'spot' => $spot,
+            'spotId' => $spot->getId(),
         ]);
     }
 
@@ -138,6 +97,18 @@ class SpotController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $spot = $form->getData();
+
+            if (! $spot->getId()) {
+                $user = $this->getUser();
+
+                $spot
+                    ->setCreator($user)
+                    ->setPublishedAt(new \DateTime());
+            }
+
+            foreach ($spot->getCategories() as $category) {
+                $spot->addCategory($category);
+            }
 
             $this->repository->add($spot, true);
 

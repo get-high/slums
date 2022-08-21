@@ -40,7 +40,7 @@
         attr: { class: 'text' }
     }) }}
 
-    <img src="{{ asset('images/spots/' ~ spot.id ~ '-preview.jpg')  }}" width="270" class="imgborder" alt="" />
+    <img src="{{ asset('images/spots/' ~ spotId ~ '-preview.jpg')  }}" width="270" class="imgborder" alt="" />
 
     {{ form_row(EditSpotForm.categories, {
         attr: { class: 'select-category text' }
