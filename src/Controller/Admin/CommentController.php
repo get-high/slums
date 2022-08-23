@@ -22,7 +22,7 @@ class CommentController extends AbstractController
     }
 
     #[Route("admin/spots/{id<\d+>}/comments", name: "admin_spot_comments", methods: ["GET"])]
-    public function edit(Spot $spot)
+    public function comments(Spot $spot)
     {
         $comments = $this->commentRepository->findBy(['spot' => $spot]);
 
