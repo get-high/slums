@@ -19,6 +19,8 @@ services:
             App\Service\ImageUploader $spotUploader: '@image_uploader.spot'
             App\Service\ImageUploader $photoUploader: '@image_uploader.photo'
             App\Service\ImageUploader $avatarUploader: '@image_uploader.avatar'
+            League\Flysystem\Filesystem $spotFilesystem: '@oneup_flysystem.spot_uploads_filesystem'
+            League\Flysystem\Filesystem $photoFilesystem: '@oneup_flysystem.photo_uploads_filesystem'
 
     postPersist:
         class: App\EventListener\SpotRatingUpdateListener

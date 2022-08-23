@@ -6,6 +6,7 @@ use App\Entity\Spot;
 use App\Form\SpotFormType;
 use App\Repository\SpotRepository;
 use App\Service\ImageUploader;
+use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -21,10 +22,16 @@ class SpotController extends AbstractController
 
     private SpotRepository $repository;
 
-    public function __construct(ImageUploader $spotUploader, SpotRepository $repository)
+    private Filesystem $spotFilesystem;
+
+    private Filesystem $photoFilesystem;
+
+    public function __construct(ImageUploader $spotUploader, SpotRepository $repository, Filesystem $spotFilesystem, Filesystem $photoFilesystem)
     {
         $this->spotUploader = $spotUploader;
         $this->repository = $repository;
+        $this->spotFilesystem = $spotFilesystem;
+        $this->photoFilesystem = $photoFilesystem;
     }
 
     #[Route("admin/spots", name: "admin_spots", methods: ["GET"])]
@@ -38,7 +45,7 @@ class SpotController extends AbstractController
         ]);
     }
 
-    #[Route("admin/spots/create", name: "admin_create_spot")]
+    #[Route("admin/spots/create", name: "admin_create_spot", methods: ["GET", "POST"])]
     public function create(Request $request)
     {
         $form = $this->createForm(SpotFormType::class);
@@ -61,7 +68,7 @@ class SpotController extends AbstractController
             ]);
     }
 
-    #[Route("admin/spots/{id<\d+>}/edit", name: "admin_edit_spot")]
+    #[Route("admin/spots/{id<\d+>}/edit", name: "admin_edit_spot", methods: ["GET", "POST"])]
     public function edit(Spot $spot, Request $request)
     {
         $form = $this->createForm(SpotFormType::class, $spot);
@@ -85,10 +92,24 @@ class SpotController extends AbstractController
         ]);
     }
 
-    #[Route("admin/spots/{id<\d+>}", name: "admin_destroy_spot", methods: ["DELETE"])]
-    public function destroy(Spot $spot, SpotRepository $repository)
+    #[Route("admin/spots/{id<\d+>}", name: "admin_destroy_spot", methods: ["GET", "DELETE"])]
+    public function destroy(Spot $spot)
     {
+        $this->spotFilesystem->delete($spot->getId() . '.jpg');
+        $this->spotFilesystem->delete($spot->getId() . '-medium.jpg');
+        $this->spotFilesystem->delete($spot->getId() . '-preview.jpg');
 
+        foreach ($spot->getPhotos() as $photo) {
+            $this->photoFilesystem->delete($photo->getId() . '.jpg');
+            $this->photoFilesystem->delete($photo->getId() . '-medium.jpg');
+            $this->photoFilesystem->delete($photo->getId() . '-preview.jpg');
+        }
+
+        $this->repository->remove($spot, true);
+
+        $this->addFlash('message', 'Объект успешно удален');
+
+        return $this->redirectToRoute('admin_spots');
     }
 
     private function handleFormRequest(FormInterface $form, Request $request)

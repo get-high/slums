@@ -5,7 +5,7 @@
 {% block heading %}Управление объектами{% endblock %}
 
 {% block body %}
-    <table border="0" width="100%" cellpadding="3" cellspacing="1" class="head">
+    <table class="head">
         <tr>
             <td><b>Объект</b></td>
             <td><b>Опции</b></td>
@@ -13,7 +13,20 @@
         {% for spot in spots %}
             <tr class="item">
                 <td>{{ spot.title }} ()</td>
-                <td align="center"><a href="{{ path('admin_edit_spot', {id: spot.id}) }}">[Изменить]</a> <a href="index.php?do=photomanager&nid=$nid&where=objects">[Фото]</a> <a href="index.php?do=comments&nid=$nid">[Комментарии: $commz]</a> <a href="index.php?do=repost&nid=$nid">[Репост]</a> <a href="index.php?do=removeobject&nid=$nid">[Удалить]</a></td>
+                <td>
+                    <a href="{{ path('admin_edit_spot', {id: spot.id}) }}">
+                        <img src="{{ asset('images/icons/edit.png') }}" />
+                    </a>
+                    <a href="{{ path('admin_edit_spot_photos', {id: spot.id}) }}">
+                        <img src="{{ asset('images/icons/image.png') }}" />
+                    </a>
+                    <a href="#">
+                        <img src="{{ asset('images/icons/comment.png') }}" />
+                    </a>
+                    <a href="{{ path('admin_destroy_spot', {id: spot.id}) }}" onclick="return confirm('Вы уверенны, что хотите удалить объект под названием {{ spot.title }}?');">
+                        <img src="{{ asset('images/icons/delete.png') }}" />
+                    </a>
+                </td>
             </tr>
         {% endfor %}
     </table>
@@ -22,4 +35,36 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <style type="text/css">
+        .ui-draggable, .ui-droppable {background-position: top;}
+        #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+        #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 185px; height:185px; text-align: center; }
+        .alert {
+            padding:0;
+            margin-bottom:5px;
+            color:#fff;
+            font-size:14px;
+            font-weight:bold;
+            border:1px solid #708498;
+            padding:10px;
+        }
+        .alert-success {
+            background-color: green;
+        }
+        .alert-danger {
+            background-color: red;
+        }
+        .deletebtn {
+            border:0;
+            background:transparent;
+            background-image:url('{{ asset('images/icons/delete.png') }}');
+            cursor:pointer;
+            outline:none;
+            display:inline;
+            width:30px;
+            height:30px;
+        }
+    </style>
+
 {% endblock %}
