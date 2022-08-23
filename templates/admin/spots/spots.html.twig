@@ -17,12 +17,15 @@
                     <a href="{{ path('admin_edit_spot', {id: spot.id}) }}">
                         <img src="{{ asset('images/icons/edit.png') }}" />
                     </a>
-                    <a href="{{ path('admin_edit_spot_photos', {id: spot.id}) }}">
+                    <a href="{{ path('admin_spot_photos', {id: spot.id}) }}">
                         <img src="{{ asset('images/icons/image.png') }}" />
                     </a>
-                    <a href="#">
-                        <img src="{{ asset('images/icons/comment.png') }}" />
-                    </a>
+                    {% if spot.comments.count > 0 %}
+                        <a href="{{ path('admin_spot_comments', {id: spot.id}) }}">
+                            <img src="{{ asset('images/icons/comment.png') }}" />
+                            <span style="color:#455e70;position:absolute;margin-left:-20px;padding-top:6px;">{{ spot.comments.count }}</span>
+                        </a>
+                    {% endif %}
                     <a href="{{ path('admin_destroy_spot', {id: spot.id}) }}" onclick="return confirm('Вы уверенны, что хотите удалить объект под названием {{ spot.title }}?');">
                         <img src="{{ asset('images/icons/delete.png') }}" />
                     </a>
@@ -35,36 +38,4 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <style type="text/css">
-        .ui-draggable, .ui-droppable {background-position: top;}
-        #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-        #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 185px; height:185px; text-align: center; }
-        .alert {
-            padding:0;
-            margin-bottom:5px;
-            color:#fff;
-            font-size:14px;
-            font-weight:bold;
-            border:1px solid #708498;
-            padding:10px;
-        }
-        .alert-success {
-            background-color: green;
-        }
-        .alert-danger {
-            background-color: red;
-        }
-        .deletebtn {
-            border:0;
-            background:transparent;
-            background-image:url('{{ asset('images/icons/delete.png') }}');
-            cursor:pointer;
-            outline:none;
-            display:inline;
-            width:30px;
-            height:30px;
-        }
-    </style>
-
 {% endblock %}

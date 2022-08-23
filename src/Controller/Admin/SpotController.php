@@ -92,7 +92,7 @@ class SpotController extends AbstractController
         ]);
     }
 
-    #[Route("admin/spots/{id<\d+>}", name: "admin_destroy_spot", methods: ["GET", "DELETE"])]
+    #[Route("admin/spots/{id<\d+>}/destroy", name: "admin_destroy_spot", methods: ["GET", "DELETE"])]
     public function destroy(Spot $spot)
     {
         $this->spotFilesystem->delete($spot->getId() . '.jpg');
