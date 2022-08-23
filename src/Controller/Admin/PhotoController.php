@@ -10,6 +10,7 @@ use App\Service\ImageUploader;
 use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,6 +62,19 @@ class PhotoController extends AbstractController
         }
 
         return new Response();
+    }
+
+    #[Route("admin/spots/{id<\d+>}/photos/upload", name: "admin_spot_photos_upload", methods: ["POST"])]
+    public function upload(Spot $spot, Request $request): Response
+    {
+        foreach ($request->files->get('photos') as $photo) {
+            $photoModel = new Photo();
+            $photoModel->setSpot($spot);
+            $this->photoRepository->add($photoModel, true);
+            $this->photoUploader->uploadImage($photo, $photoModel);
+        }
+
+        return $this->redirectToRoute('admin_spot_photos', ['id' => $spot->getId()]);
     }
 
     #[Route("admin/photos/{id<\d+>}/destroy", name: "admin_destroy_spot_photo", methods: ["GET", "DELETE"])]

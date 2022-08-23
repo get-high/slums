@@ -5,7 +5,7 @@
 {% block heading %}Фото к объекту {% endblock %}
 
 {% block body %}
-    <form id="imageform" method="post" enctype="multipart/form-data" action='index.php?do=doaddphoto' style="clear:both">
+    <form method="post" enctype="multipart/form-data" action='{{ path('admin_spot_photos_upload', {id: spot.id}) }}'>
 
         <table border="0" width="100%" cellpadding="3" cellspacing="1" class="head">
             <tr>
@@ -14,16 +14,12 @@
             <tr class="item">
                 <td>
                     <div id='imageloadbutton'>
-                        <input type="hidden" name="spot" value="{{ spot.id }}" />
-                        <input type="file" name="foto[]" id="photoimg" multiple="true" />
+                        <input type="file" name="photos[]" multiple="true" />
                     </div>
-
-                    <div id='preview'></div>
-                    <div id='imageloadstatus' style='display:none'><img src="{{ asset('images/loader.svg') }}" alt="Загрузка..." width="70" /></div>
+                    <input type="submit" value="Загрузить" />
                 </td>
             </tr>
         </table>
-
     </form>
     <br />
     <form method="post" action="index.php?do=doeditphotos">
