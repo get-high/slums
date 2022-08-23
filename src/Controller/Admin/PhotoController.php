@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Photo;
 use App\Entity\Spot;
 use App\Repository\PhotoRepository;
 use App\Repository\SpotRepository;
@@ -29,8 +30,14 @@ class PhotoController extends AbstractController
         $this->photoRepository = $photoRepository;
     }
 
-    #[Route("admin/spots/{id<\d+>}/photos", name: "admin_spot_photos", methods: ["GET", "POST"])]
+    #[Route("admin/spots/{id<\d+>}/photos", name: "admin_spot_photos", methods: ["GET"])]
     public function photos(Spot $spot, Request $request)
+    {
+
+    }
+
+    #[Route("admin/photos/{id<\d+>}/destroy", name: "admin_destroy_spot_photo", methods: ["GET", "DELETE"])]
+    public function destroy(Photo $photo)
     {
 
     }
