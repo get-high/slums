@@ -4,14 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Comment;
 use App\Entity\Spot;
-use App\Form\SpotFormType;
 use App\Repository\CommentRepository;
 use App\Repository\SpotRepository;
-use App\Service\ImageUploader;
-use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 

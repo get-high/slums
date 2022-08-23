@@ -3,13 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Spot;
-use App\Form\SpotFormType;
 use App\Repository\PhotoRepository;
 use App\Repository\SpotRepository;
 use App\Service\ImageUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
