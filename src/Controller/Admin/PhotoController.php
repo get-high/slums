@@ -11,6 +11,7 @@ use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,13 +38,32 @@ class PhotoController extends AbstractController
     #[Route("admin/spots/{id<\d+>}/photos", name: "admin_spot_photos", methods: ["GET"])]
     public function photos(Spot $spot)
     {
-        $photos = $this->photoRepository->findBy(['spot' => $spot]);
+        $photos = $this->photoRepository->findBy(['spot' => $spot], ['order_by' => 'ASC']);
 
         return $this->render(
             'admin/photos/photos.html.twig', [
             'spot' => $spot,
             'photos' => $photos,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    #[Route("admin/photos/sort", name: "admin_spot_photos_sort", methods: ["POST"])]
+    public function sort(Request $request): Response
+    {
+        $i = 0;
+
+        foreach ($request->get('item') as $item) {
+            $photo = $this->photoRepository->find($item);
+            $photo->setOrderBy($i);
+            $this->photoRepository->add($photo, true);
+            $i++;
+        }
+
+        return new Response();
     }
 
     #[Route("admin/photos/{id<\d+>}/destroy", name: "admin_destroy_spot_photo", methods: ["GET", "DELETE"])]

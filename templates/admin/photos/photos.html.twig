@@ -60,7 +60,7 @@
                     $.ajax({
                         data: data,
                         type: 'POST',
-                        url: 'http://slums.loc/admin/index.php?do=sortphoto'
+                        url: '{{ path('admin_spot_photos_sort') }}'
                     });
                 }
             });
