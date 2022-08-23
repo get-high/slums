@@ -54,13 +54,10 @@ class PhotoController extends AbstractController
     #[Route("admin/photos/sort", name: "admin_spot_photos_sort", methods: ["POST"])]
     public function sort(Request $request): Response
     {
-        $i = 0;
-
-        foreach ($request->get('item') as $item) {
+        foreach ($request->get('item') as $index => $item) {
             $photo = $this->photoRepository->find($item);
-            $photo->setOrderBy($i);
+            $photo->setOrderBy($index);
             $this->photoRepository->add($photo, true);
-            $i++;
         }
 
         return new Response();
