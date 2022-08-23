@@ -1,0 +1,29 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Комментарии к объекту - Проект Трущобы{% endblock %}
+
+{% block heading %}Комментарии к объекту {% endblock %}
+
+{% block body %}
+    <table class="head">
+        <tr>
+            <td><b>Объект</b></td>
+            <td><b>Опции</b></td>
+        </tr>
+        {% for comment in comments %}
+            <tr class="item">
+                <td>{{ comment.user.name }}<br /><br />{{ comment.content }}</td>
+                <td>
+                    <a href="{{ path('admin_destroy_spot_comment', {id: comment.id}) }}" onclick="return confirm('Вы уверенны, что хотите удалить комментарий от пользователя {{ comment.user.name }}?');">
+                        <img src="{{ asset('images/icons/delete.png') }}" />
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
