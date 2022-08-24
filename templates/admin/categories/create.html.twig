@@ -1,0 +1,25 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Добавление Раздела - Проект Трущобы{% endblock %}
+
+{% block heading %}Добавление объекта{% endblock %}
+
+{% block body %}
+
+    {{ form_start(CreateCategoryForm) }}
+    {{ form_row(CreateCategoryForm.title, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateCategoryForm.slug, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateCategoryForm.description, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(CreateCategoryForm.main) }}
+
+    <input type="submit" value="Добавить" style="margin-top: 10px;" />
+
+    {{ form_end(CreateCategoryForm) }}
+
+{% endblock %}

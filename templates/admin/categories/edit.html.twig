@@ -1,0 +1,25 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Редактирование категории - Проект Трущобы{% endblock %}
+
+{% block heading %}Редактирование категории{% endblock %}
+
+{% block body %}
+
+    {{ form_start(EditCategoryForm) }}
+    {{ form_row(EditCategoryForm.title, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditCategoryForm.slug, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditCategoryForm.description, {
+        attr: { class: 'text' }
+    }) }}
+    {{ form_row(EditCategoryForm.main) }}
+
+    <input type="submit" value="Сохранить" style="margin-top: 10px;" />
+
+    {{ form_end(EditCategoryForm) }}
+
+{% endblock %}
