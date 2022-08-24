@@ -73,6 +73,8 @@ class PhotoController extends AbstractController
             $this->photoRepository->add($photo, true);
         }
 
+        $this->addFlash('message', 'Фото успешно обновлены');
+
         return $this->redirectToRoute('admin_spot_photos', ['id' => $photo->getSpot()->getId()]);
     }
 
@@ -85,6 +87,8 @@ class PhotoController extends AbstractController
             $this->photoRepository->add($photoModel, true);
             $this->photoUploader->uploadImage($photo, $photoModel);
         }
+
+        $this->addFlash('message', 'Фото успешно загружены');
 
         return $this->redirectToRoute('admin_spot_photos', ['id' => $spot->getId()]);
     }
