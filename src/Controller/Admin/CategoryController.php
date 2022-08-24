@@ -53,7 +53,6 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryFormType::class);
 
         if ($category = $this->handleFormRequest($form, $request)) {
-
             $this->addFlash('message', 'Раздел успешно добавлен');
 
             return $this->redirectToRoute('admin_edit_category', [
