@@ -30,6 +30,10 @@ class Category
     #[Groups('main')]
     private ?string $slug = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups('main')]
+    private ?int $order_by = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups('main')]
     private ?string $description = null;
@@ -71,6 +75,18 @@ class Category
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getOrderBy(): ?int
+    {
+        return $this->order_by;
+    }
+
+    public function setOrderBy(?int $order_by): self
+    {
+        $this->order_by = $order_by;
 
         return $this;
     }
