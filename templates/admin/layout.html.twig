@@ -52,10 +52,10 @@
             <br />
             <table border="0" cellpadding="2" cellspacing="1" class="head" width="250" align="center">
                 <tr class="item_alt">
-                    <td><a href="index.php?do=users">Пользователи: $totalusers</a></td>
+                    <td><a href="{{ path('admin_users') }}">Пользователи</a></td>
                 </tr>
                 <tr class="item_alt">
-                    <td><a href="../login.php?do=logout">Выход</a></td>
+                    <td><a href="{{ path('app_logout') }}">Выход</a></td>
                 </tr>
             </table>
             <!-- Конец навигации -->

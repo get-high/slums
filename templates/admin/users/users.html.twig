@@ -1,0 +1,21 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Пользователи - Проект Трущобы{% endblock %}
+
+{% block heading %}Пользователи к объекту {% endblock %}
+
+{% block body %}
+    <table class="head">
+        <tr>
+            <td><b>Пользователь</b></td>
+            <td><b>Опции</b></td>
+        </tr>
+        {% for user in users %}
+            <tr class="item">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
