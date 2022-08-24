@@ -62,7 +62,7 @@ class CategoryController extends AbstractController
     {
         $this->categoryRepository->remove($category, true);
 
-        $this->addFlash('message', 'Рахдел успешно удален');
+        $this->addFlash('message', 'Раздел успешно удален');
 
         return $this->redirectToRoute('admin_categories');
     }
