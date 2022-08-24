@@ -1,0 +1,53 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Категории - Проект Трущобы{% endblock %}
+
+{% block heading %}Категории {% endblock %}
+
+{% block body %}
+
+    <ul id="sortable" style="width: 100%;">
+        {% for category in categories %}
+                <li id="item-{{ category.id }}">
+                    <div>
+                        {{ category.title }}
+                        <a href="{{ path('admin_edit_category', {id: category.id}) }}">
+                            <img src="{{ asset('images/icons/edit.png') }}" />
+                        </a>
+                        <a href="{{ path('admin_destroy_category', {id: category.id}) }}" onclick="return confirm('Вы уверенны, что хотите удалить раздел: {{ category.title }}?');">
+                            <img src="{{ asset('images/icons/delete.png') }}" />
+                        </a>
+                    </div>
+                </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $( function() {
+            $('#sortable').sortable({
+                stop: function (event, ui) {
+                    var data = $(this).sortable('serialize');
+                    $.ajax({
+                        data: data,
+                        type: 'POST',
+                        url: '{{ path('admin_spot_categories_sort') }}'
+                    });
+                }
+            });
+        } );
+    </script>
+
+    <style>
+        .ui-draggable, .ui-droppable {
+            background-position: top;
+        }
+
+        #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+        #sortable li { margin: 3px 3px 3px 0; padding: 1px; width: 100%;}
+    </style>
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Repository\CategoryRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -24,12 +25,24 @@ class CategoryController extends AbstractController
     #[Route("admin/categories", name: "admin_categories", methods: ["GET"])]
     public function index()
     {
-        $categories = $this->categoryRepository->findAll();
+        $categories = $this->categoryRepository->findBy([], ['order_by' => 'ASC']);
 
         return $this->render(
-            'admin/comments/comments.html.twig', [
+            'admin/categories/categories.html.twig', [
             'categories' => $categories,
         ]);
+    }
+
+    #[Route("admin/categories/sort", name: "admin_spot_categories_sort", methods: ["POST"])]
+    public function sort(Request $request): Response
+    {
+        foreach ($request->get('item') as $index => $item) {
+            $category = $this->categoryRepository->find($item);
+            $category->setOrderBy($index);
+            $this->categoryRepository->add($category, true);
+        }
+
+        return new Response();
     }
 
     #[Route("admin/categories/create", name: "admin_create_category", methods: ["GET", "POST"])]
