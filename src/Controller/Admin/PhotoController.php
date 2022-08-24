@@ -64,6 +64,18 @@ class PhotoController extends AbstractController
         return new Response();
     }
 
+    #[Route("admin/photos/update", name: "admin_spot_photos_update", methods: ["POST"])]
+    public function update(Request $request): Response
+    {
+        foreach ($request->get('description') as $id => $description) {
+            $photo = $this->photoRepository->find($id);
+            $photo->setDescription($description);
+            $this->photoRepository->add($photo, true);
+        }
+
+        return $this->redirectToRoute('admin_spot_photos', ['id' => $photo->getSpot()->getId()]);
+    }
+
     #[Route("admin/spots/{id<\d+>}/photos/upload", name: "admin_spot_photos_upload", methods: ["POST"])]
     public function upload(Spot $spot, Request $request): Response
     {

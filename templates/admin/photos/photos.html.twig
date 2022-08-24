@@ -22,14 +22,13 @@
         </table>
     </form>
     <br />
-    <form method="post" action="index.php?do=doeditphotos">
+    <form method="post" action="{{ path('admin_spot_photos_update') }}">
         <ul id="sortable">
             {% for photo in photos %}
                 <li id="item-{{ photo.id }}"  class="ui-state-default" style="height:190px;">
                     <img src="{{ asset('images/photos/' ~ photo.id ~ '-preview.jpg') }}" width="180" />
                     <br />
-                    <input type="text" name="description[$sch]" value="{{ photo.description }}" style="width:90%;">
-                    <input type="hidden" name="fid[$sch]" value="{{ photo.id }}">
+                    <input type="text" name="description[{{ photo.id }}]" value="{{ photo.description }}" style="width:90%;">
                     <br />
                     <a href="{{ path('admin_destroy_spot_photo', {id: photo.id}) }}" onclick="return confirm('Вы уверенны, что хотите удалить фото id: {{ photo.id }}?');">
                         <img src="{{ asset('images/icons/delete.png') }}" />
@@ -37,8 +36,6 @@
                 </li>
             {% endfor %}
         </ul>
-        <input type="hidden" name="galid" value="$nid">
-        <input type="hidden" name="sch" value="$sch">
         <input type="submit" value="Сохранить" />
     </form>
 
