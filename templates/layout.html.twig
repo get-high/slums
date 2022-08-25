@@ -124,9 +124,39 @@
                 <div class="cell"><a href="https://instagram.com/trushchoby" target="_blank"><img src="/images/icons/instagram.png" height="28" alt="Трущобы в Instagram" class="micon"></a></div>
                 <div class="cell"><a href="https://t.me/trushchoby" target="_blank"><img src="/images/icons/telegram.png" height="28" alt="Трущобы в Telegram" class="micon"></a></div>
                 <div class="cell"><a href="#" onclick="return false" class="tooltip" data-tooltip-content="#tooltip_content" id="authtooltip"><img src="/images/icons/key.png" class="micon" alt="Авторизоваться"></a>
-                    <div class="tooltip_templates" style="width:250px;height:150px;"><span id="tooltip_content">$userauth</span></div>
+                    <div class="tooltip_templates" style="width:250px;height:150px;">
+                        <span id="tooltip_content">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                                <div style="display:table;">
+                                    <div style="display:table-cell;width:100px;">
+                                        <img src="{{ asset('images/avatars/' ~ app.user.id ~ '.jpg') }}">
+                                    </div>
+                                    <div style="display:table-cell;vertical-align:top;padding:5px;">
+                                        <b>{{ app.user.name }}</b>
+                                        <br />
+                                        <a href="{{ path('user_visited') }}">Я посетил {{ app.user.spotsUserWas.count }} объект</a>
+                                        <br />
+                                        <a href="{{ path('user_wish_list') }}">Я хочу посетить {{ app.user.spotsUserWill.count }} объект</a>
+                                        <br /><br />
+                                        <a href="{{ path('app_logout') }}">Выйти</a>
+                                    </div>
+                                </div>
+
+                            {% else %}
+
+                                <div style="padding:6px;text-align:center;font-size:22px;margin:0 auto;">Aвторизоваться с помощью социальной сети:</div>
+                                <div style="display:block;padding:6px;text-align:center;background-color:#333333;margin:0 auto;">
+                                    <a href="$siteaddress/auth/callback.php?provider=Vkontakte" title="Авторизоваться с помощью ВКонтакте"><img src="{{ asset('images/icons/vk.png') }}" height="46" alt="Авторизоваться с помощью ВКонтакте" style="padding-right:20px;" /></a>
+                                    <a href="$siteaddress/auth/callback.php?provider=Facebook" title="Авторизоваться с помощью Facebook"><img src="{{ asset('images/icons/facebook.png') }}" height="46" alt="Авторизоваться с помощью Facebook" style="padding-right:20px;" /></a>
+                                    <a href="$siteaddress/auth/callback.php?provider=Google" title="Авторизоваться с помощью Google+"><img src="{{ asset('images/icons/google.png') }}" height="46" alt="Авторизоваться с помощью Google" style="padding-left:20px;" /></a>
+                                </div>
+
+                            {% endif %}
+                        </span>
+                    </div>
                 </div>
-                <div class="cell"><a href="#" id="openmap" class="tooltip" title="$maptooltip"><img src="/images/icons/spot.png" class="micon" alt="Открыть карту"></a></div>
+                <div class="cell"><a href="#" id="openmap" class="tooltip" title="Посмотреть все объекты раздела на карте"><img src="/images/icons/spot.png" class="micon" alt="Открыть карту"></a></div>
                 <div class="cell"><a href="#search" id="showsearch"><img src="/images/icons/search.png" class="micon" alt="Поиск"></a></div>
             </div>
 
