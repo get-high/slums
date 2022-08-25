@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+
+{% if category is defined %}
+    {% set path = path('ajax_category', { id: category.id }) %}
+    {% set title = category.title ~ ' - ' ~ category.description ~ ' - Проект Трущобы' %}
+{% else %}
+    {% set path = path('ajax_index') %}
+    {% set title = 'Проект Трущобы - гид интересных прогулок. Заброшенные дома, открытые крыши Питера, дворы-колодцы, парадные и другие интересные места Санкт-Петербурга' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block header %}
+    <h1>Объекты на которых я был</h1>
+{% endblock %}
+
+{% block body %}
+    {% embed "parts/sticky-bar.html.twig" %}
+        {% block spots_bit %}
+            {% for spot in mostVisitedSpotsUserWas %}
+                {% include 'parts/spot-preview.html.twig' %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+    <div id="content">
+        <div class="bbit" id="bodycont">
+            {% include 'parts/spot-bit.html.twig' %}
+        </div>
+        {% if more %}
+            <div>
+                <div id="loader" style="display:none;width:700px;text-align:center;">
+                    <img src="{{ asset('images/loader.svg') }}" alt="Загрузка" width="70" height="70">
+                </div>
+                <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" charset="utf-8">
+        jQuery(document).ready(function($) {
+            var page = 2;
+            $("#loadmore").click(function() {
+                $('#loadmore').hide();
+                $('#loader').show();
+                $.ajax({
+                    url: '{{ path }}',
+                    method: 'POST',
+                    data: {'page' : page},
+                    beforeSend: function() { inProgress = true;}
+                }).done(function(data){
+                    $("#bodycont").append(data.spots);
+                    inProgress = false;
+                    $('#loader').hide();
+                    if (data.more) { $('#loadmore').show(); }
+                    page += 1;
+                });
+            });
+        });
+    </script>
+{% endblock %}

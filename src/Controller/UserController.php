@@ -22,12 +22,26 @@ class UserController extends AbstractController
     #[Route(path: '/spots/visited', name: 'user_visited')]
     public function visited()
     {
+        $latestSpots = $this->getUser()->getSpotsUserWas();
+        $mostVisitedSpotsUserWas = $this->spotService->getMostVisitedSpots(6);
 
+        return $this->render('spots/visited.html.twig', [
+            'more' => false,
+            'latestSpots' => $latestSpots,
+            'mostVisitedSpotsUserWas' => $mostVisitedSpotsUserWas,
+        ]);
     }
 
     #[Route(path: '/spots/wish-list', name: 'user_wish_list')]
     public function wishlist()
     {
+        $latestSpots = $this->getUser()->getSpotsUserWill();
+        $mostVisitedSpotsUserWill = $this->spotService->getMostVisitedSpots(6);
 
+        return $this->render('spots/wish-list.html.twig', [
+            'more' => false,
+            'latestSpots' => $latestSpots,
+            'mostVisitedSpotsUserWill' => $mostVisitedSpotsUserWill,
+        ]);
     }
 }
