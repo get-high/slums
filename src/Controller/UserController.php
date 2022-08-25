@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Service\SpotService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -16,20 +15,14 @@ class UserController extends AbstractController
         $this->spotService = $spotService;
     }
 
-    /**
-     * @Route("/spots/visited", name="visited")
-     * @return Response
-     */
-    public function visited(): Response
+    #[Route(path: '/spots/visited', name: 'user_visited')]
+    public function visited()
     {
 
     }
 
-    /**
-     * @Route("/spot/wish-list", name="wish_list")
-     * @return Response
-     */
-    public function wishlist(): Response
+    #[Route(path: '/spots/wish-list', name: 'user_wish_list')]
+    public function wishlist()
     {
 
     }
