@@ -40,6 +40,24 @@ class SpotService
         );
     }
 
+    public function paginateLatestPublishedSpotsUserWas(User $user, Request $request,  int $num = 10)
+    {
+        return $this->paginator->paginate(
+            $this->spotRepository->paginateLatestPublishedUserWas($user),
+            $request->get('page', 1),
+            $num
+        );
+    }
+
+    public function paginateLatestPublishedSpotsUserWill(User $user, Request $request,  int $num = 10)
+    {
+        return $this->paginator->paginate(
+            $this->spotRepository->paginateLatestPublishedUserWill($user),
+            $request->get('page', 1),
+            $num
+        );
+    }
+
     public function paginateCategoryLatestPublishedSpots(Category $category, Request $request,  int $num = 10)
     {
         return $this->paginator->paginate(

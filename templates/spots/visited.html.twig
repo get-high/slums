@@ -1,14 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% if category is defined %}
-    {% set path = path('ajax_category', { id: category.id }) %}
-    {% set title = category.title ~ ' - ' ~ category.description ~ ' - Проект Трущобы' %}
-{% else %}
-    {% set path = path('ajax_index') %}
-    {% set title = 'Проект Трущобы - гид интересных прогулок. Заброшенные дома, открытые крыши Питера, дворы-колодцы, парадные и другие интересные места Санкт-Петербурга' %}
-{% endif %}
-
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Объекты на которых я был - Проект Трущобы{% endblock %}
 
 {% block header %}
     <h1>Объекты на которых я был</h1>
@@ -46,7 +38,7 @@
                 $('#loadmore').hide();
                 $('#loader').show();
                 $.ajax({
-                    url: '{{ path }}',
+                    url: '{{ path('ajax_visited_spots') }}',
                     method: 'POST',
                     data: {'page' : page},
                     beforeSend: function() { inProgress = true;}

@@ -47,6 +47,32 @@ class AjaxController extends AbstractController
     }
 
     /**
+     * @Route("/api/visited", name="ajax_visited_spots", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @param Request $request
+     * @return Response
+     */
+    public function visited(Request $request): Response
+    {
+        $latestSpots = $this->spotService->paginateLatestPublishedSpotsUserWas($this->getUser(), $request, 10);
+
+        return $this->latestSpots($latestSpots);
+    }
+
+    /**
+     * @Route("/api/wish-list", name="ajax_wish_list", methods={"POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @param Request $request
+     * @return Response
+     */
+    public function wishlist(Request $request): Response
+    {
+        $latestSpots = $this->spotService->paginateLatestPublishedSpotsUserWill($this->getUser(), $request, 10);
+
+        return $this->latestSpots($latestSpots);
+    }
+
+    /**
      * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
