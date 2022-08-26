@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Spot;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,6 +62,16 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->topRated($num, $this->category($category)))->getQuery()->getResult();
     }
 
+    public function getMostVisitedUserWas(User $user, int $num = 6)
+    {
+        return $this->published($this->mostVisited($num, $this->userWas($user)))->getQuery()->getResult();
+    }
+
+    public function getMostVisitedUserWill(User $user, int $num = 6)
+    {
+        return $this->published($this->mostVisited($num, $this->userWill($user)))->getQuery()->getResult();
+    }
+
     public function getMostVisited(int $num = 6)
     {
         return $this->published($this->mostVisited($num))->getQuery()->getResult();
@@ -96,6 +107,20 @@ class SpotRepository extends ServiceEntityRepository
             ->andWhere('c.id IN (:category)')
             ->setParameter('category', $category)
             ->groupBy('s');
+    }
+
+    private function userWas(User $user, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->andWhere('s.id IN (:spots)')
+            ->setParameter('spots', $user->getSpotsUserWas());
+    }
+
+    private function userWill(User $user, QueryBuilder $builder = null)
+    {
+        return $this->getOrCreateQueryBuilder($builder)
+            ->andWhere('s.id IN (:spots)')
+            ->setParameter('spots', $user->getSpotsUserWill());
     }
 
     private function random(int $num = 6, QueryBuilder $builder = null)

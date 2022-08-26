@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Spot;
+use App\Entity\User;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,6 +67,16 @@ class SpotService
     public function getMostVisitedSpots(int $num = 6)
     {
         return $this->spotRepository->getMostVisited($num);
+    }
+
+    public function getMostVisitedSpotsUserWas(User $user, int $num = 6)
+    {
+        return $this->spotRepository->getMostVisitedUserWas($user, $num);
+    }
+
+    public function getMostVisitedSpotsUserWill(User $user, int $num = 6)
+    {
+        return $this->spotRepository->getMostVisitedUserWill($user, $num);
     }
 
     public function getCategoryMostVisitedSpots(Category $category, int $num = 6)

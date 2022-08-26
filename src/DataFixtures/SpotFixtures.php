@@ -55,7 +55,7 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
                 ->setCreator($this->getRandomReference(User::class))
             ;
 
-            if ($this->faker->boolean(90)) {
+            if ($this->faker->boolean(99)) {
                 $spot->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
 

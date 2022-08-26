@@ -23,7 +23,7 @@ class UserController extends AbstractController
     public function visited()
     {
         $latestSpots = $this->getUser()->getSpotsUserWas();
-        $mostVisitedSpotsUserWas = $this->spotService->getMostVisitedSpots(6);
+        $mostVisitedSpotsUserWas = $this->spotService->getMostVisitedSpotsUserWas($this->getUser(), 6);
 
         return $this->render('spots/visited.html.twig', [
             'more' => false,
@@ -36,7 +36,7 @@ class UserController extends AbstractController
     public function wishlist()
     {
         $latestSpots = $this->getUser()->getSpotsUserWill();
-        $mostVisitedSpotsUserWill = $this->spotService->getMostVisitedSpots(6);
+        $mostVisitedSpotsUserWill = $this->spotService->getMostVisitedSpotsUserWill($this->getUser(),6);
 
         return $this->render('spots/wish-list.html.twig', [
             'more' => false,
