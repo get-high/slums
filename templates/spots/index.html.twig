@@ -1,0 +1,131 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Проект Трущобы - гид интересных прогулок. Заброшенные дома, открытые крыши Питера, дворы-колодцы, парадные и другие интересные места Санкт-Петербурга{% endblock %}
+
+{% block header %}
+    {% include 'parts/main-slider.html.twig' %}
+    {% include 'parts/right-bar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {% embed "parts/sticky-bar.html.twig" %}
+        {% block spots_bit %}
+            {% for spot in mostVisitedSpots %}
+                {% include 'parts/spot-preview.html.twig' %}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+    <div id="content">
+        <div class="bbit" id="bodycont">
+            {% include 'parts/spot-bit.html.twig' %}
+        </div>
+        {% if more %}
+            <div>
+                <div id="loader" style="display:none;width:700px;text-align:center;">
+                    <img src="{{ asset('images/loader.svg') }}" alt="Загрузка" width="70" height="70">
+                </div>
+                <input type="button" value="Загрузить ещё" id="loadmore" class="loadmore">
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        ymaps.ready(init);
+        function init () {
+            var myMap;
+            $('#openmap').bind( {
+                    click: function () {
+                        if ( !myMap) {
+                            myMap=new ymaps.Map('map', {
+                                    center: [$mapcenter], zoom: $zoom, controls: ['zoomControl', 'fullscreenControl']
+                                }
+                                , {
+                                    autoFitToViewport: 'always', balloonPanelMaxMapArea: 0
+                                }
+                            ), objectManager=new ymaps.ObjectManager( {
+                                    clusterize: false, geoObjectOpenBalloonOnClick: true,
+                                }
+                            );
+                            myMap.geoObjects.add(objectManager);
+                            $.ajax( {
+                                    url: "https://slums.ru/index.php?do=mapjson&c=$ocid"
+                                }
+                            ).done(function(data) {
+                                    objectManager.add(data);
+                                    objectManager.objects.balloon.open($ppid);
+                                }
+                            );
+                            $("#map").show();
+                            var geolocButton=new ymaps.control.Button( {
+                                    data: {
+                                        title: "Определить ваше местоположение", image: "{{ asset('images/geoloc.png') }}"
+                                    }
+                                }
+                            );
+                            geolocButton.events.add('press', function () {
+                                    ymaps.geolocation.get( {
+                                            mapStateAutoApply: true, autoReverseGeocode: true
+                                        }
+                                    ).then(function (result) {
+                                            myMap.geoObjects.add(result.geoObjects);
+                                        }
+                                    );
+                                }
+                            );
+                            myMap.controls.add(geolocButton, {
+                                    float: "left"
+                                }
+                            );
+                            var myButton=new ymaps.control.Button( {
+                                    data: {
+                                        title: "Закрыть карту", image: "{{ asset('images/x.png') }}"
+                                    }
+                                }
+                            );
+                            myButton.events.add('press', function () {
+                                    myMap.destroy();
+                                    myMap=null;
+                                    $( "#map").hide();
+                                }
+                            );
+                            myMap.controls.add(myButton, {
+                                    float: "left"
+                                }
+                            );
+                        }
+                        else {
+                            myMap.destroy();
+                            myMap=null;
+                            $( "#map").hide();
+                        }
+                    }
+                }
+            );
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        jQuery(document).ready(function($) {
+            var page = 2;
+            $("#loadmore").click(function() {
+                $('#loadmore').hide();
+                $('#loader').show();
+                $.ajax({
+                    url: '{{ path('ajax_index') }}',
+                    method: 'POST',
+                    data: {'page' : page},
+                    beforeSend: function() { inProgress = true;}
+                }).done(function(data){
+                    $("#bodycont").append(data.spots);
+                    inProgress = false;
+                    $('#loader').hide();
+                    if (data.more) { $('#loadmore').show(); }
+                    page += 1;
+                });
+            });
+        });
+    </script>
+{% endblock %}

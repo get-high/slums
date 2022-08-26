@@ -31,7 +31,7 @@ class SpotController extends AbstractController
         $mostVisitedSpots = $this->spotService->getMostVisitedSpots(6);
         $more = ($latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount()) ? false : true;
 
-        return $this->render('spots/spots.html.twig', [
+        return $this->render('spots/index.html.twig', [
             'more' => $more,
             'latestSpots' => $latestSpots,
             'topRatedSpots' => $topRatedSpots,
@@ -67,7 +67,7 @@ class SpotController extends AbstractController
         $mostVisitedSpots = $this->spotService->getCategoryMostVisitedSpots($category, 6);
         $more = $latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount() ? false : true;
 
-        return $this->render('spots/spots.html.twig', [
+        return $this->render('spots/category.html.twig', [
             'more' => $more,
             'category' => $category,
             'latestSpots' => $latestSpots,
