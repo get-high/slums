@@ -32,37 +32,9 @@ class MapController extends AbstractController
     {
         $spots = $this->spotRepository->getPublished();
 
-        foreach ($spots as $spot) {
-            $balloonContent = $this->renderView('parts/balloon.html.twig', [
-                'spot' => $spot,
-            ]);
-
-            $json[] = [
-                'type' => 'Feature',
-                'id' => $spot->getId(),
-                'geometry' => [
-                    'type' => 'Point',
-                    'coordinates' => [
-                        $spot->getLat(),
-                        $spot->getLng(),
-                    ],
-                ],
-                'properties' => [
-                    'balloonContent' => $balloonContent,
-                    'clusterCaption' => 'title'
-                ],
-                'options' => [
-                    'iconLayout' => 'default#image',
-                    'iconImageHref' => 'images/newspot.png',
-                    'iconImageSize' => [48, 48],
-                    'iconImageOffset' => [-24, -24],
-                ]
-            ];
-        }
-
         return $this->json([
             'type' => 'FeatureCollection',
-            'features' => $json
+            'features' => $this->getMapObjects($spots),
         ]);
     }
 
@@ -97,5 +69,39 @@ class MapController extends AbstractController
     public function wishlist(Request $request): Response
     {
         // JSON для карты с точками в которых пользователь хочет побывать
+    }
+
+    private function getMapObjects(array $spots)
+    {
+        $json = [];
+
+        foreach ($spots as $spot) {
+            $balloonContent = $this->renderView('parts/balloon.html.twig', [
+                'spot' => $spot,
+            ]);
+
+            $json[] = [
+                'type' => 'Feature',
+                'id' => $spot->getId(),
+                'geometry' => [
+                    'type' => 'Point',
+                    'coordinates' => [
+                        $spot->getLat(),
+                        $spot->getLng(),
+                    ],
+                ],
+                'properties' => [
+                    'balloonContent' => $balloonContent,
+                ],
+                'options' => [
+                    'iconLayout' => 'default#image',
+                    'iconImageHref' => 'images/newspot.png',
+                    'iconImageSize' => [48, 48],
+                    'iconImageOffset' => [-24, -24],
+                ]
+            ];
+        }
+
+        return $json;
     }
 }
