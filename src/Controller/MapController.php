@@ -39,14 +39,18 @@ class MapController extends AbstractController
     }
 
     /**
-     * @Route("/api/map/category/{id}", name="map_category", methods={"POST"})
+     * @Route("/api/map/category/{id}", name="map_category", methods={"GET", "POST"})
      * @param Category $category
-     * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function category(Category $category, Request $request): Response
+    public function category(Category $category): JsonResponse
     {
-        // JSON с точками раздела
+        $spots = $this->spotRepository->getPublishedCategorySpots($category);
+
+        return $this->json([
+            'type' => 'FeatureCollection',
+            'features' => $this->getMapObjects($spots),
+        ]);
     }
 
     /**
@@ -95,7 +99,7 @@ class MapController extends AbstractController
                 ],
                 'options' => [
                     'iconLayout' => 'default#image',
-                    'iconImageHref' => 'images/newspot.png',
+                    'iconImageHref' => '/images/newspot.png',
                     'iconImageSize' => [48, 48],
                     'iconImageOffset' => [-24, -24],
                 ]

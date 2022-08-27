@@ -82,6 +82,11 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->mostVisited($num, $this->category($category)))->getQuery()->getResult();
     }
 
+    public function getPublishedCategorySpots(Category $category)
+    {
+        return $this->published($this->category($category))->getQuery()->getResult();
+    }
+
     public function getPublished()
     {
         return $this->published()->getQuery()->getResult();

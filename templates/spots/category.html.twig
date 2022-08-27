@@ -41,7 +41,7 @@
                     click: function () {
                         if ( !myMap) {
                             myMap=new ymaps.Map('map', {
-                                    center: [$mapcenter], zoom: $zoom, controls: ['zoomControl', 'fullscreenControl']
+                                    center: [59.93331936,30.32755066], zoom: 12, controls: ['zoomControl', 'fullscreenControl']
                                 }
                                 , {
                                     autoFitToViewport: 'always', balloonPanelMaxMapArea: 0
@@ -52,11 +52,10 @@
                             );
                             myMap.geoObjects.add(objectManager);
                             $.ajax( {
-                                    url: "https://slums.ru/index.php?do=mapjson&c=$ocid"
+                                    url: "{{ path('map_category', {id: category.id}) }}"
                                 }
                             ).done(function(data) {
                                     objectManager.add(data);
-                                    objectManager.objects.balloon.open($ppid);
                                 }
                             );
                             $("#map").show();
@@ -104,7 +103,7 @@
                         }
                     }
                 }
-            );
+            );}
     </script>
 
     <script type="text/javascript" charset="utf-8">
