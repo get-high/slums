@@ -1,0 +1,15 @@
+<div style='position:relative;height:150px;width:250px;'>
+    <div class='gray' style='position:absolute;z-index:1;filter: gray;-webkit-filter:grayscale(100%);width:100%;height:150px;background-image: url({{ asset('images/spots/' ~ spot.id ~ '-medium.jpg') }});background-size:cover;'>
+    </div>
+    <div style='position:absolute;z-index:3;'>
+        <div style='display:table;height:150px;width:250px;'>
+            <div style='display:table-cell;vertical-align:bottom;padding:3px;'>
+                <a href='{{ path('show_spot', {slug: spot.slug}) }}' target='_top' class='mp'>
+                    <span class='gm_shop'>{{ spot.title }}</span>
+                    <br/>
+                    <span class='gm_address'>{{ spot.address }}<br/></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

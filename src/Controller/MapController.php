@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Entity\Spot;
+use App\Repository\SpotRepository;
 use App\Service\SpotService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,19 +16,54 @@ class MapController extends AbstractController
 {
     private SpotService $spotService;
 
-    public function __construct(SpotService $spotService)
+    private SpotRepository $spotRepository;
+
+    public function __construct(SpotService $spotService, SpotRepository $spotRepository)
     {
         $this->spotService = $spotService;
+        $this->spotRepository = $spotRepository;
     }
 
     /**
-     * @Route("/api/map", name="map_index", methods={"POST"})
-     * @param Request $request
-     * @return Response
+     * @Route("/api/map", name="map_index", methods={"GET", "POST"})
+     * @return JsonResponse
      */
-    public function index(Request $request): Response
+    public function index(): JsonResponse
     {
-        // JSON со всеми опубликованными точками
+        $spots = $this->spotRepository->getPublished();
+
+        foreach ($spots as $spot) {
+            $balloonContent = $this->renderView('parts/balloon.html.twig', [
+                'spot' => $spot,
+            ]);
+
+            $json[] = [
+                'type' => 'Feature',
+                'id' => $spot->getId(),
+                'geometry' => [
+                    'type' => 'Point',
+                    'coordinates' => [
+                        $spot->getLat(),
+                        $spot->getLng(),
+                    ],
+                ],
+                'properties' => [
+                    'balloonContent' => $balloonContent,
+                    'clusterCaption' => 'title'
+                ],
+                'options' => [
+                    'iconLayout' => 'default#image',
+                    'iconImageHref' => 'images/newspot.png',
+                    'iconImageSize' => [48, 48],
+                    'iconImageOffset' => [-24, -24],
+                ]
+            ];
+        }
+
+        return $this->json([
+            'type' => 'FeatureCollection',
+            'features' => $json
+        ]);
     }
 
     /**
