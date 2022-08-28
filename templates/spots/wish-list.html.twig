@@ -31,6 +31,80 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+    <script type="text/javascript">
+        ymaps.ready(init);
+        function init () {
+            var myMap;
+            $('#openmap').bind( {
+                    click: function () {
+                        if ( !myMap) {
+                            myMap=new ymaps.Map('map', {
+                                    center: [59.93331936,30.32755066], zoom: 12, controls: ['zoomControl', 'fullscreenControl']
+                                }
+                                , {
+                                    autoFitToViewport: 'always', balloonPanelMaxMapArea: 0
+                                }
+                            ), objectManager=new ymaps.ObjectManager( {
+                                    clusterize: false, geoObjectOpenBalloonOnClick: true,
+                                }
+                            );
+                            myMap.geoObjects.add(objectManager);
+                            $.ajax( {
+                                    url: "{{ path('map_wish_list') }}"
+                                }
+                            ).done(function(data) {
+                                    objectManager.add(data);
+                                }
+                            );
+                            $("#map").show();
+                            var geolocButton=new ymaps.control.Button( {
+                                    data: {
+                                        title: "Определить ваше местоположение", image: "{{ asset('images/geoloc.png') }}"
+                                    }
+                                }
+                            );
+                            geolocButton.events.add('press', function () {
+                                    ymaps.geolocation.get( {
+                                            mapStateAutoApply: true, autoReverseGeocode: true
+                                        }
+                                    ).then(function (result) {
+                                            myMap.geoObjects.add(result.geoObjects);
+                                        }
+                                    );
+                                }
+                            );
+                            myMap.controls.add(geolocButton, {
+                                    float: "left"
+                                }
+                            );
+                            var myButton=new ymaps.control.Button( {
+                                    data: {
+                                        title: "Закрыть карту", image: "{{ asset('images/x.png') }}"
+                                    }
+                                }
+                            );
+                            myButton.events.add('press', function () {
+                                    myMap.destroy();
+                                    myMap=null;
+                                    $( "#map").hide();
+                                }
+                            );
+                            myMap.controls.add(myButton, {
+                                    float: "left"
+                                }
+                            );
+                        }
+                        else {
+                            myMap.destroy();
+                            myMap=null;
+                            $( "#map").hide();
+                        }
+                    }
+                }
+            );}
+    </script>
+
     <script type="text/javascript" charset="utf-8">
         jQuery(document).ready(function($) {
             var page = 2;

@@ -8,8 +8,6 @@ use App\Service\SpotService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MapController extends AbstractController
@@ -54,25 +52,33 @@ class MapController extends AbstractController
     }
 
     /**
-     * @Route("/api/map/visited", name="map_visited_spots", methods={"POST"})
+     * @Route("/api/map/visited", name="map_visited_spots", methods={"GET", "POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function visited(Request $request): Response
+    public function visited(): JsonResponse
     {
-        // JSON для карты с точками в которых был пользователь
+        $spots = $this->spotRepository->allSpotsWhereUserWas($this->getUser());
+
+        return $this->json([
+            'type' => 'FeatureCollection',
+            'features' => $this->getMapObjects($spots),
+        ]);
     }
 
     /**
-     * @Route("/api/map/wish-list", name="map_wish_list", methods={"POST"})
+     * @Route("/api/map/wish-list", name="map_wish_list", methods={"GET", "POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function wishlist(Request $request): Response
+    public function wishlist(): JsonResponse
     {
-        // JSON для карты с точками в которых пользователь хочет побывать
+        $spots = $this->spotRepository->allSpotsUserWantsToVisit($this->getUser());
+
+        return $this->json([
+            'type' => 'FeatureCollection',
+            'features' => $this->getMapObjects($spots),
+        ]);
     }
 
     private function getMapObjects(array $spots)

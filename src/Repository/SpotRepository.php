@@ -87,6 +87,16 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->category($category))->getQuery()->getResult();
     }
 
+    public function allSpotsWhereUserWas(User $user)
+    {
+        return $this->published($this->latest($this->userWas($user)))->getQuery()->getResult();
+    }
+
+    public function allSpotsUserWantsToVisit(User $user)
+    {
+        return $this->published($this->latest($this->userWill($user)))->getQuery()->getResult();
+    }
+
     public function getPublished()
     {
         return $this->published()->getQuery()->getResult();
