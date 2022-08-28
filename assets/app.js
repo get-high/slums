@@ -11,8 +11,8 @@
 // start the Stimulus application
 //import './bootstrap';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, {StrictMode} from 'react'
+import {createRoot} from "react-dom/client";
 
 class App extends React.Component {
     render() {
@@ -22,4 +22,11 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+const root = document.getElementById('root');
+const app = createRoot(root);
+
+app.render(
+    <StrictMode>
+        <App/>
+    </StrictMode>,
+);
