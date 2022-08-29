@@ -26,4 +26,6 @@ class AdminController extends AbstractController
     {
         return $this->render('layouts/admin.html.twig');
     }
+
+
 }

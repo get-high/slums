@@ -34,14 +34,21 @@ class SpotController extends AbstractController
         $this->photoFilesystem = $photoFilesystem;
     }
 
-    #[Route("admin/spots", name: "admin_spots", methods: ["GET"])]
+    #[Route("api/admin/spots", name: "admin_spots", methods: ["GET"])]
     public function index()
     {
         $spots = $this->repository->findAll();
 
+        /*
         return $this->render(
             'admin/spots/spots.html.twig', [
             'spots' => $spots,
+        ]);*/
+
+        return $this->json([
+            'id' => 1,
+            'firstName' => 'FeatureCollection',
+            'email' => 'admin@mail.ru'
         ]);
     }
 
