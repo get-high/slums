@@ -46,13 +46,11 @@ class SpotController extends AbstractController
         ]);*/
 
         return $this->json([
-            'id' => 1,
-            'firstName' => 'FeatureCollection',
-            'email' => 'admin@mail.ru'
-        ]);
+            'spots' => $spots,
+        ], 200, [], ['groups' => ['main']]);
     }
 
-    #[Route("admin/spots/create", name: "admin_create_spot", methods: ["GET", "POST"])]
+    #[Route("api/admin/spots/create", name: "admin_create_spot", methods: ["GET", "POST"])]
     public function create(Request $request)
     {
         $form = $this->createForm(SpotFormType::class);
@@ -75,7 +73,7 @@ class SpotController extends AbstractController
             ]);
     }
 
-    #[Route("admin/spots/{id<\d+>}/edit", name: "admin_edit_spot", methods: ["GET", "POST"])]
+    #[Route("api/admin/spots/{id<\d+>}/edit", name: "admin_edit_spot", methods: ["GET", "POST"])]
     public function edit(Spot $spot, Request $request)
     {
         $form = $this->createForm(SpotFormType::class, $spot);
@@ -99,7 +97,7 @@ class SpotController extends AbstractController
         ]);
     }
 
-    #[Route("admin/spots/{id<\d+>}/destroy", name: "admin_destroy_spot", methods: ["GET", "DELETE"])]
+    #[Route("api/admin/spots/{id<\d+>}/destroy", name: "admin_destroy_spot", methods: ["GET", "DELETE"])]
     public function destroy(Spot $spot)
     {
         $this->spotFilesystem->delete($spot->getId() . '.jpg');
