@@ -1,17 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getUserDetails, registerUser, userLogin } from '../actions/userActions'
+import { userLogin } from '../actions/userActions'
 
-// initialize userToken from local storage
-const userToken = localStorage.getItem('userToken')
-  ? localStorage.getItem('userToken')
+const token = localStorage.getItem('token')
+  ? localStorage.getItem('token')
   : null
 
 const initialState = {
   loading: false,
-  userInfo: null,
-  userToken,
+  token,
   error: null,
-  success: false,
 }
 
 const userSlice = createSlice({
@@ -19,51 +16,24 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('userToken') // delete token from storage
+      localStorage.removeItem('token')
       state.loading = false
-      state.userInfo = null
-      state.userToken = null
+      state.token = null
       state.error = null
     },
   },
   extraReducers: {
-    // login user
     [userLogin.pending]: (state) => {
       state.loading = true
       state.error = null
     },
     [userLogin.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.userInfo = payload
-      state.userToken = payload.userToken
+      state.token = payload.token
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
-    },
-    // register user
-    [registerUser.pending]: (state) => {
-      state.loading = true
-      state.error = null
-    },
-    [registerUser.fulfilled]: (state, { payload }) => {
-      state.loading = false
-      state.success = true // registration successful
-    },
-    [registerUser.rejected]: (state, { payload }) => {
-      state.loading = false
-      state.error = payload
-    },
-    // get user details
-    [getUserDetails.pending]: (state) => {
-      state.loading = true
-    },
-    [getUserDetails.fulfilled]: (state, { payload }) => {
-      state.loading = false
-      state.userInfo = payload
-    },
-    [getUserDetails.rejected]: (state, { payload }) => {
-      state.loading = false
     },
   },
 })
