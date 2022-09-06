@@ -8,6 +8,11 @@ parameters:
     spot_images: '%public_dir%/images/spots'
     photos: '%public_dir%/images/photos'
     avatars: '%public_dir%/images/avatars'
+    exeptions:
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { code: 404 }
+        App\Exception\SpotNotFoundException: { code: 404, hidden: false }
+        App\Exception\CategoryNotFoundException: { code: 404, hidden: false }
+        App\Exception\SpotAlreadyExistsException: { code: 409, hidden: false }
 
 services:
     # default configuration for services in *this* file
