@@ -39,6 +39,11 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function existsById(int $id): bool
+    {
+        return null !== $this->find($id);
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

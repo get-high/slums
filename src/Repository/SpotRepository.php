@@ -186,6 +186,25 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->latest($this->category($category)));
     }
 
+    /**
+     * @param QueryBuilder|null $builder
+     * @return QueryBuilder
+     */
+    private function getOrCreateQueryBuilder(?QueryBuilder $builder): QueryBuilder
+    {
+        return $builder ?? $this->createQueryBuilder('s');
+    }
+
+    public function existsById(int $id): bool
+    {
+        return null !== $this->find($id);
+    }
+
+    public function existsBySlug(string $slug): bool
+    {
+        return null !== $this->findOneBy(['slug' => $slug]);
+    }
+
 //    /**
 //     * @return Spot[] Returns an array of Spot objects
 //     */
@@ -210,13 +229,4 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
-    /**
-     * @param QueryBuilder|null $builder
-     * @return QueryBuilder
-     */
-    private function getOrCreateQueryBuilder(?QueryBuilder $builder): QueryBuilder
-    {
-        return $builder ?? $this->createQueryBuilder('s');
-    }
 }

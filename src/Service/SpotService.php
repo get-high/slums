@@ -5,20 +5,20 @@ namespace App\Service;
 use App\Entity\Category;
 use App\Entity\Spot;
 use App\Entity\User;
+use App\Exception\CategoryNotFoundException;
+use App\Repository\CategoryRepository;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SpotService
 {
-    private SpotRepository $spotRepository;
-
-    private PaginatorInterface $paginator;
-
-    public function __construct(SpotRepository $spotRepository, PaginatorInterface $paginator)
+    public function __construct(
+        private SpotRepository $spotRepository,
+        private CategoryRepository $categoryRepository,
+        private PaginatorInterface $paginator
+    )
     {
-        $this->spotRepository = $spotRepository;
-        $this->paginator = $paginator;
     }
 
     public function getMainSpots()
@@ -58,8 +58,12 @@ class SpotService
         );
     }
 
-    public function paginateCategoryLatestPublishedSpots(Category $category, Request $request,  int $num = 10)
+    public function paginateLatestPublishedSpotsByCategory(Category $category, Request $request,  int $num = 10)
     {
+        if (! $this->categoryRepository->existsById($category->getId())) {
+            throw new CategoryNotFoundException();
+        }
+
         return $this->paginator->paginate(
             $this->spotRepository->paginateCategoryLatestPublished($category),
             $request->get('page', 1),

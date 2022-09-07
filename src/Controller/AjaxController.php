@@ -41,7 +41,7 @@ class AjaxController extends AbstractController
      */
     public function category(Category $category, Request $request): Response
     {
-        $latestSpots = $this->spotService->paginateCategoryLatestPublishedSpots($category, $request);
+        $latestSpots = $this->spotService->paginateLatestPublishedSpotsByCategory($category, $request);
 
         return $this->latestSpots($latestSpots);
     }

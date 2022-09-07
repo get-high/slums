@@ -62,7 +62,7 @@ class SpotController extends AbstractController
      */
     public function category(Category $category, Request $request): Response
     {
-        $latestSpots = $this->spotService->paginateCategoryLatestPublishedSpots($category, $request, 10);
+        $latestSpots = $this->spotService->paginateLatestPublishedSpotsByCategory($category, $request, 10);
         $topRatedSpots = $this->spotService->getCategoryTopRatedSpots($category, 4);
         $mostVisitedSpots = $this->spotService->getCategoryMostVisitedSpots($category, 6);
         $more = $latestSpots->getCurrentPageNumber() * 10 >= $latestSpots->getTotalItemCount() ? false : true;
