@@ -60,12 +60,8 @@ class SpotService
 
     public function paginateLatestPublishedSpotsByCategory(Category $category, Request $request,  int $num = 10)
     {
-        if (! $this->categoryRepository->existsById($category->getId())) {
-            throw new CategoryNotFoundException();
-        }
-
         return $this->paginator->paginate(
-            $this->spotRepository->paginateCategoryLatestPublished($category),
+            $this->spotRepository->paginateLatestPublishedByCategory($category),
             $request->get('page', 1),
             $num
         );

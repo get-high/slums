@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\Listener;
 
 use App\Entity\Vote;
 use App\Repository\SpotRepository;

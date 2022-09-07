@@ -181,7 +181,7 @@ class SpotRepository extends ServiceEntityRepository
         return $this->published($this->latest($this->userWill($user)));
     }
 
-    public function paginateCategoryLatestPublished(Category $category)
+    public function paginateLatestPublishedByCategory(Category $category)
     {
         return $this->published($this->latest($this->category($category)));
     }

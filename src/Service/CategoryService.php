@@ -30,4 +30,9 @@ class CategoryService
 
         return new CategoryListResponse($items);
     }
+
+    public function getCategory(Category $category): CategoryListItem
+    {
+        return new CategoryListItem($category->getId(), $category->getTitle(), $category->getSlug(), $category->isMain());
+    }
 }
