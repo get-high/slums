@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Model\Spot\SpotRequest;
+use App\Model\Spot\SpotResponse;
 use App\Repository\SpotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,12 +12,32 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Table(name: 'spots')]
+#[ORM\Table(name: "spots")]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
+#[ApiResource(
+    collectionOperations: [
+        "get" => [
+            "output" => SpotResponse::class,
+            #"normalization_context" => ["groups" => "main"],
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+        "post" => [
+            "input" => SpotRequest::class,
+            "output" => SpotResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+    ],
+    itemOperations: [
+        "get" => [
+            "output" => SpotResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+    ],
+    paginationEnabled: true,
+)]
 class Spot
 {
     use TimestampableEntity;
@@ -22,92 +45,73 @@ class Spot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
-    #[Groups('main')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Поле title не может быть пустым")]
-    #[Groups('main')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank(message: "Поле slug не может быть пустым")]
-    #[Assert\Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[Groups('main')]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('main')]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('main')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('main')]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('main')]
     private ?string $how_to_get = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups('main')]
     private ?float $rating = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Type(type: "float")]
-    #[Groups('main')]
     private ?float $lat = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Type(type: "float")]
-    #[Groups('main')]
     private ?float $lng = null;
 
-    #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
-    #[Groups('main')]
+    #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
     private ?bool $main = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups('main')]
     private ?int $views = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('main')]
     private ?string $years = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('main')]
     private ?string $authors = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups('main')]
     private ?\DateTimeInterface $published_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'spots')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('main')]
     private ?User $creator = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'spots')]
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: "spots")]
     private Collection $categories;
 
-    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: "spot", targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Photo::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: "spot", targetEntity: Photo::class, orphanRemoval: true)]
     private Collection $photos;
 
-    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Vote::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: "spot", targetEntity: Vote::class, orphanRemoval: true)]
     private Collection $votes;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots_user_was')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: "spots_user_was")]
     #[ORM\JoinTable(name: "spot_user_was")]
     private Collection $user_was;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'spots_user_will')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: "spots_user_will")]
     #[ORM\JoinTable(name: "spot_user_will")]
     private Collection $user_will;
 
