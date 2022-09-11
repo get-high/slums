@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Admin\CreateSpotAction;
 use App\Model\Spot\SpotRequest;
 use App\Model\Spot\SpotResponse;
 use App\Repository\SpotRepository;
@@ -16,18 +17,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: "spots")]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
-#[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
         "get" => [
             "output" => SpotResponse::class,
-            #"normalization_context" => ["groups" => "main"],
             "security" => "is_granted('ROLE_ADMIN')",
         ],
         "post" => [
+            "deserialize" => false,
+            "controller" => CreateSpotAction::class,
             "input" => SpotRequest::class,
             "output" => SpotResponse::class,
             "security" => "is_granted('ROLE_ADMIN')",
+            'input_formats' => [
+                'multipart' => ['multipart/form-data'],
+            ],
         ],
     ],
     itemOperations: [
@@ -123,6 +127,13 @@ class Spot
         $this->votes = new ArrayCollection();
         $this->user_was = new ArrayCollection();
         $this->user_will = new ArrayCollection();
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId(): ?int
