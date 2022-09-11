@@ -10,8 +10,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ValidCategoryValidator extends ConstraintValidator
 {
     public function __construct(private CategoryRepository $repository)
-    {
-    }
+    {}
 
     public function validate($value, Constraint $constraint)
     {
