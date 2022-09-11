@@ -54,83 +54,28 @@ class SpotRequest
         $this->image = $image;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    /**
-     * @return bool
-     */
     public function isMain(): bool
     {
         return $this->main;
     }
 
-    /**
-     * @param bool $main
-     */
-    public function setMain(bool $main): void
-    {
-        $this->main = $main;
-    }
-
-    /**
-     * @return int[]
-     */
     public function getCategories(): array
     {
         return $this->categories;
     }
 
-    /**
-     * @param int[] $categories
-     */
-    public function setCategories(array $categories): void
-    {
-        $this->categories = $categories;
-    }
-
-    /**
-     * @return UploadedFile
-     */
     public function getImage(): UploadedFile
     {
         return $this->image;
-    }
-
-    /**
-     * @param UploadedFile $image
-     */
-    public function setImage(UploadedFile $image): void
-    {
-        $this->image = $image;
     }
 }

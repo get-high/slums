@@ -39,8 +39,8 @@ class CreateSpotAction
 
         $this->validator->validate($model);
 
-        $spot = new Spot();
-        $spot->setTitle($model->getTitle())
+        $spot = (new Spot())
+            ->setTitle($model->getTitle())
             ->setSlug($model->getSlug())
             ->setMain($model->isMain())
             ->setCreator($this->security->getUser());
