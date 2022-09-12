@@ -96,7 +96,7 @@ class Spot
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $published_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'spots')]
+    #[ORM\ManyToOne(inversedBy: "spots")]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 

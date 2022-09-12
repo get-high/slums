@@ -48,6 +48,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'App\DataTransformer\CategoryInputDataTransformer': ~
+    'App\DataTransformer\SpotOutputDataTransformer': ~
     'App\DataTransformer\CategoryOutputDataTransformer': ~
 
     image_uploader.spot:
