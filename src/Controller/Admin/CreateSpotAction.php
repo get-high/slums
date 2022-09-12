@@ -49,6 +49,7 @@ class CreateSpotAction
             $spot->addCategory($this->categoryRepository->find($category));
         }
 
+        $this->validator->validate($spot);
         $this->em->persist($spot);
         $this->em->flush();
 

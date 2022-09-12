@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: "spots")]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
+#[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
         "get" => [
@@ -127,13 +128,6 @@ class Spot
         $this->votes = new ArrayCollection();
         $this->user_was = new ArrayCollection();
         $this->user_will = new ArrayCollection();
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getId(): ?int

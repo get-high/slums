@@ -2,7 +2,6 @@
 
 namespace App\Model\Spot;
 
-use App\Validator\UniqueSpotSlug;
 use App\Validator\ValidCategory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\Image;
@@ -16,7 +15,6 @@ class SpotRequest
 
     #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[UniqueSpotSlug]
     private string $slug;
 
     #[NotBlank]
