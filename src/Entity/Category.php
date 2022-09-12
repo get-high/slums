@@ -36,6 +36,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         "delete" => [
             "security" => "is_granted('ROLE_ADMIN')",
         ],
+        "patch" => [
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
     ],
     paginationEnabled: false,
 )]
