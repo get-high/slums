@@ -33,6 +33,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             "output" => CategoryResponse::class,
             "security" => "is_granted('ROLE_ADMIN')",
         ],
+        "delete" => [
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
     ],
     paginationEnabled: false,
 )]
