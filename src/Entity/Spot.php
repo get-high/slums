@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\CreateSpotAction;
+use App\Controller\Admin\Spot\CreateSpotAction;
+use App\Controller\Admin\Spot\RemoveSpotAction;
 use App\Model\Spot\SpotRequest;
 use App\Model\Spot\SpotResponse;
 use App\Repository\SpotRepository;
@@ -38,6 +39,13 @@ use Symfony\Component\Validator\Constraints as Assert;
     itemOperations: [
         "get" => [
             "output" => SpotResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+        "delete" => [
+            "controller" => RemoveSpotAction::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+        "patch" => [
             "security" => "is_granted('ROLE_ADMIN')",
         ],
     ],

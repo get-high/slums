@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Spot;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Encoder\MultipartDecoder;
