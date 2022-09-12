@@ -3,17 +3,17 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Entity\Spot;
-use App\Model\Spot\SpotResponse;
+use App\Entity\Category;
+use App\Model\Category\CategoryResponse;
 
-class SpotOutputDataTransformer implements DataTransformerInterface
+class CategoryOutputDataTransformer implements DataTransformerInterface
 {
     /**
      * {@inheritdoc}
      */
     public function transform($data, string $to, array $context = [])
     {
-        $output = new SpotResponse();
+        $output = new CategoryResponse();
         $output->id = $data->getId();
         $output->title = $data->getTitle();
         $output->slug = $data->getSlug();
@@ -27,7 +27,7 @@ class SpotOutputDataTransformer implements DataTransformerInterface
      */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
-        return SpotResponse::class === $to && $data instanceof Spot;
+        return CategoryResponse::class === $to && $data instanceof Category;
     }
 
 }

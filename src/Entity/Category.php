@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Model\Category\CategoryRequest;
+use App\Model\Category\CategoryResponse;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,12 +12,30 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Table(name: 'categories')]
+#[ORM\Table(name: "categories")]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
+#[ApiResource(
+    collectionOperations: [
+        "get" => [
+            "output" => CategoryResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+        "post" => [
+            "input" => CategoryRequest::class,
+            "output" => CategoryResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+    ],
+    itemOperations: [
+        "get" => [
+            "output" => CategoryResponse::class,
+            "security" => "is_granted('ROLE_ADMIN')",
+        ],
+    ],
+    paginationEnabled: false,
+)]
 class Category
 {
     use TimestampableEntity;
@@ -22,33 +43,24 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
-    #[Groups('main')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Поле title не может быть пустым")]
-    #[Groups('main')]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\NotBlank(message: "Поле slug не может быть пустым")]
-    #[Assert\Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[Groups('main')]
     private ?string $slug = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups('main')]
     private ?int $order_by = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('main')]
     private ?string $description = null;
 
-    #[ORM\Column(options: ['unsigned' => true, 'default' => 0])]
-    #[Groups('main')]
+    #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
     private ?bool $main = null;
 
-    #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: "categories")]
     private Collection $spots;
 
     public function __construct()
@@ -59,13 +71,6 @@ class Category
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getTitle(): ?string
