@@ -76,7 +76,7 @@ class SpotFixtures extends BaseFixtures implements DependentFixtureInterface
         foreach ($spots as $spot) {
             $fileName = $this->faker->randomElement(self::$spotImages);
 
-            $this->spotUploader->uploadImage(new File(dirname(dirname(__DIR__)).'/public/images/objects/'.$fileName), $spot);
+            $this->spotUploader->uploadImage(new File(dirname(__DIR__, 2) .'/public/images/objects/'.$fileName), $spot);
         }
     }
 

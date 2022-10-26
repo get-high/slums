@@ -18,6 +18,9 @@ class UserFixtures extends BaseFixtures
     private UserRepository $repository;
 
     private static $userImages = [
+        '1.jpg',
+        '2.jpg',
+        '3.jpg',
         '4.jpg',
         '5.jpg',
     ];
@@ -60,7 +63,7 @@ class UserFixtures extends BaseFixtures
         foreach ($users as $user) {
             $fileName = $this->faker->randomElement(self::$userImages);
 
-            $this->avatarUploader->uploadImage(new File(dirname(dirname(__DIR__)).'/public/images/users/'.$fileName), $user);
+            $this->avatarUploader->uploadImage(new File(dirname(__DIR__, 2) .'/public/images/users/'.$fileName), $user);
         }
     }
 }
