@@ -24,7 +24,6 @@ class SpotRequest
      * @var int[]
      */
     #[NotBlank]
-    #[ValidCategory]
     private array $categories;
 
     #[NotBlank]
