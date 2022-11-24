@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Admin\Spot\CreateSpotAction;
 use App\Controller\Admin\Spot\RemoveSpotAction;
+use App\Dto\SpotInput;
+use App\Dto\SpotOutput;
 use App\Model\Spot\SpotRequest;
 use App\Model\Spot\SpotResponse;
 use App\Repository\SpotRepository;
@@ -14,42 +16,37 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Table(name: "spots")]
 #[ORM\Entity(repositoryClass: SpotRepository::class)]
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get" => [
-            "output" => SpotResponse::class,
-            "security" => "is_granted('ROLE_ADMIN')",
-        ],
+        "get",
         "post" => [
-            "deserialize" => false,
-            "controller" => CreateSpotAction::class,
-            "input" => SpotRequest::class,
-            "output" => SpotResponse::class,
-            "security" => "is_granted('ROLE_ADMIN')",
-            'input_formats' => [
-                'multipart' => ['multipart/form-data'],
-            ],
+            "input" => SpotInput::class,
+            #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
         ],
     ],
     itemOperations: [
-        "get" => [
-            "output" => SpotResponse::class,
-            "security" => "is_granted('ROLE_ADMIN')",
-        ],
+        "get",
         "delete" => [
             "controller" => RemoveSpotAction::class,
-            "security" => "is_granted('ROLE_ADMIN')",
         ],
         "patch" => [
-            "security" => "is_granted('ROLE_ADMIN')",
+            "input" => SpotInput::class,
         ],
     ],
+    denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
+    normalizationContext: ["groups" => ["spot:read"]],
+    output: SpotOutput::class,
     paginationEnabled: true,
+    security: "is_granted('ROLE_ADMIN')",
 )]
 class Spot
 {
@@ -61,9 +58,14 @@ class Spot
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("spot:read")]
+    #[NotBlank]
     private ?string $title = null;
 
+    #[Groups("spot:read")]
     #[ORM\Column(length: 255, unique: true)]
+    #[NotBlank]
+    #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -90,6 +92,8 @@ class Spot
     private ?float $lng = null;
 
     #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
+    #[Groups("spot:read")]
+    #[NotNull]
     private ?bool $main = null;
 
     #[ORM\Column(nullable: true)]
@@ -106,9 +110,12 @@ class Spot
 
     #[ORM\ManyToOne(inversedBy: "spots")]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["spot:collection:post"])]
     private ?User $creator = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: "spots")]
+    #[Groups(["spot:read", "spot:write"])]
+    #[NotBlank]
     private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: "spot", targetEntity: Comment::class, orphanRemoval: true)]
