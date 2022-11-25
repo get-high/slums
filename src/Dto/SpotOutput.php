@@ -3,7 +3,6 @@
 namespace App\Dto;
 
 use App\Entity\Spot;
-use App\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 class SpotOutput

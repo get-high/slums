@@ -50,7 +50,6 @@ class SpotInput
         $dto->slug = $spot->getSlug();
         $dto->main = $spot->isMain();
         $dto->categories = $spot->getCategories();
-        $dto->creator = $spot->getCreator();
 
         return $dto;
     }
