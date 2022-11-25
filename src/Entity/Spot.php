@@ -3,12 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Spot\CreateSpotAction;
 use App\Controller\Admin\Spot\RemoveSpotAction;
 use App\Dto\SpotInput;
 use App\Dto\SpotOutput;
-use App\Model\Spot\SpotRequest;
-use App\Model\Spot\SpotResponse;
 use App\Repository\SpotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,6 +37,9 @@ use Symfony\Component\Validator\Constraints\Regex;
         ],
         "patch" => [
             "input" => SpotInput::class,
+        ],
+        "upload" => [
+
         ],
     ],
     denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
