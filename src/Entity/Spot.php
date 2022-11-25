@@ -39,7 +39,17 @@ use Symfony\Component\Validator\Constraints\Regex;
             "input" => SpotInput::class,
         ],
         "upload" => [
-
+            'path' => '/spots/{id}/upload',
+            'method' => "post",
+            'deserialize' => false,
+            #'controller' => UploadSpotImageAction::class,
+            'input_formats' => [
+                'multipart' => ['multipart/form-data'],
+            ],
+            'openapi_context' => [
+                'summary' => 'Uploads the Spot image',
+                'description' => 'Uploads the Spot image',
+            ],
         ],
     ],
     denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],

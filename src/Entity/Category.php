@@ -12,6 +12,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Table(name: "categories")]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -20,27 +22,25 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     collectionOperations: [
         "get" => [
             "output" => CategoryOutput::class,
-            "security" => "is_granted('ROLE_ADMIN')",
         ],
         "post" => [
             "input" => CategoryInput::class,
             "output" => CategoryOutput::class,
-            "security" => "is_granted('ROLE_ADMIN')",
         ],
     ],
     itemOperations: [
         "get" => [
             "output" => CategoryOutput::class,
-            "security" => "is_granted('ROLE_ADMIN')",
         ],
         "delete" => [
-            "security" => "is_granted('ROLE_ADMIN')",
+
         ],
         "patch" => [
-            "security" => "is_granted('ROLE_ADMIN')",
+
         ],
     ],
     paginationEnabled: false,
+    security: "is_granted('ROLE_ADMIN')",
 )]
 class Category
 {
@@ -52,6 +52,8 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("category:read")]
+    #[NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
