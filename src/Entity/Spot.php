@@ -33,7 +33,9 @@ use Symfony\Component\Validator\Constraints\Regex;
         ],
     ],
     itemOperations: [
-        "get",
+        "get" => [
+            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:read"]],
+        ],
         "delete" => [
             "controller" => RemoveSpotAction::class,
         ],
@@ -58,6 +60,7 @@ use Symfony\Component\Validator\Constraints\Regex;
     normalizationContext: ["groups" => ["spot:read"]],
     output: SpotOutput::class,
     paginationEnabled: true,
+    paginationItemsPerPage: 20,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Spot
