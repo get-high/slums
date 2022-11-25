@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\Category;
+namespace App\Dto;
 
-class CategoryResponse
+class CategoryOutput
 {
     public int $id;
 

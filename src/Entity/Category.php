@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Model\Category\CategoryRequest;
-use App\Model\Category\CategoryResponse;
+use App\Dto\CategoryInput;
+use App\Dto\CategoryOutput;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,18 +19,18 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ApiResource(
     collectionOperations: [
         "get" => [
-            "output" => CategoryResponse::class,
+            "output" => CategoryOutput::class,
             "security" => "is_granted('ROLE_ADMIN')",
         ],
         "post" => [
-            "input" => CategoryRequest::class,
-            "output" => CategoryResponse::class,
+            "input" => CategoryInput::class,
+            "output" => CategoryOutput::class,
             "security" => "is_granted('ROLE_ADMIN')",
         ],
     ],
     itemOperations: [
         "get" => [
-            "output" => CategoryResponse::class,
+            "output" => CategoryOutput::class,
             "security" => "is_granted('ROLE_ADMIN')",
         ],
         "delete" => [

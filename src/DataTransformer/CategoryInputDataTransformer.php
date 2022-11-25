@@ -3,12 +3,11 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\Category;
 
 class CategoryInputDataTransformer implements DataTransformerInterface
 {
-    public function __construct(private ValidatorInterface $validator)
+    public function __construct()
     {}
 
     /**
@@ -16,8 +15,6 @@ class CategoryInputDataTransformer implements DataTransformerInterface
      */
     public function transform($data, string $to, array $context = []): Category
     {
-        $this->validator->validate($data);
-
         return (new Category())
             ->setTitle($data->title)
             ->setSlug($data->slug)

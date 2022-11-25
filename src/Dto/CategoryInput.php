@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Model\Category;
+namespace App\Dto;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class CategoryRequest
+class CategoryInput
 {
     #[NotBlank]
     public string $title;

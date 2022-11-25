@@ -3,8 +3,8 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use App\Dto\CategoryOutput;
 use App\Entity\Category;
-use App\Model\Category\CategoryResponse;
 
 class CategoryOutputDataTransformer implements DataTransformerInterface
 {
@@ -13,7 +13,7 @@ class CategoryOutputDataTransformer implements DataTransformerInterface
      */
     public function transform($data, string $to, array $context = [])
     {
-        $output = new CategoryResponse();
+        $output = new CategoryOutput();
         $output->id = $data->getId();
         $output->title = $data->getTitle();
         $output->slug = $data->getSlug();
@@ -27,7 +27,7 @@ class CategoryOutputDataTransformer implements DataTransformerInterface
      */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
-        return CategoryResponse::class === $to && $data instanceof Category;
+        return CategoryOutput::class === $to && $data instanceof Category;
     }
 
 }
