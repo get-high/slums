@@ -8,34 +8,34 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class SpotOutput
 {
-    #[Groups(["spot:read", "spot:item:get"])]
+    #[Groups(["spot:item:get", "spot:collection:get"])]
     public int $id;
 
-    #[Groups(["spot:read", "spot:item:get"])]
+    #[Groups(["spot:item:get", "spot:collection:get"])]
     public string $title;
 
-    #[Groups(["spot:read", "spot:item:get"])]
+    #[Groups(["spot:item:get", "spot:collection:get"])]
     public string $slug;
 
-    #[Groups(["spot:read"])]
+    #[Groups("spot:item:get")]
     public ?string $address;
 
-    #[Groups("spot:read")]
+    #[Groups("spot:item:get")]
     public ?string $description;
 
-    #[Groups("spot:read")]
+    #[Groups("spot:item:get")]
     public ?string $content;
 
-    #[Groups("spot:read")]
+    #[Groups("spot:item:get")]
     public ?string $how_to_get;
 
-    #[Groups(["spot:read", "spot:item:get"])]
+    #[Groups(["spot:item:get", "spot:collection:get"])]
     public bool $main;
 
     /**
      * @var Category[]
      */
-    #[Groups("spot:read")]
+    #[Groups("spot:item:get")]
     public iterable $categories;
 
     public static function createFromEntity(Spot $spot): self

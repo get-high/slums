@@ -24,9 +24,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get" => [
-            "normalization_context" => ["groups"=>["spot:item:get"]],
-        ],
+        "get",
         "post" => [
             "input" => SpotInput::class,
             #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
@@ -34,7 +32,7 @@ use Symfony\Component\Validator\Constraints\Regex;
     ],
     itemOperations: [
         "get" => [
-            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:read"]],
+            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
         ],
         "delete" => [
             "controller" => RemoveSpotAction::class,
@@ -57,7 +55,7 @@ use Symfony\Component\Validator\Constraints\Regex;
         ],*/
     ],
     denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
-    normalizationContext: ["groups" => ["spot:read"]],
+    normalizationContext: ["groups" => ["spot:collection:get"]],
     output: SpotOutput::class,
     paginationEnabled: true,
     paginationItemsPerPage: 20,
