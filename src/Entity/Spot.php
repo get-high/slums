@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Admin\Spot\CreateSpotAction;
 use App\Controller\Admin\Spot\RemoveSpotAction;
 use App\Dto\SpotInput;
 use App\Dto\SpotOutput;
@@ -13,7 +14,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -24,7 +24,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get",
+        "get" => [
+            "normalization_context" => ["groups"=>["spot:item:get"]],
+        ],
         "post" => [
             "input" => SpotInput::class,
             #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
@@ -38,11 +40,11 @@ use Symfony\Component\Validator\Constraints\Regex;
         "patch" => [
             "input" => SpotInput::class,
         ],
-        "upload" => [
-            'path' => '/spots/{id}/upload',
+        /*"upload" => [
+            #'path' => '/spots/{id}/upload',
             'method' => "post",
             'deserialize' => false,
-            #'controller' => UploadSpotImageAction::class,
+            'controller' => CreateSpotAction::class,
             'input_formats' => [
                 'multipart' => ['multipart/form-data'],
             ],
@@ -50,7 +52,7 @@ use Symfony\Component\Validator\Constraints\Regex;
                 'summary' => 'Uploads the Spot image',
                 'description' => 'Uploads the Spot image',
             ],
-        ],
+        ],*/
     ],
     denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
     normalizationContext: ["groups" => ["spot:read"]],
@@ -68,11 +70,9 @@ class Spot
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("spot:read")]
     #[NotBlank]
     private ?string $title = null;
 
-    #[Groups("spot:read")]
     #[ORM\Column(length: 255, unique: true)]
     #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
@@ -102,7 +102,6 @@ class Spot
     private ?float $lng = null;
 
     #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
-    #[Groups("spot:read")]
     #[NotNull]
     private ?bool $main = null;
 
@@ -120,11 +119,9 @@ class Spot
 
     #[ORM\ManyToOne(inversedBy: "spots")]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["spot:collection:post"])]
     private ?User $creator = null;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: "spots")]
-    #[Groups(["spot:read", "spot:write"])]
     #[NotBlank]
     private Collection $categories;
 

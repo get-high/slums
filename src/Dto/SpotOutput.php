@@ -2,23 +2,27 @@
 
 namespace App\Dto;
 
+use App\Entity\Category;
 use App\Entity\Spot;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 class SpotOutput
 {
-    #[Groups("spot:read")]
+    #[Groups(["spot:read", "spot:item:get"])]
     public int $id;
 
-    #[Groups("spot:read")]
+    #[Groups(["spot:read", "spot:item:get"])]
     public string $title;
 
-    #[Groups("spot:read")]
+    #[Groups(["spot:read", "spot:item:get"])]
     public string $slug;
 
-    #[Groups("spot:read")]
+    #[Groups(["spot:read", "spot:item:get"])]
     public bool $main;
 
+    /**
+     * @var Category[]
+     */
     #[Groups("spot:read")]
     public iterable $categories;
 
