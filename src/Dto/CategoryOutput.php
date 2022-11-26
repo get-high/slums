@@ -7,16 +7,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 class CategoryOutput
 {
-    #[Groups("category:read")]
+    #[Groups("category:item:get")]
     public int $id;
 
-    #[Groups("category:read")]
+    #[Groups("category:item:get")]
     public string $title;
 
-    #[Groups("category:read")]
+    #[Groups("category:item:get")]
     public string $slug;
 
-    #[Groups("category:read")]
+    #[Groups("category:item:get")]
     public bool $main;
 
     public static function createFromEntity(Category $category): self

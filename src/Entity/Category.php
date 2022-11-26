@@ -12,7 +12,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Table(name: "categories")]
@@ -20,12 +19,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get" => [
-            "output" => CategoryOutput::class,
-        ],
+        "get",
         "post" => [
             "input" => CategoryInput::class,
-            "output" => CategoryOutput::class,
+            "normalization_context" => ["skip_null_values" => false, "groups"=>["category:item:get"]],
         ],
     ],
     itemOperations: [
@@ -39,6 +36,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
         ],
     ],
+    denormalizationContext: ["groups" => ["category:write", "category:collection:post"]],
+    normalizationContext: ["groups" => ["category:collection:get"]],
+    output: CategoryOutput::class,
     paginationEnabled: false,
     security: "is_granted('ROLE_ADMIN')",
 )]
@@ -52,7 +52,6 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("category:read")]
     #[NotBlank]
     private ?string $title = null;
 
