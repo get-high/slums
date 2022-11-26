@@ -27,6 +27,7 @@ use Symfony\Component\Validator\Constraints\Regex;
         "get",
         "post" => [
             "input" => SpotInput::class,
+            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
             #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
         ],
     ],
