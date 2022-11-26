@@ -29,8 +29,20 @@ class SpotOutput
     #[Groups("spot:item:get")]
     public ?string $how_to_get;
 
+    #[Groups("spot:item:get")]
+    public ?float $lat;
+
+    #[Groups("spot:item:get")]
+    public ?float $lng;
+
     #[Groups(["spot:item:get", "spot:collection:get"])]
     public bool $main;
+
+    #[Groups("spot:item:get")]
+    public ?string $years;
+
+    #[Groups("spot:item:get")]
+    public ?string $authors;
 
     /**
      * @var Category[]
@@ -48,7 +60,11 @@ class SpotOutput
         $output->description = $spot->getDescription();
         $output->content = $spot->getContent();
         $output->how_to_get = $spot->getHowToGet();
+        $output->lat = $spot->getLat();
+        $output->lng = $spot->getLng();
         $output->main = $spot->isMain();
+        $output->years = $spot->getYears();
+        $output->authors = $spot->getAuthors();
         $output->categories = $spot->getCategories();
 
         return $output;

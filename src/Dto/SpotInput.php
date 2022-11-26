@@ -32,12 +32,6 @@ class SpotInput
     #[Groups(["spot:write"])]
     public iterable $categories;
 
-    /**
-     * @var User
-     */
-    #[Groups(["spot:collection:post"])]
-    public User $creator;
-
     public static function createFromEntity(?Spot $spot): self
     {
         $dto = new SpotInput();
