@@ -22,7 +22,7 @@ services:
             League\Flysystem\Filesystem $spotFilesystem: '@oneup_flysystem.spot_uploads_filesystem'
             League\Flysystem\Filesystem $photoFilesystem: '@oneup_flysystem.photo_uploads_filesystem'
 
-    postPersist:
+    updateRating:
         class: App\Listener\SpotRatingUpdateListener
         tags:
             -
@@ -30,6 +30,14 @@ services:
                 event: 'postPersist'
                 entity: 'App\Entity\Vote'
                 method: 'updateSpotRating'
+
+    newSpot:
+        class: App\Listener\NewSpotListener
+        tags:
+            - name: 'doctrine.orm.entity_listener'
+              event: 'postPersist'
+              entity: 'App\Entity\Spot'
+              method: 'uploadDefaultImage'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
