@@ -3,8 +3,6 @@
 namespace App\Dto;
 
 use App\Entity\Category;
-use App\Entity\Spot;
-use App\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;

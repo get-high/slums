@@ -3,27 +3,29 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
+use ApiPlatform\Validator\ValidatorInterface;
+use App\Dto\CategoryInput;
 use App\Entity\Category;
 
 class CategoryInputDataTransformer implements DataTransformerInterface
 {
-    public function __construct()
-    {}
+    public function __construct(
+        private ValidatorInterface $validator,
+    ) {}
 
     /**
-     * {@inheritdoc}
+     * @param CategoryInput $input
      */
-    public function transform($data, string $to, array $context = []): Category
+    public function transform($input, string $to, array $context = []): Category
     {
-        return (new Category())
-            ->setTitle($data->title)
-            ->setSlug($data->slug)
-            ->setMain($data->main);
+        $this->validator->validate($input);
+
+        $category = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
+
+        return $input->createOrUpdateEntity($category);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
         if ($data instanceof Category) {
