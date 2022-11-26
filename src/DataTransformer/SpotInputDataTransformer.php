@@ -4,6 +4,7 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
+use ApiPlatform\Validator\ValidatorInterface;
 use App\Dto\SpotInput;
 use App\Entity\Spot;
 use Symfony\Component\Security\Core\Security;
@@ -12,6 +13,7 @@ class SpotInputDataTransformer implements DataTransformerInterface
 {
     public function __construct(
         private Security $security,
+        private ValidatorInterface $validator,
     )
     {}
 
@@ -20,6 +22,8 @@ class SpotInputDataTransformer implements DataTransformerInterface
      */
     public function transform($input, string $to, array $context = []): Spot
     {
+        $this->validator->validate($input);
+
         $spot = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
 
         return $input->createOrUpdateEntity($spot, $this->security->getUser());
