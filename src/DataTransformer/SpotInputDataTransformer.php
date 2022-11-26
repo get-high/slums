@@ -14,8 +14,7 @@ class SpotInputDataTransformer implements DataTransformerInterface
     public function __construct(
         private Security $security,
         private ValidatorInterface $validator,
-    )
-    {}
+    ) {}
 
     /**
      * @param SpotInput $input
