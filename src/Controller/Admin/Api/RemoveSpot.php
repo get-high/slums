@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\Admin\Spot;
+namespace App\Controller\Admin\Api;
 
 use App\Entity\Spot;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class RemoveSpotAction
+class RemoveSpot
 {
     public function __construct(
         private Filesystem $spotFilesystem,
