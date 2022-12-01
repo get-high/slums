@@ -2,10 +2,12 @@
 
 namespace App\Dto;
 
-use App\Entity\Category;
 use App\Entity\Spot;
 use App\Entity\User;
+use App\Validator\ValidCategory;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -13,24 +15,34 @@ use Symfony\Component\Validator\Constraints\Regex;
 class SpotInput
 {
     #[NotBlank]
-    #[Groups(["spot:write", "user:write"])]
-    public string $title;
+    #[Groups(["spot:write"])]
+    public ?string $title;
 
     #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[Groups(["spot:write", "user:write"])]
-    public string $slug;
+    #[Groups(["spot:write"])]
+    public ?string $slug;
 
     #[NotNull]
     #[Groups(["spot:write"])]
-    public bool $main;
+    public ?bool $main;
 
     /**
-     * @var Category[]
+     * @var int[]
      */
     #[NotBlank]
+    #[NotNull]
+    #[ValidCategory]
     #[Groups(["spot:write"])]
-    public iterable $categories;
+    public ?array $categories;
+
+    #[Image(
+        mimeTypes: ['image/jpeg'],
+        minWidth: 700,
+        minHeight: 500,
+    )]
+    #[Groups(['spot:write'])]
+    public ?UploadedFile $image;
 
     public static function createFromEntity(?Spot $spot): self
     {

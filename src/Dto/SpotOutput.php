@@ -2,7 +2,6 @@
 
 namespace App\Dto;
 
-use App\Entity\Category;
 use App\Entity\Spot;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -45,7 +44,7 @@ class SpotOutput
     public ?string $authors;
 
     /**
-     * @var Category[]
+     * @var int[]
      */
     #[Groups("spot:item:get")]
     public iterable $categories;
@@ -65,7 +64,9 @@ class SpotOutput
         $output->main = $spot->isMain();
         $output->years = $spot->getYears();
         $output->authors = $spot->getAuthors();
-        $output->categories = $spot->getCategories();
+        foreach ($spot->getCategories() as $category) {
+            $output->categories[] = $category->getId();
+        }
 
         return $output;
     }

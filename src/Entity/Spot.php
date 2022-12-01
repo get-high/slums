@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Spot\CreateSpotAction;
+use App\Controller\Admin\Api\CreateSpot;
+use App\Controller\Admin\Api\UpdateSpot;
 use App\Controller\Admin\Spot\RemoveSpotAction;
 use App\Dto\SpotInput;
 use App\Dto\SpotOutput;
@@ -14,6 +16,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -26,40 +29,37 @@ use Symfony\Component\Validator\Constraints\Regex;
     collectionOperations: [
         "get",
         "post" => [
+            "controller" => CreateSpot::class,
+            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:write", "spot:item:get"]],
+            "denormalization_context" => ["groups" => ["spot:write", "spot:collection:post", "spot:item:get"]],
             "input" => SpotInput::class,
-            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
-            #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
+            "output" => SpotOutput::class,
+            "deserialize" => false,
         ],
     ],
     itemOperations: [
         "get" => [
-            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
+            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
         ],
         "delete" => [
             "controller" => RemoveSpotAction::class,
         ],
-        "patch" => [
+        "update" => [
+            "path" => "/spots/{id}",
+            "method" => "post",
+            "controller" => UpdateSpot::class,
+            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:write"]],
+            "denormalization_context" => ["groups" => ["spot:write", "spot:collection:post", "spot:item:get"]],
             "input" => SpotInput::class,
+            "output" => SpotOutput::class,
+            "deserialize" => false,
         ],
-        /*"upload" => [
-            #'path' => '/spots/{id}/upload',
-            'method' => "post",
-            'deserialize' => false,
-            'controller' => CreateSpotAction::class,
-            'input_formats' => [
-                'multipart' => ['multipart/form-data'],
-            ],
-            'openapi_context' => [
-                'summary' => 'Uploads the Spot image',
-                'description' => 'Uploads the Spot image',
-            ],
-        ],*/
     ],
     denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
     normalizationContext: ["groups" => ["spot:collection:get"]],
     output: SpotOutput::class,
     paginationEnabled: true,
-    paginationItemsPerPage: 20,
+    paginationItemsPerPage: 10,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Spot
@@ -69,21 +69,27 @@ class Spot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups(["spot:write"])]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[NotBlank]
+    #[Groups(["spot:write"])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
+    #[Groups(["spot:write"])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["spot:write"])]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(["spot:write"])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -105,6 +111,7 @@ class Spot
 
     #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
     #[NotNull]
+    #[Groups(["spot:write"])]
     private ?bool $main = null;
 
     #[ORM\Column(nullable: true)]
@@ -125,6 +132,7 @@ class Spot
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: "spots")]
     #[NotBlank]
+    #[Groups(["spot:write"])]
     private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: "spot", targetEntity: Comment::class, orphanRemoval: true)]
