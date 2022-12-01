@@ -5,8 +5,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Admin\Api\CreateSpot;
+use App\Controller\Admin\Api\RemoveSpot;
 use App\Controller\Admin\Api\UpdateSpot;
-use App\Controller\Admin\Spot\RemoveSpotAction;
 use App\Dto\SpotInput;
 use App\Dto\SpotOutput;
 use App\Repository\SpotRepository;
@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints\Regex;
             "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
         ],
         "delete" => [
-            "controller" => RemoveSpotAction::class,
+            "controller" => RemoveSpot::class,
         ],
         "update" => [
             "path" => "/spots/{id}",
