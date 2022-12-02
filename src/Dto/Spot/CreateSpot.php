@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Spot;
 
 use App\Entity\Spot;
 use App\Entity\User;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class SpotInput
+class CreateSpot
 {
     #[NotBlank]
     #[Groups(["spot:write"])]
@@ -36,6 +36,7 @@ class SpotInput
     #[Groups(["spot:write"])]
     public ?array $categories;
 
+    #[NotBlank]
     #[Image(
         mimeTypes: ['image/jpeg'],
         minWidth: 700,
@@ -46,7 +47,7 @@ class SpotInput
 
     public static function createFromEntity(?Spot $spot): self
     {
-        $dto = new SpotInput();
+        $dto = new CreateSpot();
 
         if (!$spot) {
             return $dto;

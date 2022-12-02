@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Spot;
 
 use App\Entity\Spot;
 use Symfony\Component\Serializer\Annotation\Groups;

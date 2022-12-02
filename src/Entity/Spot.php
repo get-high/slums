@@ -4,11 +4,12 @@ namespace App\Entity;
 
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Api\CreateSpot;
-use App\Controller\Admin\Api\RemoveSpot;
-use App\Controller\Admin\Api\UpdateSpot;
-use App\Dto\SpotInput;
-use App\Dto\SpotOutput;
+use App\Controller\Admin\Api\CreateSpotController;
+use App\Controller\Admin\Api\RemoveSpotController;
+use App\Controller\Admin\Api\UpdateSpotController;
+use App\Dto\Spot\CreateSpot;
+use App\Dto\Spot\SpotOutput;
+use App\Dto\Spot\UpdateSpot;
 use App\Repository\SpotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,10 +30,10 @@ use Symfony\Component\Validator\Constraints\Regex;
     collectionOperations: [
         "get",
         "post" => [
-            "controller" => CreateSpot::class,
-            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:write", "spot:item:get"]],
-            "denormalization_context" => ["groups" => ["spot:write", "spot:collection:post", "spot:item:get"]],
-            "input" => SpotInput::class,
+            "controller" => CreateSpotController::class,
+            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
+            "denormalization_context" => ["groups" => ["spot:write"]],
+            "input" => CreateSpot::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
         ],
@@ -42,20 +43,20 @@ use Symfony\Component\Validator\Constraints\Regex;
             "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
         ],
         "delete" => [
-            "controller" => RemoveSpot::class,
+            "controller" => RemoveSpotController::class,
         ],
         "update" => [
             "path" => "/spots/{id}",
             "method" => "post",
-            "controller" => UpdateSpot::class,
-            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:write"]],
-            "denormalization_context" => ["groups" => ["spot:write", "spot:collection:post", "spot:item:get"]],
-            "input" => SpotInput::class,
+            "controller" => UpdateSpotController::class,
+            "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
+            "denormalization_context" => ["groups" => ["spot:write"]],
+            "input" => UpdateSpot::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
         ],
     ],
-    denormalizationContext: ["groups" => ["spot:write", "spot:collection:post"]],
+    denormalizationContext: ["groups" => ["spot:write"]],
     normalizationContext: ["groups" => ["spot:collection:get"]],
     output: SpotOutput::class,
     paginationEnabled: true,

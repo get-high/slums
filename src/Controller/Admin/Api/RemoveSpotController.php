@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class RemoveSpot
+class RemoveSpotController
 {
     public function __construct(
         private Filesystem $spotFilesystem,
