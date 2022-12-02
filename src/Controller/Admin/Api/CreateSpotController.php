@@ -34,7 +34,6 @@ class CreateSpotController extends AbstractController
         $spot = (new Spot())
             ->setTitle($dto->title)
             ->setSlug($dto->slug)
-            ->setMain($dto->main)
             ->setAddress($dto->address)
             ->setDescription($dto->description)
             ->setContent($dto->content)
