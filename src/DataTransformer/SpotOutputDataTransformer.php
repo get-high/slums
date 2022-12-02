@@ -3,7 +3,7 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Dto\Spot\SpotOutput;
+use App\Dto\SpotOutput;
 use App\Entity\Spot;
 
 class SpotOutputDataTransformer implements DataTransformerInterface

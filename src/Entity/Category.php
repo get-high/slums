@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Dto\CategoryInput;
 use App\Dto\CategoryOutput;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Table(name: "categories")]
@@ -21,25 +21,34 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     collectionOperations: [
         "get",
         "post" => [
-            "input" => CategoryInput::class,
-            "normalization_context" => ["skip_null_values" => false, "groups"=>["category:item:get"]],
+            #"normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
+            #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
+            //uriTemplate: '/spots/create',
         ],
     ],
     itemOperations: [
         "get" => [
-            "output" => CategoryOutput::class,
+            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
         ],
-        "delete" => [
-
-        ],
-        "patch" => [
-
-        ],
+        /*"upload" => [
+            #'path' => '/spots/{id}/upload',
+            'method' => "post",
+            'deserialize' => false,
+            'controller' => CreateSpotAction::class,
+            'input_formats' => [
+                'multipart' => ['multipart/form-data'],
+            ],
+            'openapi_context' => [
+                'summary' => 'Uploads the Spot image',
+                'description' => 'Uploads the Spot image',
+            ],
+        ],*/
     ],
     denormalizationContext: ["groups" => ["category:write", "category:collection:post"]],
     normalizationContext: ["groups" => ["category:collection:get"]],
     output: CategoryOutput::class,
-    paginationEnabled: false,
+    paginationEnabled: true,
+    paginationItemsPerPage: 20,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Category
@@ -49,6 +58,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
+    #[Groups(["category:write"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

@@ -3,8 +3,8 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\Spot\SpotInput;
-use App\Dto\Spot\SpotOutput;
+use App\Dto\SpotInput;
+use App\Dto\SpotOutput;
 use App\Entity\Spot;
 use App\Repository\CategoryRepository;
 use App\Service\ImageUploader;
@@ -35,6 +35,15 @@ class CreateSpotController extends AbstractController
             ->setTitle($dto->title)
             ->setSlug($dto->slug)
             ->setMain($dto->main)
+            ->setAddress($dto->address)
+            ->setDescription($dto->description)
+            ->setContent($dto->content)
+            ->setHowToGet($dto->how_to_get)
+            ->setLat($dto->lat)
+            ->setLng($dto->lng)
+            ->setMain($dto->main)
+            ->setYears($dto->years)
+            ->setAuthors($dto->authors)
             ->setCreator($this->security->getUser());
 
         foreach ($dto->categories as $category) {
