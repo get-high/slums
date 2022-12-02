@@ -70,27 +70,21 @@ class Spot
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
-    #[Groups(["spot:write"])]
-
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[NotBlank]
-    #[Groups(["spot:write"])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
     #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
-    #[Groups(["spot:write"])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["spot:write"])]
     private ?string $address = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["spot:write"])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -112,7 +106,6 @@ class Spot
 
     #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
     #[NotNull]
-    #[Groups(["spot:write"])]
     private ?bool $main = null;
 
     #[ORM\Column(nullable: true)]
@@ -133,7 +126,6 @@ class Spot
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: "spots")]
     #[NotBlank]
-    #[Groups(["spot:write"])]
     private Collection $categories;
 
     #[ORM\OneToMany(mappedBy: "spot", targetEntity: Comment::class, orphanRemoval: true)]
