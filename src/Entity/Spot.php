@@ -7,9 +7,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Admin\Api\CreateSpotController;
 use App\Controller\Admin\Api\RemoveSpotController;
 use App\Controller\Admin\Api\UpdateSpotController;
-use App\Dto\Spot\CreateSpot;
+use App\Dto\Spot\SpotInput;
 use App\Dto\Spot\SpotOutput;
-use App\Dto\Spot\UpdateSpot;
 use App\Repository\SpotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,7 +16,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
@@ -32,8 +30,8 @@ use Symfony\Component\Validator\Constraints\Regex;
         "post" => [
             "controller" => CreateSpotController::class,
             "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
-            "denormalization_context" => ["groups" => ["spot:write"]],
-            "input" => CreateSpot::class,
+            "validation_context" => ["groups" => ["spot:write"]],
+            "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
         ],
@@ -50,8 +48,8 @@ use Symfony\Component\Validator\Constraints\Regex;
             "method" => "post",
             "controller" => UpdateSpotController::class,
             "normalization_context" => ["skip_null_values" => false, "groups" => ["spot:item:get"]],
-            "denormalization_context" => ["groups" => ["spot:write"]],
-            "input" => UpdateSpot::class,
+            "validation_context" => ["groups" => ["spot:update"]],
+            "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
         ],
@@ -60,7 +58,7 @@ use Symfony\Component\Validator\Constraints\Regex;
     normalizationContext: ["groups" => ["spot:collection:get"]],
     output: SpotOutput::class,
     paginationEnabled: true,
-    paginationItemsPerPage: 10,
+    paginationItemsPerPage: 20,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Spot

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\Spot\CreateSpot;
+use App\Dto\Spot\SpotInput;
 use App\Dto\Spot\SpotOutput;
 use App\Entity\Spot;
 use App\Repository\CategoryRepository;
@@ -27,17 +27,9 @@ class CreateSpotController extends AbstractController
 
     public function __invoke(Request $request)
     {
-        $dto = new CreateSpot();
-        $dto->title = $request->get('title');
-        $dto->slug = $request->get('slug');
-        $dto->main = $request->get('main');
-        $dto->image = $request->files->get('image');
-
-        foreach ($request->get('categories') as $category) {
-            $dto->categories[] = $category;
-        }
-
-        $this->validator->validate($dto);
+        $input = new SpotInput();
+        $dto = $input->createFromRequest($request);
+        $this->validator->validate($dto, ['groups' => ['spot:write']]);
 
         $spot = (new Spot())
             ->setTitle($dto->title)
