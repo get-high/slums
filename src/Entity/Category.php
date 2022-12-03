@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
     ],
     denormalizationContext: ["groups" => ["category:write"]],
     input: CategoryInput::class,
-    normalizationContext: ["skip_null_values" => false, "groups" => ["category:item:get"]],
+    normalizationContext: ["groups" => ["category:item:get"]],
     output: CategoryOutput::class,
     paginationEnabled: false,
     security: "is_granted('ROLE_ADMIN')",
@@ -64,8 +64,8 @@ class Category
     #[NotBlank]
     private ?string $slug = null;
 
-    #[ORM\Column(options: ["default" => 0])]
-    private ?int $order_by = null;
+    #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
+    private ?int $order_by = 0;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[NotBlank]
