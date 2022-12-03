@@ -3,9 +3,7 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\SpotInput;
-use App\Dto\SpotOutput;
-use App\Entity\Category;
+use App\Dto\CategorySort;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,23 +16,21 @@ class SortCategoriesController extends AbstractController
     public function __construct(
         private ValidatorInterface $validator,
         private CategoryRepository $categoryRepository,
-        private EntityManagerInterface $em)
+        private EntityManagerInterface $em,
+    )
     {}
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): void
     {
-        $input = new SpotInput();
-        $dto = $input->createFromRequest($request);
-        $this->validator->validate($dto, ['groups' => ['spot:update']]);
+        $dto = new CategorySort();
+        $dto->categories = $request->get('categories');
+        $this->validator->validate($dto);
 
-        $spot = new Category();
-        $spot->setOrderBy($dto->title);
-
-        $this->validator->validate($spot);
-        $this->em->persist($spot);
-        $this->em->flush();
-        $output = new SpotOutput();
-
-        return $output->createFromEntity($spot);
+        foreach ($dto->categories as $index => $cat) {
+            $category = $this->categoryRepository->find($cat);
+            $category->setOrderBy($index);
+            $this->em->persist($category);
+            $this->em->flush();
+        }
     }
 }
