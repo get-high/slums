@@ -26,8 +26,8 @@ class SortCategoriesController extends AbstractController
         $dto->categories = $request->get('categories');
         $this->validator->validate($dto);
 
-        foreach ($dto->categories as $index => $cat) {
-            $category = $this->categoryRepository->find($cat);
+        foreach ($dto->categories as $index => $id) {
+            $category = $this->categoryRepository->find($id);
             $category->setOrderBy($index);
             $this->em->persist($category);
             $this->em->flush();
