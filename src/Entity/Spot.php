@@ -34,6 +34,9 @@ use Symfony\Component\Validator\Constraints\Regex;
             "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
+            "input_formats" => [
+                'multipart' => ['multipart/form-data'],
+            ],
         ],
     ],
     itemOperations: [
@@ -52,6 +55,9 @@ use Symfony\Component\Validator\Constraints\Regex;
             "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
+            "input_formats" => [
+                'multipart' => ['multipart/form-data'],
+            ],
         ],
     ],
     denormalizationContext: ["groups" => ["spot:write"]],

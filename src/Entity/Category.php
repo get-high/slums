@@ -44,7 +44,15 @@ use Symfony\Component\Validator\Constraints\NotNull;
             ],
         ],
     ],
-    itemOperations: ["get", "patch", "delete"],
+    itemOperations: [
+        "get",
+        "delete",
+        "patch" => [
+            "input_formats" => [
+                'json' => ['application/merge-patch+json'],
+            ],
+        ],
+    ],
     denormalizationContext: ["groups" => ["category:write"]],
     input: CategoryInput::class,
     normalizationContext: ["groups" => ["category:item:get"]],
