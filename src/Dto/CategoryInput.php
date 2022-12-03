@@ -10,24 +10,20 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class CategoryInput
 {
-    #[NotBlank(groups: ["category:write"])]
+    #[NotBlank]
     #[Groups("category:write")]
     public ?string $title;
 
-    #[NotBlank(groups: ["category:write"])]
+    #[NotBlank]
     #[Regex(pattern: "/^[a-z_0-9]+$/", message:"Поле slug может состоять только из латинских букв, _ и цифр")]
     #[Groups("category:write")]
     public ?string $slug;
 
-    #[NotBlank(groups: ["category:write"])]
+    #[NotBlank]
     #[Groups("category:write")]
     public ?string $description;
 
-    #[NotBlank(groups: ["category:sort"])]
-    #[Groups(["category:sort"])]
-    public ?int $order_by = 0;
-
-    #[NotNull(groups: ["category:write"])]
+    #[NotNull]
     #[Groups("category:write")]
     public ?bool $main;
 
@@ -43,7 +39,6 @@ class CategoryInput
         $dto->slug = $category->getSlug();
         $dto->description = $category->getDescription();
         $dto->main = $category->isMain();
-        $dto->order_by = $category->getOrderBy();
 
         return $dto;
     }
@@ -57,8 +52,7 @@ class CategoryInput
         $category->setTitle($this->title)
             ->setSlug($this->slug)
             ->setDescription($this->description)
-            ->setMain($this->main)
-            ->setOrderBy($this->order_by);
+            ->setMain($this->main);
 
         return $category;
     }

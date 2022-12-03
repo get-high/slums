@@ -24,23 +24,19 @@ use Symfony\Component\Validator\Constraints\NotNull;
         "get" => [
             "normalization_context" => ["groups" => ["category:collection:get"]],
         ],
-        "post" => [
-            "validation_context" => ["groups" => ["category:write"]],
-        ],
+        "post",
     ],
     itemOperations: [
         "get",
-        "patch" => [
-            "validation_context" => ["groups" => ["category:write"]],
-        ],
+        "patch",
         "delete",
         "sort" => [
-            'path' => '/spots/{id}/sort',
+            'path' => '/categories/sort',
             'method' => "post",
             'controller' => CreateSpotController::class,
             'openapi_context' => [
-                'summary' => 'Uploads the Spot image',
-                'description' => 'Uploads the Spot image',
+                'summary' => 'Sort Categories',
+                'description' => 'Sort Categories',
             ],
         ],
     ],
@@ -68,7 +64,7 @@ class Category
     #[NotBlank]
     private ?string $slug = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(options: ["default" => 0])]
     private ?int $order_by = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

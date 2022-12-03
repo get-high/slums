@@ -19,7 +19,7 @@ class CategoryInputDataTransformer implements DataTransformerInterface
      */
     public function transform($input, string $to, array $context = []): Category
     {
-        $this->validator->validate($input, ['groups' => ['category:write']]);
+        $this->validator->validate($input);
 
         $category = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? null;
 
