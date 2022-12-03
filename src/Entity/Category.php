@@ -22,9 +22,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get" => [
-            "normalization_context" => ["groups" => ["category:collection:get"]]
-        ],
+        "get",
         "post",
         "sort" => [
             "path" => "/categories/sort",
@@ -60,13 +58,13 @@ use Symfony\Component\Validator\Constraints\NotNull;
         ],
     ],
     itemOperations: [
-        "get",
         "delete",
         "patch" => ["input_formats" => ["json" => ["application/merge-patch+json"]]],
+        "get" => ["normalization_context" => ["groups" => ["category:item:get"]]],
     ],
     denormalizationContext: ["groups" => ["category:write"]],
     input: CategoryInput::class,
-    normalizationContext: ["groups" => ["category:item:get"]],
+    normalizationContext: ["groups" => ["category:collection:get"]],
     output: CategoryOutput::class,
     paginationEnabled: false,
     security: "is_granted('ROLE_ADMIN')",
