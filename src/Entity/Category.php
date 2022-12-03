@@ -23,8 +23,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 #[ApiResource(
     collectionOperations: [
         "get" => [
-            "normalization_context" => ["groups" => ["category:collection:get"]],
-            "output_formats" => ["json" => ["application/ld+json"]],
+            "normalization_context" => ["groups" => ["category:collection:get"]]
         ],
         "post",
         "sort" => [
