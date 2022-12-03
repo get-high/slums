@@ -3,10 +3,10 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
 use ApiPlatform\Validator\ValidatorInterface;
 use App\Dto\CategoryInput;
 use App\Entity\Category;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class CategoryInputDataTransformer implements DataTransformerInterface
 {
@@ -19,9 +19,9 @@ class CategoryInputDataTransformer implements DataTransformerInterface
      */
     public function transform($input, string $to, array $context = []): Category
     {
-        $this->validator->validate($input);
+        $this->validator->validate($input, ['groups' => ['category:write']]);
 
-        $category = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE] ?? null;
+        $category = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? null;
 
         return $input->createOrUpdateEntity($category);
     }

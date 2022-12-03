@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Admin\Api\CreateSpotController;
+use App\Dto\CategoryInput;
 use App\Dto\CategoryOutput;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,44 +13,42 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Table(name: "categories")]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[UniqueEntity(fields: ["slug"], message: "Данный slug уже используется в системе.")]
 #[ApiResource(
     collectionOperations: [
-        "get",
+        "get" => [
+            "normalization_context" => ["groups" => ["category:collection:get"]],
+        ],
         "post" => [
-            #"normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
-            #"denormalization_context" => ["groups"=>["cheese:write", "cheese:collection:post"]],
-            //uriTemplate: '/spots/create',
+            "validation_context" => ["groups" => ["category:write"]],
         ],
     ],
     itemOperations: [
-        "get" => [
-            "normalization_context" => ["skip_null_values" => false, "groups"=>["spot:item:get"]],
+        "get",
+        "patch" => [
+            "validation_context" => ["groups" => ["category:write"]],
         ],
-        /*"upload" => [
-            #'path' => '/spots/{id}/upload',
+        "delete",
+        "sort" => [
+            'path' => '/spots/{id}/sort',
             'method' => "post",
-            'deserialize' => false,
-            'controller' => CreateSpotAction::class,
-            'input_formats' => [
-                'multipart' => ['multipart/form-data'],
-            ],
+            'controller' => CreateSpotController::class,
             'openapi_context' => [
                 'summary' => 'Uploads the Spot image',
                 'description' => 'Uploads the Spot image',
             ],
-        ],*/
+        ],
     ],
-    denormalizationContext: ["groups" => ["category:write", "category:collection:post"]],
-    normalizationContext: ["groups" => ["category:collection:get"]],
+    denormalizationContext: ["groups" => ["category:write"]],
+    input: CategoryInput::class,
+    normalizationContext: ["skip_null_values" => false, "groups" => ["category:item:get"]],
     output: CategoryOutput::class,
-    paginationEnabled: true,
-    paginationItemsPerPage: 20,
+    paginationEnabled: false,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Category
@@ -58,7 +58,6 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
-    #[Groups(["category:write"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -66,15 +65,18 @@ class Category
     private ?string $title = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[NotBlank]
     private ?string $slug = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $order_by = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(options: ["unsigned" => true, "default" => 0])]
+    #[NotNull]
     private ?bool $main = null;
 
     #[ORM\ManyToMany(targetEntity: Spot::class, mappedBy: "categories")]
