@@ -66,7 +66,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
         "delete",
         "patch" => [
             "input_formats" => [
-                'json' => ['application/merge-patch+json'],
+                "json" => ["application/merge-patch+json"],
             ],
         ],
     ],

@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints\Regex;
             "output" => SpotOutput::class,
             "deserialize" => false,
             "input_formats" => [
-                'multipart' => ['multipart/form-data'],
+                "multipart" => ["multipart/form-data"],
             ],
         ],
     ],
@@ -56,7 +56,7 @@ use Symfony\Component\Validator\Constraints\Regex;
             "output" => SpotOutput::class,
             "deserialize" => false,
             "input_formats" => [
-                'multipart' => ['multipart/form-data'],
+                "multipart" => ["multipart/form-data"],
             ],
         ],
     ],
