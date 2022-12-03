@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Api\CreateSpotController;
+use App\Controller\Admin\Api\SortCategoriesController;
 use App\Dto\CategoryInput;
 use App\Dto\CategoryOutput;
 use App\Repository\CategoryRepository;
@@ -25,21 +25,17 @@ use Symfony\Component\Validator\Constraints\NotNull;
             "normalization_context" => ["groups" => ["category:collection:get"]],
         ],
         "post",
-    ],
-    itemOperations: [
-        "get",
-        "patch",
-        "delete",
         "sort" => [
-            'path' => '/categories/sort',
-            'method' => "post",
-            'controller' => CreateSpotController::class,
-            'openapi_context' => [
-                'summary' => 'Sort Categories',
-                'description' => 'Sort Categories',
+            "path" => "/categories/sort",
+            "method" => "post",
+            "controller" => SortCategoriesController::class,
+            "openapi_context" => [
+                "summary" => "Sort Categories",
+                "description" => "Sort Categories",
             ],
         ],
     ],
+    itemOperations: ["get", "patch", "delete"],
     denormalizationContext: ["groups" => ["category:write"]],
     input: CategoryInput::class,
     normalizationContext: ["groups" => ["category:item:get"]],
