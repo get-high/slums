@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
     collectionOperations: [
         "get" => [
             "normalization_context" => ["groups" => ["category:collection:get"]],
+            "output_formats" => ["json" => ["application/ld+json"]],
         ],
         "post",
         "sort" => [
@@ -35,9 +36,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
             "output" => false,
             "deserialize" => false,
             "validate"=> false,
-            "input_formats" => [
-                "multipart" => ["multipart/form-data"],
-            ],
+            "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
                 "summary" => "Sorts the collection of Category resources",
                 "description" => "Sorts the collection of Category resources",
@@ -64,11 +63,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
     itemOperations: [
         "get",
         "delete",
-        "patch" => [
-            "input_formats" => [
-                "json" => ["application/merge-patch+json"],
-            ],
-        ],
+        "patch" => ["input_formats" => ["json" => ["application/merge-patch+json"]]],
     ],
     denormalizationContext: ["groups" => ["category:write"]],
     input: CategoryInput::class,
