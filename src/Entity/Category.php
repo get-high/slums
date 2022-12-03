@@ -36,11 +36,28 @@ use Symfony\Component\Validator\Constraints\NotNull;
             "deserialize" => false,
             "validate"=> false,
             "input_formats" => [
-                'multipart' => ['multipart/form-data'],
+                "multipart" => ["multipart/form-data"],
             ],
             "openapi_context" => [
-                "summary" => "Sort Categories",
-                "description" => "Sort Categories",
+                "summary" => "Sorts the collection of Category resources",
+                "description" => "Sorts the collection of Category resources",
+                "responses" => ["204" => ["description" => "Collection of Category resources was sorted"]],
+                "requestBody" => [
+                    "required" => true,
+                    "content" => [
+                        "multipart/form-data" => [
+                            "schema" => [
+                                "type" => "object",
+                                "properties" => [
+                                    "categories" => [
+                                        "type" => "array",
+                                        "description" => "Category Id",
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],
