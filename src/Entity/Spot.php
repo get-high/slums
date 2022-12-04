@@ -34,9 +34,7 @@ use Symfony\Component\Validator\Constraints\Regex;
             "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
-            "input_formats" => [
-                "multipart" => ["multipart/form-data"],
-            ],
+            "input_formats" => ["multipart" => ["multipart/form-data"]],
         ],
     ],
     itemOperations: [
@@ -55,8 +53,64 @@ use Symfony\Component\Validator\Constraints\Regex;
             "input" => SpotInput::class,
             "output" => SpotOutput::class,
             "deserialize" => false,
-            "input_formats" => [
-                "multipart" => ["multipart/form-data"],
+            "input_formats" => ["multipart" => ["multipart/form-data"]],
+            "openapi_context" => [
+                "summary" => "Updates the Spot resource.",
+                "description" => "Updates the Spot resource.",
+                "responses" => ["201" => ["description" => "Spot resource updated"]],
+                "requestBody" => [
+                    "description" => "The updated Spot resource",
+                    "required" => true,
+                    "content" => [
+                        "multipart/form-data" => [
+                            "schema" => [
+                                "type" => "object",
+                                "properties" => [
+                                    "title" => [
+                                        "type" => "string",
+                                    ],
+                                    "slug" => [
+                                        "type" => "string",
+                                    ],
+                                    "address" => [
+                                        "type" => "string",
+                                    ],
+                                    "description" => [
+                                        "type" => "string",
+                                    ],
+                                    "content" => [
+                                        "type" => "string",
+                                    ],
+                                    "how_to_get" => [
+                                        "type" => "string",
+                                    ],
+                                    "lat" => [
+                                        "type" => "number",
+                                    ],
+                                    "lng" => [
+                                        "type" => "number",
+                                    ],
+                                    "main" => [
+                                        "type" => "boolean",
+                                    ],
+                                    "years" => [
+                                        "type" => "string",
+                                    ],
+                                    "authors" => [
+                                        "type" => "string",
+                                    ],
+                                    "categories" => [
+                                        "type" => "array",
+                                    ],
+                                    "image" => [
+                                        "type" => "string",
+                                        "format" => "binary",
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

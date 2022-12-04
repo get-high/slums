@@ -47,7 +47,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
                                 "properties" => [
                                     "categories" => [
                                         "type" => "array",
-                                        "description" => "Category Id",
                                     ],
                                 ],
                             ],
