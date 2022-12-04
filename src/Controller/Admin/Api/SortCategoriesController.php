@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\CategorySort;
+use App\Dto\SpotInput;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +22,9 @@ class SortCategoriesController extends AbstractController
 
     public function __invoke(Request $request): void
     {
-        $dto = new CategorySort();
+        $dto = new SpotInput();
         $dto->categories = $request->get('categories');
-        $this->validator->validate($dto);
+        $this->validator->validate($dto, ['groups' => ['category:sort']]);
 
         foreach ($dto->categories as $index => $id) {
             $category = $this->categoryRepository->find($id);
