@@ -58,10 +58,10 @@ class SpotInput
     /**
      * @var int[]
      */
-    #[NotNull(groups: ["spot:write", "spot:update"])]
-    #[NotBlank(groups: ["spot:write", "spot:update"])]
-    #[ValidCategory(groups: ["spot:write", "spot:update"])]
-    #[Groups(["spot:write"])]
+    #[NotNull(groups: ["spot:write", "spot:update", "category:sort"])]
+    #[NotBlank(groups: ["spot:write", "spot:update", "category:sort"])]
+    #[ValidCategory(groups: ["spot:write", "spot:update", "category:sort"])]
+    #[Groups(["spot:write", "category:sort"])]
     public ?array $categories;
 
     #[NotBlank(groups: ["spot:write"])]
