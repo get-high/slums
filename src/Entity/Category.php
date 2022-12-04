@@ -6,7 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Admin\Api\SortCategoriesController;
 use App\Dto\CategoryInput;
 use App\Dto\CategoryOutput;
-use App\Dto\CategorySort;
+use App\Dto\SpotInput;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,14 +29,14 @@ use Symfony\Component\Validator\Constraints\NotNull;
             "method" => "post",
             "controller" => SortCategoriesController::class,
             "denormalization_context" => ["groups" => ["category:sort"]],
-            "input" => CategorySort::class,
+            "input" => SpotInput::class,
             "output" => false,
             "deserialize" => false,
             "validate"=> false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
-                "summary" => "Sorts the collection of Category resources",
-                "description" => "Sorts the collection of Category resources",
+                "summary" => "Sorts the collection of Category resources.",
+                "description" => "Sorts the collection of Category resources.",
                 "responses" => ["204" => ["description" => "Collection of Category resources was sorted"]],
                 "requestBody" => [
                     "required" => true,
