@@ -72,8 +72,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             "method" => "post",
             "controller" => SortPhotosController::class,
             "output" => false,
-            "deserialize" => false,
             "validate"=> false,
+            "deserialize" => false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
                 "summary" => "Sorts the collection of Photo resources.",
