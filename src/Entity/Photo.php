@@ -6,7 +6,9 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\Admin\Api\RemovePhotoController;
-use App\Controller\Admin\Api\UpdateSpotPhotosController;
+use App\Controller\Admin\Api\SortPhotosController;
+use App\Controller\Admin\Api\UpdatePhotosController;
+use App\Controller\Admin\Api\UploadPhotosController;
 use App\Dto\PhotoOutput;
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,36 +22,30 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
         "update" => [
             "path" => "/photos/update",
             "method" => "post",
-            "controller" => UpdateSpotPhotosController::class,
+            "controller" => UpdatePhotosController::class,
             "normalization_context" => ["skip_null_values" => false, "groups" => ["photo:item:get"]],
             "validation_context" => ["groups" => ["photo:update"]],
             #"input" => SpotInput::class,
-            #"output" => SpotOutput::class,
             "deserialize" => false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
-                "parameters" => [
-                   # "name" => "spotId",
-                    #"in" => "path",
-                    #"type" => "string",
 
-                ],
             ],
         ],
         "upload" => [
             "path" => "/photos/upload",
             "method" => "post",
-            #"controller" => UpdateSpotController::class,
-
+            "controller" => UploadPhotosController::class,
             "output" => false,
+            "validate" => false,
             "deserialize" => false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
-                "summary" => "Updates the Spot resource.",
-                "description" => "Updates the Spot resource.",
-                "responses" => ["201" => ["description" => "Spot resource updated"]],
+                "summary" => "Uploads Photos.",
+                "description" => "Uploads Photos.",
+                "responses" => ["204" => ["description" => "Photos uploaded"]],
                 "requestBody" => [
-                    "description" => "The updated Spot resource",
+                    "description" => "The uploaded Photos",
                     "required" => true,
                     "content" => [
                         "multipart/form-data" => [
@@ -73,7 +69,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
         "sort" => [
             "path" => "/photos/sort",
             "method" => "post",
-            #"controller" => SortCategoriesController::class,
+            "controller" => SortPhotosController::class,
             "denormalization_context" => ["groups" => ["photo:sort"]],
             #"input" => SpotInput::class,
             "output" => false,
@@ -81,9 +77,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             "validate"=> false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
-                "summary" => "Sorts the collection of Category resources.",
-                "description" => "Sorts the collection of Category resources.",
-                "responses" => ["204" => ["description" => "Collection of Category resources was sorted"]],
+                "summary" => "Sorts the collection of Photo resources.",
+                "description" => "Sorts the collection of Photo resources.",
+                "responses" => ["204" => ["description" => "Collection of Photo resources was sorted"]],
                 "requestBody" => [
                     "required" => true,
                     "content" => [
