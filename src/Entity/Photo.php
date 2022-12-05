@@ -9,6 +9,7 @@ use App\Controller\Admin\Api\RemovePhotoController;
 use App\Controller\Admin\Api\SortPhotosController;
 use App\Controller\Admin\Api\UpdatePhotosController;
 use App\Controller\Admin\Api\UploadPhotosController;
+use App\Dto\PhotoInput;
 use App\Dto\PhotoOutput;
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -71,7 +72,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             "method" => "post",
             "controller" => SortPhotosController::class,
             "denormalization_context" => ["groups" => ["photo:sort"]],
-            #"input" => SpotInput::class,
+            "input" => PhotoInput::class,
             "output" => false,
             "deserialize" => false,
             "validate"=> false,

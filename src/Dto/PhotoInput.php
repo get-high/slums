@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Validator\ValidPhoto;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\Image;
@@ -11,11 +12,21 @@ class PhotoInput
 {
     #[NotBlank]
     #[Groups(["photo:write"])]
-    public string $description;
+    public ?string $description;
 
     #[Groups("photo:write")]
-    public int $order_by;
+    public ?int $order_by;
 
+    /**
+     * @var int[]
+     */
+    #[NotBlank(groups: ["photo:sort"])]
+    #[ValidPhoto(groups: ["photo:sort"])]
+    public ?array $photos;
+
+    /**
+     * @var int[]
+     */
     #[NotBlank(groups: ["photo:image"])]
     #[Image(
         mimeTypes: ["image/jpeg"],

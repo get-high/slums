@@ -39,6 +39,11 @@ class PhotoRepository extends ServiceEntityRepository
         }
     }
 
+    public function existsById(int $id): bool
+    {
+        return null !== $this->find($id);
+    }
+
 //    /**
 //     * @return Photo[] Returns an array of Photo objects
 //     */
