@@ -50,6 +50,7 @@ services:
     App\DataTransformer\SpotOutputDataTransformer: ~
     App\DataTransformer\CategoryInputDataTransformer: ~
     App\DataTransformer\CategoryOutputDataTransformer: ~
+    App\DataTransformer\PhotoOutputDataTransformer: ~
 
     image_uploader.spot:
         class: App\Service\ImageUploader
