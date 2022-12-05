@@ -28,8 +28,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
             "path" => "/categories/sort",
             "method" => "post",
             "controller" => SortCategoriesController::class,
-            "denormalization_context" => ["groups" => ["category:sort"]],
-            "input" => SpotInput::class,
             "output" => false,
             "deserialize" => false,
             "validate"=> false,

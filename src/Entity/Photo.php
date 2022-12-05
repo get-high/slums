@@ -71,8 +71,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             "path" => "/photos/sort",
             "method" => "post",
             "controller" => SortPhotosController::class,
-            "denormalization_context" => ["groups" => ["photo:sort"]],
-            "input" => PhotoInput::class,
             "output" => false,
             "deserialize" => false,
             "validate"=> false,
