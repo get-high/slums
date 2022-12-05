@@ -101,6 +101,9 @@ use Symfony\Component\Validator\Constraints\Regex;
                                     ],
                                     "categories" => [
                                         "type" => "array",
+                                        "items" => [
+                                            "type" => "integer",
+                                        ],
                                     ],
                                     "image" => [
                                         "type" => "string",

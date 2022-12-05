@@ -24,13 +24,34 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
             "path" => "/photos/update",
             "method" => "post",
             "controller" => UpdatePhotosController::class,
-            "normalization_context" => ["skip_null_values" => false, "groups" => ["photo:item:get"]],
-            "validation_context" => ["groups" => ["photo:update"]],
-            #"input" => SpotInput::class,
+            #"normalization_context" => ["skip_null_values" => false, "groups" => ["photo:item:get"]],
+            #"input" => PhotoInput::class,
+            "output" => false,
+            "validate" => false,
             "deserialize" => false,
             "input_formats" => ["multipart" => ["multipart/form-data"]],
             "openapi_context" => [
-
+                "summary" => "Updates Photos description.",
+                "description" => "Updates Photos description.",
+                "responses" => ["204" => ["description" => "Photos description updated"]],
+                "requestBody" => [
+                    "required" => true,
+                    "content" => [
+                        "multipart/form-data" => [
+                            "schema" => [
+                                "type" => "object",
+                                "properties" => [
+                                    "description" => [
+                                        "type" => "array",
+                                        "items" => [
+                                            "type" => "string",
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
         "upload" => [
@@ -46,7 +67,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
                 "description" => "Uploads Photos.",
                 "responses" => ["204" => ["description" => "Photos uploaded"]],
                 "requestBody" => [
-                    "description" => "The uploaded Photos",
                     "required" => true,
                     "content" => [
                         "multipart/form-data" => [
@@ -54,11 +74,14 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
                                 "type" => "object",
                                 "properties" => [
                                     "spot" => [
-                                        "type" => "string",
+                                        "type" => "integer",
                                     ],
                                     "photos" => [
                                         "type" => "array",
-                                        "format" => "binary",
+                                        "items" => [
+                                            "type" => "string",
+                                            "format" => "binary",
+                                        ],
                                     ],
                                 ],
                             ],
@@ -88,6 +111,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
                                 "properties" => [
                                     "photos" => [
                                         "type" => "array",
+                                        "items" => [
+                                            "type" => "integer",
+                                        ],
                                     ],
                                 ],
                             ],
