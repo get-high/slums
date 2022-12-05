@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\Admin\Api\RemovePhotoController;
 use App\Controller\Admin\Api\UpdateSpotPhotosController;
 use App\Dto\PhotoOutput;
 use App\Repository\PhotoRepository;
@@ -103,7 +104,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
     ],
     itemOperations: [
         "get",
-        "delete",
+        "delete" => [
+            "controller" => RemovePhotoController::class,
+        ],
     ],
     denormalizationContext: ["groups" => ["photo:write"]],
     normalizationContext: ["groups" => ["photo"]],
