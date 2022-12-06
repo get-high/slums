@@ -17,6 +17,8 @@ class CommentOutput
     #[Groups("comment")]
     public string $user;
 
+    #[Groups("comment")]
+    public \DateTime $date;
 
     public static function createFromEntity(Comment $comment): self
     {
@@ -24,6 +26,7 @@ class CommentOutput
         $output->id = $comment->getId();
         $output->content = $comment->getContent();
         $output->user = $comment->getUser()->getName();
+        $output->date = $comment->getCreatedAt();
 
         return $output;
     }
