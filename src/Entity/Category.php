@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Api\SortCategoriesController;
+use App\Controller\Api\Admin\SortCategoriesController;
 use App\Dto\Input\CategoryInput;
 use App\Dto\Output\CategoryOutput;
 use App\Repository\CategoryRepository;

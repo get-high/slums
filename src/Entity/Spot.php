@@ -4,9 +4,9 @@ namespace App\Entity;
 
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\Admin\Api\CreateSpotController;
-use App\Controller\Admin\Api\RemoveSpotController;
-use App\Controller\Admin\Api\UpdateSpotController;
+use App\Controller\Api\Admin\CreateSpotController;
+use App\Controller\Api\Admin\RemoveSpotController;
+use App\Controller\Api\Admin\UpdateSpotController;
 use App\Dto\Input\SpotInput;
 use App\Dto\Output\SpotOutput;
 use App\Repository\SpotRepository;

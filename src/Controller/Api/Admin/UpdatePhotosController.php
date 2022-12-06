@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin\Api;
+namespace App\Controller\Api\Admin;
 
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\EntityManagerInterface;
