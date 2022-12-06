@@ -5,8 +5,6 @@ namespace App\Service;
 use App\Entity\Category;
 use App\Entity\Spot;
 use App\Entity\User;
-use App\Exception\CategoryNotFoundException;
-use App\Repository\CategoryRepository;
 use App\Repository\SpotRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,11 +13,8 @@ class SpotService
 {
     public function __construct(
         private SpotRepository $spotRepository,
-        private CategoryRepository $categoryRepository,
-        private PaginatorInterface $paginator
-    )
-    {
-    }
+        private PaginatorInterface $paginator,
+    ) {}
 
     public function getMainSpots()
     {
