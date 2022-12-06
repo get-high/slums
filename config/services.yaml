@@ -52,6 +52,7 @@ services:
     App\DataTransformer\CategoryOutputDataTransformer: ~
     App\DataTransformer\PhotoOutputDataTransformer: ~
     App\DataTransformer\CommentOutputDataTransformer: ~
+    App\DataTransformer\UserOutputDataTransformer: ~
 
     image_uploader.spot:
         class: App\Service\ImageUploader
