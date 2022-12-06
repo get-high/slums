@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Dto\CommentOutput;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +13,16 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Table(name: 'comments')]
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ApiResource(
+    collectionOperations: ["get"],
+    itemOperations: ["get", "delete"],
+    normalizationContext: ["groups" => ["comment"]],
+    output: CommentOutput::class,
+    paginationEnabled: true,
+    paginationItemsPerPage: 20,
+    security: "is_granted('ROLE_ADMIN')",
+)]
+#[ApiFilter(SearchFilter::class, properties: ['spot' => 'exact'])]
 class Comment
 {
     use TimestampableEntity;
