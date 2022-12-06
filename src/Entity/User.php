@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Index(columns: ["uid", 'provider'], name: 'UNIQ_UID_PROVIDER')]
 #[ApiResource(
     collectionOperations: ["get"],
-    itemOperations: ["get"],
+    itemOperations: [],
     normalizationContext: ["groups" => ["user"]],
     output: UserOutput::class,
     paginationEnabled: true,
