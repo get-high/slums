@@ -2,7 +2,6 @@
 
 namespace App\Dto;
 
-use App\Entity\Category;
 use App\Entity\Comment;
 use Symfony\Component\Serializer\Annotation\Groups;
 
