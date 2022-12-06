@@ -4,7 +4,7 @@ namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\CategoryInput;
+use App\Dto\Input\CategoryInput;
 use App\Entity\Category;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 

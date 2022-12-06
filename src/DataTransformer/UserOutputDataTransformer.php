@@ -3,7 +3,7 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Dto\UserOutput;
+use App\Dto\Output\UserOutput;
 use App\Entity\User;
 
 class UserOutputDataTransformer implements DataTransformerInterface

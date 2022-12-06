@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Input;
 
 use App\Validator\ValidCategory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

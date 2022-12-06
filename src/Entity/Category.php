@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Admin\Api\SortCategoriesController;
-use App\Dto\CategoryInput;
-use App\Dto\CategoryOutput;
-use App\Dto\SpotInput;
+use App\Dto\Input\CategoryInput;
+use App\Dto\Output\CategoryOutput;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

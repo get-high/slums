@@ -3,7 +3,7 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Dto\PhotoOutput;
+use App\Dto\Output\PhotoOutput;
 use App\Entity\Photo;
 
 class PhotoOutputDataTransformer implements DataTransformerInterface

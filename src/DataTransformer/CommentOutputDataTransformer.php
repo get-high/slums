@@ -3,7 +3,7 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Dto\CommentOutput;
+use App\Dto\Output\CommentOutput;
 use App\Entity\Comment;
 
 class CommentOutputDataTransformer implements DataTransformerInterface

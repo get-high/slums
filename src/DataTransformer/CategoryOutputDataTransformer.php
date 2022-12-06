@@ -3,7 +3,7 @@
 namespace App\DataTransformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use App\Dto\CategoryOutput;
+use App\Dto\Output\CategoryOutput;
 use App\Entity\Category;
 
 class CategoryOutputDataTransformer implements DataTransformerInterface

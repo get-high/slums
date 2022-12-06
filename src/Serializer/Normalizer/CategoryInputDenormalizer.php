@@ -2,7 +2,7 @@
 
 namespace App\Serializer\Normalizer;
 
-use App\Dto\CategoryInput;
+use App\Dto\Input\CategoryInput;
 use App\Entity\Category;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;

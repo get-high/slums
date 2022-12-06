@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Input;
 
 use App\Entity\Category;
 use Symfony\Component\Serializer\Annotation\Groups;

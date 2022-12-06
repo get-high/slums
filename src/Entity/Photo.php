@@ -9,7 +9,7 @@ use App\Controller\Admin\Api\RemovePhotoController;
 use App\Controller\Admin\Api\SortPhotosController;
 use App\Controller\Admin\Api\UpdatePhotosController;
 use App\Controller\Admin\Api\UploadPhotosController;
-use App\Dto\PhotoOutput;
+use App\Dto\Output\PhotoOutput;
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
