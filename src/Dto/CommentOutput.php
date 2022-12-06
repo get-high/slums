@@ -3,6 +3,7 @@
 namespace App\Dto;
 
 use App\Entity\Comment;
+use DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 class CommentOutput
@@ -17,7 +18,7 @@ class CommentOutput
     public string $user;
 
     #[Groups("comment")]
-    public \DateTime $date;
+    public DateTime $date;
 
     public static function createFromEntity(Comment $comment): self
     {
