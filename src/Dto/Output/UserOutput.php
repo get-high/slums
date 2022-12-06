@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Output;
 
 use App\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;

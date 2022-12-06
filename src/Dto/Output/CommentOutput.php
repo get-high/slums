@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Output;
 
 use App\Entity\Comment;
 use DateTime;
