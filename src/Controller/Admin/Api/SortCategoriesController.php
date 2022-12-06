@@ -3,7 +3,7 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\SpotInput;
+use App\Dto\Input\SpotInput;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

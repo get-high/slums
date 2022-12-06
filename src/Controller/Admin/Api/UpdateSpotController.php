@@ -3,8 +3,8 @@
 namespace App\Controller\Admin\Api;
 
 use ApiPlatform\Validator\ValidatorInterface;
-use App\Dto\SpotInput;
-use App\Dto\SpotOutput;
+use App\Dto\Input\SpotInput;
+use App\Dto\Output\SpotOutput;
 use App\Entity\Spot;
 use App\Repository\CategoryRepository;
 use App\Service\ImageUploader;
