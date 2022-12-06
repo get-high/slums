@@ -121,7 +121,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
         ],
     ],
     itemOperations: [
-        "get",
         "delete" => [
             "controller" => RemovePhotoController::class,
         ],

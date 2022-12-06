@@ -15,7 +15,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ApiResource(
     collectionOperations: ["get"],
-    itemOperations: ["get", "delete"],
+    itemOperations: ["delete"],
     normalizationContext: ["groups" => ["comment"]],
     output: CommentOutput::class,
     paginationEnabled: true,
