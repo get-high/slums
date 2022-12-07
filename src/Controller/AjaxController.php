@@ -22,7 +22,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api", name="ajax_index", methods={"POST"})
+     * @Route("/ajax", name="ajax_index", methods={"POST"})
      * @param Request $request
      * @return Response
      */
@@ -34,7 +34,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/category/{id}", name="ajax_category", methods={"POST"})
+     * @Route("/ajax/category/{id}", name="ajax_category", methods={"POST"})
      * @param Category $category
      * @param Request $request
      * @return Response
@@ -47,7 +47,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/visited", name="ajax_visited_spots", methods={"POST"})
+     * @Route("/ajax/visited", name="ajax_visited_spots", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Request $request
      * @return Response
@@ -60,7 +60,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/wish-list", name="ajax_wish_list", methods={"POST"})
+     * @Route("/ajax/wish-list", name="ajax_wish_list", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Request $request
      * @return Response
@@ -73,7 +73,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/was/{id<\d+>}", name="was", methods={"POST"})
+     * @Route("/ajax/was/{id<\d+>}", name="was", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @return JsonResponse
@@ -90,7 +90,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/will/{id<\d+>}", name="will", methods={"POST"})
+     * @Route("/ajax/will/{id<\d+>}", name="will", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @return JsonResponse
@@ -107,7 +107,7 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/api/rate/{id<\d+>}", name="rate", methods={"POST"})
+     * @Route("/ajax/rate/{id<\d+>}", name="rate", methods={"POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @param Spot $spot
      * @param Request $request
