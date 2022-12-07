@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Api\Admin\CreateSpotController;
 use App\Controller\Api\Admin\RemoveSpotController;
