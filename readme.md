@@ -1,1 +1,1 @@
-Движок (CMS) сайта slums.ru на Symfony 6
+Код сайта slums.ru на Symfony 6 и Api Platform c панелью управления на React.
