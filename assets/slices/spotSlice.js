@@ -1,42 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createSpot } from '../actions/spotActions'
 
-const token = localStorage.getItem('token')
-  ? localStorage.getItem('token')
-  : null
-
 const initialState = {
   loading: false,
   error: null,
+  spot: null,
 }
 
-const createSpot = createSlice({
+const spotSlice = createSlice({
   name: 'spot',
   initialState,
   reducers: {
-    logout: (state) => {
-      localStorage.removeItem('token')
-      state.loading = false
-      state.token = null
-      state.error = null
-    },
   },
   extraReducers: {
-    [spotSlice.pending]: (state) => {
+    [createSpot.pending]: (state) => {
       state.loading = true
       state.error = null
     },
-    [spotSlice.fulfilled]: (state, { payload }) => {
+    [createSpot.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.token = payload.token
+      state.spot = payload
     },
-    [spotSlice.rejected]: (state, { payload }) => {
+    [createSpot.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
     },
   },
 })
 
-export const { logout } = spotSlice.actions
+export const { } = spotSlice.actions
 
 export default spotSlice.reducer

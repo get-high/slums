@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {useForm, Controller} from 'react-hook-form'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCategories} from '../../actions/categoryActions'
@@ -12,8 +12,13 @@ const CreateSpot = () => {
 
     const onSubmit = (data) => {
         //console.log(JSON.stringify(data))
-        //const newData =
-        dispatch(createSpot(data))
+        dispatch(createSpot(data)).then((res) => {
+            if (typeof res.error !== "undefined") {
+                res.payload.violations.forEach(function(e){
+                    setError(e.propertyPath, { type: e.code, message: e.message })
+                })
+            }
+        });
     }
 
     const {
@@ -24,6 +29,7 @@ const CreateSpot = () => {
         },
         handleSubmit,
         control,
+        setError
     } = useForm({
         mode: "onBlur",
     });
@@ -91,6 +97,78 @@ const CreateSpot = () => {
                 </label>
                 <div>
                     {errors?.address && <p>{errors?.address?.message}</p>}
+                </div>
+
+                <label>
+                    Description:
+                    <input type="text"
+                           {...register("description", {
+                               //required: "Введите description",
+                           })}
+                    />
+                </label>
+                <div>
+                    {errors?.description && <p>{errors?.description?.message}</p>}
+                </div>
+
+
+                <label>
+                    Content:
+                    <textarea
+                           {...register("content", {
+                               //required: "Введите content",
+                           })}
+                    />
+                </label>
+                <div>
+                    {errors?.content && <p>{errors?.content?.message}</p>}
+                </div>
+
+
+                <label>
+                    Lat:
+                    <input type="text"
+                           {...register("lat", {
+                               //required: "Введите lat",
+                           })}
+                    />
+                </label>
+                <div>
+                    {errors?.lat && <p>{errors?.lat?.message}</p>}
+                </div>
+
+                <label>
+                    Lng:
+                    <input type="text"
+                           {...register("lat", {
+                               //required: "Введите lat",
+                           })}
+                    />
+                </label>
+                <div>
+                    {errors?.lat && <p>{errors?.lat?.message}</p>}
+                </div>
+
+                <label>
+                    Is main?:
+                    <checkbox {...register("main", {
+                    })}/>
+                </label>
+                <div>
+                    {errors?.lat && <p>{errors?.lat?.message}</p>}
+                </div>
+
+
+                <label>
+                    Image:
+                    <input type="file"
+                           {...register("image", {
+                               //required: "Введите description",
+                           })}
+                    />
+                </label>
+                <div>
+                    {errors?.image && <p>{errors?.image?.message}</p>}
                 </div>
 
                 <input type="submit" disabled={!isValid}/>
