@@ -21,11 +21,8 @@ export const createSpot = createAsyncThunk(
             form.append('lat', lat)
             form.append('lng', lng)
             form.append('main', main)
-            //console.log(image[0])
             form.append('image', image[0])
             cats.forEach(cat => form.append('categories[]', cat.value))
-
-            //console.log(form)
 
             const { data } = await axios.post(
                 '/api/spots',
