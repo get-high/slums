@@ -1,34 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { createSpot } from '../actions/spotActions'
 
-const initialState = {
-  createSpot: {
-    loading: false,
-    errors: null,
-    spot: null,
-  },
-}
-
 const spotSlice = createSlice({
   name: 'spot',
-  initialState,
+  initialState: {
+    loading: false,
+    errors: null,
+    spotid: null,
+  },
   reducers: {
   },
   extraReducers: {
     [createSpot.pending]: (state) => {
-      state.createSpot.loading = true
-      state.createSpot.errors = null
+      state.loading = true
+      state.errors = null
     },
     [createSpot.fulfilled]: (state, { payload }) => {
-      state.createSpot.loading = false
-      state.createSpot.spot = payload
+      state.loading = false
+      state.spotid = payload
     },
     [createSpot.rejected]: (state, { payload }) => {
-      state.createSpot.loading = false
-      state.createSpot.errors = payload
+      state.loading = false
+      state.errors = payload
     },
   },
 })
+
+export const getSpotStatus = (state) => state.spot.loading;
+
+export const getSpotErrors = (state) => state.spot.errors;
+
+export const getSpotId = (state) => state.spot.spotid;
 
 export const { } = spotSlice.actions
 

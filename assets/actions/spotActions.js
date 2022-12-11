@@ -31,7 +31,13 @@ export const createSpot = createAsyncThunk(
             )
             return data
         } catch (error) {
-            return rejectWithValue(error.response.data)
+            /*
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }*/
+            return rejectWithValue(error.response.data.violations)
         }
     }
 )

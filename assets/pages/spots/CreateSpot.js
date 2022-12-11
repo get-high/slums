@@ -3,26 +3,21 @@ import {useForm, Controller} from 'react-hook-form'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCategories} from '../../actions/categoryActions'
 import {createSpot} from '../../actions/spotActions'
+import {getSpotStatus, getSpotErrors, getSpotId} from '../../slices/spotSlice'
 import Select from 'react-select'
+import {useNavigate} from "react-router-dom";
 
 const CreateSpot = () => {
 
-    const { loading, categories, error } = useSelector(state => state.category);
-
-
+    const {loading, categories, error } = useSelector(state => state.category);
+    const spotStatus = useSelector(getSpotStatus);
+    const spotErrors = useSelector(getSpotErrors);
+    const spotId = useSelector(getSpotId);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const onSubmit = (data) => {
-        //console.log(JSON.stringify(data))
-        dispatch(createSpot(data)).then((res) => {
-
-            if (res.type === "spot/create/rejected") {
-               res.payload.violations.forEach(function(e){
-                    setError(e.propertyPath, { type: e.code, message: e.message })
-                })
-            }
-            console.log(res)
-        });
+        dispatch(createSpot(data))
     }
 
     const {
@@ -42,7 +37,23 @@ const CreateSpot = () => {
         if (!loading && categories.length === 0) {
             dispatch(fetchCategories())
         }
-    }, [])
+    }, [loading, categories, dispatch])
+
+
+    useEffect(() => {
+        if (spotErrors) {
+            spotErrors.forEach(function(e){
+                setError(e.propertyPath, { type: e.code, message: e.message })
+            })
+        }
+    }, [spotErrors, dispatch]);
+
+
+    useEffect(() => {
+        if (spotId) {
+            navigate('/admin/spots/' + spotId.id )
+        }
+    }, [spotId, navigate]);
 
     return (
         <div>
@@ -185,7 +196,7 @@ const CreateSpot = () => {
                     {errors?.image && <p>{errors?.image?.message}</p>}
                 </div>
 
-                <input type="submit" disabled={!isValid}/>
+                <input type="submit" disabled={!isValid || spotStatus}/>
             </form>
         </div>
     )
