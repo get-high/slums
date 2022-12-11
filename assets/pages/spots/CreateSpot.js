@@ -131,7 +131,8 @@ const CreateSpot = () => {
 
                 <label>
                     Lat:
-                    <input type="text"
+                    <input type="number"
+                           step="0.000001"
                            {...register("lat", {
                                required: "Введите lat",
                                valueAsNumber: true,
@@ -145,7 +146,8 @@ const CreateSpot = () => {
 
                 <label>
                     Lng:
-                    <input type="text"
+                    <input type="number"
+                           step="0.000001"
                            {...register("lng", {
                                required: "Введите lnt",
                                valueAsNumber: true,
