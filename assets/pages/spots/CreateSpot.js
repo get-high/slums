@@ -8,16 +8,20 @@ import Select from 'react-select'
 const CreateSpot = () => {
 
     const { loading, categories, error } = useSelector(state => state.category);
+
+
     const dispatch = useDispatch()
 
     const onSubmit = (data) => {
         //console.log(JSON.stringify(data))
         dispatch(createSpot(data)).then((res) => {
-            if (typeof res.error !== "undefined") {
-                res.payload.violations.forEach(function(e){
+
+            if (res.type === "spot/create/rejected") {
+               res.payload.violations.forEach(function(e){
                     setError(e.propertyPath, { type: e.code, message: e.message })
                 })
             }
+            console.log(res)
         });
     }
 
@@ -129,7 +133,9 @@ const CreateSpot = () => {
                     Lat:
                     <input type="text"
                            {...register("lat", {
-                               //required: "Введите lat",
+                               required: "Введите lat",
+                               valueAsNumber: true,
+                               validate: (value) => value > 0,
                            })}
                     />
                 </label>
@@ -140,22 +146,28 @@ const CreateSpot = () => {
                 <label>
                     Lng:
                     <input type="text"
-                           {...register("lat", {
-                               //required: "Введите lat",
+                           {...register("lng", {
+                               required: "Введите lnt",
+                               valueAsNumber: true,
+                               validate: (value) => value > 0,
                            })}
                     />
                 </label>
                 <div>
-                    {errors?.lat && <p>{errors?.lat?.message}</p>}
+                    {errors?.lng && <p>{errors?.lng?.message}</p>}
                 </div>
 
                 <label>
                     Is main?:
-                    <checkbox {...register("main", {
-                    })}/>
+                    <input
+                        type='checkbox'
+                        {...register("main", {
+
+                        })}
+                    />
                 </label>
                 <div>
-                    {errors?.lat && <p>{errors?.lat?.message}</p>}
+                    {errors?.main && <p>{errors?.main?.message}</p>}
                 </div>
 
 

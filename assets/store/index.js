@@ -6,7 +6,7 @@ import spotReducer from "../slices/spotSlice";
 
 const reducer = combineReducers({
     user: userReducer,
-    spot: spotReducer,
+    //spot: spotReducer,
     category: categoryReducer,
 })
 

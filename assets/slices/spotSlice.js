@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { createSpot } from '../actions/spotActions'
 
 const initialState = {
-  loading: false,
-  error: null,
-  spot: null,
+  createSpot: {
+    loading: false,
+    errors: null,
+    spot: null,
+  },
 }
 
 const spotSlice = createSlice({
@@ -14,16 +16,16 @@ const spotSlice = createSlice({
   },
   extraReducers: {
     [createSpot.pending]: (state) => {
-      state.loading = true
-      state.error = null
+      state.createSpot.loading = true
+      state.createSpot.errors = null
     },
     [createSpot.fulfilled]: (state, { payload }) => {
-      state.loading = false
-      state.spot = payload
+      state.createSpot.loading = false
+      state.createSpot.spot = payload
     },
     [createSpot.rejected]: (state, { payload }) => {
-      state.loading = false
-      state.error = payload
+      state.createSpot.loading = false
+      state.createSpot.errors = payload
     },
   },
 })
