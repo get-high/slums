@@ -5,15 +5,13 @@ const token = localStorage.getItem('token')
   ? localStorage.getItem('token')
   : null
 
-const initialState = {
-  loading: false,
-  token,
-  error: null,
-}
-
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: {
+    loading: false,
+    token,
+    error: null,
+  },
   reducers: {
     logout: (state) => {
       localStorage.removeItem('token')
