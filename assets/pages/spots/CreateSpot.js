@@ -3,15 +3,16 @@ import {useForm, Controller} from 'react-hook-form'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCategories} from '../../actions/categoryActions'
 import {createSpot} from '../../actions/spotActions'
-import {getSpotStatus, getSpotErrors, getSpot} from '../../slices/spotSlice'
+import {getSpotSuccessStatus, getSpotLoadingStatus, getSpotErrors, getSpot, clearState} from '../../slices/spotSlice'
 import {getCategoryStatus, getCategories} from '../../slices/categorySlice'
 import Select from 'react-select'
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 
 const CreateSpot = () => {
     const categoriesLoading = useSelector(getCategoryStatus);
     const categories = useSelector(getCategories);
-    const spotStatus = useSelector(getSpotStatus);
+    const spotLoadingStatus = useSelector(getSpotLoadingStatus);
+    const spotSuccessStatus = useSelector(getSpotSuccessStatus);
     const spotErrors = useSelector(getSpotErrors);
     const spot = useSelector(getSpot);
     const dispatch = useDispatch()
@@ -29,9 +30,9 @@ const CreateSpot = () => {
         },
         handleSubmit,
         control,
-        setError
+        setError,
     } = useForm({
-        mode: "onBlur",
+        mode: 'onBlur',
     });
 
     useEffect(() => {
@@ -49,10 +50,11 @@ const CreateSpot = () => {
     }, [spotErrors, dispatch]);
 
     useEffect(() => {
-        if (spot) {
+        if (spotSuccessStatus) {
+            dispatch(clearState())
             navigate('/admin/spots/' + spot.id )
         }
-    }, [spot, navigate]);
+    }, [spotSuccessStatus, navigate, dispatch]);
 
     return (
         <div>
@@ -190,7 +192,7 @@ const CreateSpot = () => {
                     {errors?.image && <p>{errors?.image?.message}</p>}
                 </div>
 
-                <input type="submit" disabled={!isValid || spotStatus}/>
+                <input type="submit" disabled={!isValid || spotLoadingStatus}/>
             </form>
         </div>
     )

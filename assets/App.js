@@ -19,8 +19,8 @@ function App() {
                     <Route path='/admin/login' element={<LoginScreen />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path='admin/spots' element={<Spots />} />
-                        <Route path='admin/spot/create' element={<CreateSpot />} />
-                        <Route path='admin/spot/edit/:id' element={<EditSpot />} />
+                        <Route path='admin/spots/create' element={<CreateSpot />} />
+                        <Route path='admin/spots/:id' element={<EditSpot />} />
                         <Route path='admin/user-profile' element={<ProfileScreen />} />
                         <Route path='admin/home' element={<HomeScreen />} />
                     </Route>
