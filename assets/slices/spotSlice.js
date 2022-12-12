@@ -6,7 +6,7 @@ const spotSlice = createSlice({
   initialState: {
     loading: false,
     errors: null,
-    spotid: null,
+    spot: null,
   },
   reducers: {
   },
@@ -17,7 +17,7 @@ const spotSlice = createSlice({
     },
     [createSpot.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.spotid = payload
+      state.spot = payload
     },
     [createSpot.rejected]: (state, { payload }) => {
       state.loading = false
@@ -30,7 +30,7 @@ export const getSpotStatus = (state) => state.spot.loading;
 
 export const getSpotErrors = (state) => state.spot.errors;
 
-export const getSpotId = (state) => state.spot.spotid;
+export const getSpot = (state) => state.spot.spot;
 
 export const { } = spotSlice.actions
 

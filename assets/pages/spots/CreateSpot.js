@@ -3,16 +3,17 @@ import {useForm, Controller} from 'react-hook-form'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCategories} from '../../actions/categoryActions'
 import {createSpot} from '../../actions/spotActions'
-import {getSpotStatus, getSpotErrors, getSpotId} from '../../slices/spotSlice'
+import {getSpotStatus, getSpotErrors, getSpot} from '../../slices/spotSlice'
+import {getCategoryStatus, getCategories} from '../../slices/categorySlice'
 import Select from 'react-select'
 import {useNavigate} from "react-router-dom";
 
 const CreateSpot = () => {
-
-    const {loading, categories, error } = useSelector(state => state.category);
+    const categoriesLoading = useSelector(getCategoryStatus);
+    const categories = useSelector(getCategories);
     const spotStatus = useSelector(getSpotStatus);
     const spotErrors = useSelector(getSpotErrors);
-    const spotId = useSelector(getSpotId);
+    const spot = useSelector(getSpot);
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -34,11 +35,10 @@ const CreateSpot = () => {
     });
 
     useEffect(() => {
-        if (!loading && categories.length === 0) {
+        if (!categoriesLoading && categories.length === 0) {
             dispatch(fetchCategories())
         }
-    }, [loading, categories, dispatch])
-
+    }, [categoriesLoading, categories, dispatch])
 
     useEffect(() => {
         if (spotErrors) {
@@ -48,12 +48,11 @@ const CreateSpot = () => {
         }
     }, [spotErrors, dispatch]);
 
-
     useEffect(() => {
-        if (spotId) {
-            navigate('/admin/spots/' + spotId.id )
+        if (spot) {
+            navigate('/admin/spots/' + spot.id )
         }
-    }, [spotId, navigate]);
+    }, [spot, navigate]);
 
     return (
         <div>
@@ -83,30 +82,28 @@ const CreateSpot = () => {
                     {errors?.slug && <p>{errors?.slug?.message}</p>}
                 </div>
 
-                {!loading ? (
-
-                        <Controller
-                            name="cats"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                                <Select {...field} isMulti options={categories.map(({ id, title }) => ({ value: id, label: title}))} />
-                            )}
-                        />
-
+                {!categoriesLoading ? (
+                    <Controller
+                        name="categories"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <Select {...field} isMulti options={categories.map(({ id, title }) => ({ value: id, label: title}))} />
+                        )}
+                    />
                 ) : (
-                    <div>Loading...</div>
+                    <div>Загрузка...</div>
                 )}
 
                 <div>
-                    {errors?.cats && <p>{errors?.cats?.message}</p>}
+                    {errors?.categories && <p>{errors?.categories?.message}</p>}
                 </div>
 
                 <label>
                     Address:
                     <input type="text"
                            {...register("address", {
-                               //required: "Введите address",
+                               required: "Введите адрес",
                            })}
                     />
                 </label>
@@ -118,7 +115,7 @@ const CreateSpot = () => {
                     Description:
                     <input type="text"
                            {...register("description", {
-                               //required: "Введите description",
+                               required: "Введите description",
                            })}
                     />
                 </label>
@@ -131,7 +128,7 @@ const CreateSpot = () => {
                     Content:
                     <textarea
                            {...register("content", {
-                               //required: "Введите content",
+                               required: "Введите content",
                            })}
                     />
                 </label>
@@ -172,11 +169,8 @@ const CreateSpot = () => {
 
                 <label>
                     Is main?:
-                    <input
-                        type='checkbox'
-                        {...register("main", {
-
-                        })}
+                    <input type='checkbox'
+                        {...register("main")}
                     />
                 </label>
                 <div>
@@ -188,7 +182,7 @@ const CreateSpot = () => {
                     Image:
                     <input type="file"
                            {...register("image", {
-                               //required: "Введите description",
+                               required: true,
                            })}
                     />
                 </label>

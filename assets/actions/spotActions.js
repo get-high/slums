@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const createSpot = createAsyncThunk(
     'spot/create',
-    async ({ title, slug, cats, description, content, address, image, lat, lng, main }, { rejectWithValue }) => {
+    async ({ title, slug, categories, description, content, address, image, lat, lng, main }, { rejectWithValue }) => {
         try {
             const config = {
                 headers: {
@@ -22,7 +22,7 @@ export const createSpot = createAsyncThunk(
             form.append('lng', lng)
             form.append('main', main)
             form.append('image', image[0])
-            cats.forEach(cat => form.append('categories[]', cat.value))
+            categories.forEach(category => form.append('categories[]', category.value))
 
             const { data } = await axios.post(
                 '/api/spots',

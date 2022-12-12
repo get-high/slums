@@ -5,14 +5,14 @@ const categorySlice = createSlice({
   name: 'category',
   initialState: {
     categories: [],
-    loadings: false,
-    error: false,
+    loading: false,
+    errors: false,
   },
   reducers: {},
   extraReducers: {
     [fetchCategories.pending]: (state) => {
       state.loading = true
-      state.error = null
+      state.errors = null
     },
     [fetchCategories.fulfilled]: (state, { payload }) => {
       state.loading = false
@@ -20,10 +20,16 @@ const categorySlice = createSlice({
     },
     [fetchCategories.rejected]: (state, { payload }) => {
       state.loading = false
-      state.error = payload
+      state.errors = payload
     },
   },
 })
+
+export const getCategoryStatus = (state) => state.category.loading;
+
+export const getCategoryErrors = (state) => state.category.errors;
+
+export const getCategories = (state) => state.category.categories;
 
 export const {} = categorySlice.actions
 
