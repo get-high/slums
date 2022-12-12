@@ -3,6 +3,7 @@ import {useForm, Controller} from 'react-hook-form'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchCategories} from '../../actions/categoryActions'
 import {createSpot} from '../../actions/spotActions'
+import { CKEditor } from 'ckeditor4-react'
 import {getSpotSuccessStatus, getSpotLoadingStatus, getSpotErrors, getSpot, clearState} from '../../slices/spotSlice'
 import {getCategoryStatus, getCategories} from '../../slices/categorySlice'
 import Select from 'react-select'
@@ -31,6 +32,7 @@ const CreateSpot = () => {
         handleSubmit,
         control,
         setError,
+        setValue,
     } = useForm({
         mode: 'onBlur',
     });
@@ -62,9 +64,9 @@ const CreateSpot = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label>
                     Title:
-                    <input type="text"
-                           {...register("title", {
-                               required: "Введите заголовок",
+                    <input type='text'
+                           {...register('title', {
+                               required: 'Введите заголовок',
                            })}
                     />
                 </label>
@@ -74,9 +76,9 @@ const CreateSpot = () => {
 
                 <label>
                     Slug:
-                    <input type="text"
-                           {...register("slug", {
-                               required: "Введите slug",
+                    <input type='text'
+                           {...register('slug', {
+                               required: 'Введите slug',
                            })}
                     />
                 </label>
@@ -84,18 +86,21 @@ const CreateSpot = () => {
                     {errors?.slug && <p>{errors?.slug?.message}</p>}
                 </div>
 
-                {!categoriesLoading ? (
-                    <Controller
-                        name="categories"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                            <Select {...field} isMulti options={categories.map(({ id, title }) => ({ value: id, label: title}))} />
-                        )}
-                    />
-                ) : (
-                    <div>Загрузка...</div>
-                )}
+                <label>
+                    Category:
+                    {!categoriesLoading ? (
+                        <Controller
+                            name='categories'
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <Select {...field} isMulti options={categories.map(({ id, title }) => ({ value: id, label: title}))} />
+                            )}
+                        />
+                    ) : (
+                        <div>Загрузка...</div>
+                    )}
+                </label>
 
                 <div>
                     {errors?.categories && <p>{errors?.categories?.message}</p>}
@@ -103,9 +108,9 @@ const CreateSpot = () => {
 
                 <label>
                     Address:
-                    <input type="text"
-                           {...register("address", {
-                               required: "Введите адрес",
+                    <input type='text'
+                           {...register('address', {
+                               required: 'Введите адрес',
                            })}
                     />
                 </label>
@@ -115,9 +120,9 @@ const CreateSpot = () => {
 
                 <label>
                     Description:
-                    <input type="text"
-                           {...register("description", {
-                               required: "Введите description",
+                    <input type='text'
+                           {...register('description', {
+                               required: 'Введите description',
                            })}
                     />
                 </label>
@@ -128,23 +133,45 @@ const CreateSpot = () => {
 
                 <label>
                     Content:
-                    <textarea
-                           {...register("content", {
-                               required: "Введите content",
-                           })}
+                    <Controller
+                        name='content'
+                        control={control}
+                        rules={{ required: true }}
+                        render={() => (
+                            <CKEditor
+                                onChange={(value) => setValue('content', value.editor.getData())}
+                                config={{
+                                    allowedContent: true,
+                                    disallowedContent: 'p',
+                                    enterMode: 3,
+                                    toolbarGroups: [
+                                        {name: 'clipboard', groups: ['undo', 'clipboard']},
+                                        {name: 'editing', groups: ['find', 'selection', 'editing']},
+                                        {name: 'links', groups: ['links']},
+                                        {name: 'insert', groups: ['insert']},
+                                        {name: 'others', groups: ['others']},
+                                        {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
+                                        {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'paragraph']},
+                                        {name: 'tools', groups: ['tools']},
+                                        {name: 'document', groups: ['mode', 'document', 'doctools']}
+                                    ],
+                                    removeButtons: 'HorizontalRule,RemoveFormat,Outdent,Indent,Superscript,Subscript,Blockquote',
+                                    removeDialogTabs: 'link:advanced',
+                                }}
+                            />
+                        )}
                     />
                 </label>
                 <div>
                     {errors?.content && <p>{errors?.content?.message}</p>}
                 </div>
 
-
                 <label>
                     Lat:
-                    <input type="number"
-                           step="0.000001"
-                           {...register("lat", {
-                               required: "Введите lat",
+                    <input type='number'
+                           step='0.000001'
+                           {...register('lat', {
+                               required: 'Введите lat',
                                valueAsNumber: true,
                                validate: (value) => value > 0,
                            })}
@@ -156,10 +183,10 @@ const CreateSpot = () => {
 
                 <label>
                     Lng:
-                    <input type="number"
-                           step="0.000001"
-                           {...register("lng", {
-                               required: "Введите lnt",
+                    <input type='number'
+                           step='0.000001'
+                           {...register('lng', {
+                               required: 'Введите lnt',
                                valueAsNumber: true,
                                validate: (value) => value > 0,
                            })}
@@ -172,7 +199,7 @@ const CreateSpot = () => {
                 <label>
                     Is main?:
                     <input type='checkbox'
-                        {...register("main")}
+                        {...register('main')}
                     />
                 </label>
                 <div>
@@ -182,8 +209,8 @@ const CreateSpot = () => {
 
                 <label>
                     Image:
-                    <input type="file"
-                           {...register("image", {
+                    <input type='file'
+                           {...register('image', {
                                required: true,
                            })}
                     />
@@ -192,7 +219,7 @@ const CreateSpot = () => {
                     {errors?.image && <p>{errors?.image?.message}</p>}
                 </div>
 
-                <input type="submit" disabled={!isValid || spotLoadingStatus}/>
+                <input type='submit' disabled={!isValid || spotLoadingStatus}/>
             </form>
         </div>
     )
