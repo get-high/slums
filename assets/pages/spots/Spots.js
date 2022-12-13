@@ -36,11 +36,14 @@ const Spots = () => {
   }, [spots, dispatch]);
 
   return (
-      <>
+      <div>
         <h1>Spots Manager</h1>
 
-        <Spots currentSpots={spots} />
+        <div>
+            <Spots currentSpots={spots} />
+        </div>
 
+      <div>
           <ReactPaginate
               breakLabel="..."
               nextLabel="next >"
@@ -51,8 +54,17 @@ const Spots = () => {
               forcePage={2}
               previousLabel="< previous"
               renderOnZeroPageCount={null}
+              containerClassName="pagination justify-content-center"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              activeClassName="active"
           />
-      </>
+      </div>
+      </div>
   )
 }
 
