@@ -41,3 +41,28 @@ export const createSpot = createAsyncThunk(
         }
     }
 )
+
+export const fetchSpots = createAsyncThunk(
+    'spots/get',
+    async (page) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/ld+json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    'Accept': 'application/ld+json',
+                },
+            }
+            const { data } = await axios.get(
+                '/api/spots?page=' + page,
+                config,
+            )
+
+            console.log(data)
+
+            return data
+        } catch (error) {
+            return rejectWithValue(error.response.data.message)
+        }
+    }
+)

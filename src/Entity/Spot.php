@@ -120,7 +120,7 @@ use Symfony\Component\Validator\Constraints\Regex;
     normalizationContext: ["groups" => ["spot:collection:get"]],
     output: SpotOutput::class,
     paginationEnabled: true,
-    paginationItemsPerPage: 20,
+    paginationItemsPerPage: 10,
     security: "is_granted('ROLE_ADMIN')",
 )]
 class Spot
