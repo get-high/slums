@@ -9,7 +9,7 @@ const spotSlice = createSlice({
     errors: null,
     spot: null,
     spots: [],
-    page: 1,
+    pageNumber: 1,
     pageCount: 0,
   },
   reducers: {
@@ -19,7 +19,7 @@ const spotSlice = createSlice({
       state.errors = null
       state.spot = null
       state.spots = []
-      state.page = 1
+      state.pageNumber = 1
       state.pageCount = 0
     },
   },
@@ -47,7 +47,7 @@ const spotSlice = createSlice({
       state.loading = false
       state.success = true
       state.spots = payload['hydra:member']
-      state.page = parseInt(payload['hydra:view']['@id'].replace(/\D/g,''), 10)
+      state.pageNumber = parseInt(payload['hydra:view']['@id'].replace(/\D/g,''), 10)
       state.pageCount = parseInt(payload['hydra:view']['hydra:last'].replace(/\D/g,''), 10)
     },
     [fetchSpots.rejected]: (state, { payload }) => {
@@ -68,7 +68,7 @@ export const getSpots = (state) => state.spot.spots;
 
 export const getSpot = (state) => state.spot.spot;
 
-export const getPage = (state) => state.spot.page;
+export const getPageNumber = (state) => state.spot.pageNumber;
 
 export const getPageCount = (state) => state.spot.pageCount;
 
