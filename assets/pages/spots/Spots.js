@@ -1,33 +1,31 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getSpots, getSpotSuccessStatus, getSpotLoadingStatus} from '../../slices/spotSlice'
+import {getSpots, getPage, getPageCount, getSpotSuccessStatus, getSpotLoadingStatus} from '../../slices/spotSlice'
 import {fetchSpots} from '../../actions/spotActions'
 import ReactPaginate from 'react-paginate'
 
 const Spots = () => {
-
   const spots = useSelector(getSpots);
-  const page = 1;
+  const page = useSelector(getPage);
+  const pageCount = useSelector(getPageCount);
   const dispatch = useDispatch();
-  const pageCount = 2;
 
   function Spots({ currentSpots }) {
     return (
         <div>
-          {currentSpots &&
+            {currentSpots &&
               currentSpots.map((item) => (
                   <div key={item.id}>
-                    <h3>Item #{item.title}</h3>
+                    <h3>{item.title}</h3>
                   </div>
               ))}
         </div>
     );
   }
 
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % items.length;
-        setItemOffset(newOffset);
-    };
+  const handlePageClick = (event) => {
+      dispatch(fetchSpots(event.selected + 1))
+  };
 
   useEffect(() => {
     if (spots.length === 0) {
@@ -37,33 +35,35 @@ const Spots = () => {
 
   return (
       <div>
-        <h1>Spots Manager</h1>
+          <div>
+              <h1>Spots Manager</h1>
+          </div>
 
-        <div>
-            <Spots currentSpots={spots} />
-        </div>
+          <div>
+              <Spots currentSpots={spots} />
+          </div>
 
-      <div>
-          <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageCount={2}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              forcePage={2}
-              previousLabel="< previous"
-              renderOnZeroPageCount={null}
-              containerClassName="pagination justify-content-center"
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              activeClassName="active"
-          />
-      </div>
+          <div>
+              <ReactPaginate
+                  breakLabel="..."
+                  nextLabel="next >"
+                  onPageChange={handlePageClick}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  forcePage={page - 1}
+                  previousLabel="< previous"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination justify-content-center"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  activeClassName="active"
+              />
+          </div>
       </div>
   )
 }

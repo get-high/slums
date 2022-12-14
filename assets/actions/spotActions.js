@@ -57,9 +57,6 @@ export const fetchSpots = createAsyncThunk(
                 '/api/spots?page=' + page,
                 config,
             )
-
-            console.log(data)
-
             return data
         } catch (error) {
             return rejectWithValue(error.response.data.message)

@@ -9,7 +9,8 @@ const spotSlice = createSlice({
     errors: null,
     spot: null,
     spots: [],
-    total: 0
+    page: 1,
+    pageCount: 0,
   },
   reducers: {
     clearState: (state) => {
@@ -18,7 +19,8 @@ const spotSlice = createSlice({
       state.errors = null
       state.spot = null
       state.spots = []
-      state.total = 0
+      state.page = 1
+      state.pageCount = 0
     },
   },
   extraReducers: {
@@ -45,7 +47,8 @@ const spotSlice = createSlice({
       state.loading = false
       state.success = true
       state.spots = payload['hydra:member']
-      state.total = payload['hydra:totalItems']
+      state.page = parseInt(payload['hydra:view']['@id'].replace(/\D/g,''), 10)
+      state.pageCount = parseInt(payload['hydra:view']['hydra:last'].replace(/\D/g,''), 10)
     },
     [fetchSpots.rejected]: (state, { payload }) => {
       state.loading = false
@@ -64,6 +67,10 @@ export const getSpotErrors = (state) => state.spot.errors;
 export const getSpots = (state) => state.spot.spots;
 
 export const getSpot = (state) => state.spot.spot;
+
+export const getPage = (state) => state.spot.page;
+
+export const getPageCount = (state) => state.spot.pageCount;
 
 export const { clearState } = spotSlice.actions
 
