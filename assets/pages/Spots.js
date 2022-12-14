@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getSpots, getPageNumber, getPageCount, getSpotLoadingStatus} from '../slices/spotSlice'
 import {fetchSpots} from '../actions/spotActions'
 import ReactPaginate from 'react-paginate'
+import {NavLink} from 'react-router-dom'
 
 const Spots = () => {
   const spots = useSelector(getSpots);
@@ -17,7 +18,7 @@ const Spots = () => {
             {currentSpots &&
               currentSpots.map((item) => (
                   <div key={item.id}>
-                    <h3>{item.title}</h3>
+                      <NavLink to={`/admin/spots/${item.id}`}>{item.title}</NavLink>
                   </div>
               ))}
         </div>
