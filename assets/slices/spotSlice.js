@@ -40,19 +40,16 @@ const spotSlice = createSlice({
     },
     [fetchSpots.pending]: (state) => {
       state.loading = true
-      state.success = false
       state.errors = null
     },
     [fetchSpots.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.success = true
       state.spots = payload['hydra:member']
       state.pageNumber = parseInt(payload['hydra:view']['@id'].replace(/\D/g,''), 10)
       state.pageCount = parseInt(payload['hydra:view']['hydra:last'].replace(/\D/g,''), 10)
     },
     [fetchSpots.rejected]: (state, { payload }) => {
       state.loading = false
-      state.success = false
       state.errors = payload
     },
   },
