@@ -34,7 +34,6 @@ const Header = () => {
         <NavLink to='/admin/login'>Login</NavLink>
         <NavLink to='/admin/spots'>Spots Manager</NavLink>
         <NavLink to='/admin/spots/create'>Create Spot</NavLink>
-        <NavLink to='/admin/login'>Login</NavLink>
         <NavLink to='/admin/user-profile'>Profile</NavLink>
       </nav>
     </header>
