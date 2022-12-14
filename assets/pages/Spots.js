@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getSpots, getPageNumber, getPageCount, getSpotLoadingStatus} from '../../slices/spotSlice'
-import {fetchSpots} from '../../actions/spotActions'
+import {getSpots, getPageNumber, getPageCount, getSpotLoadingStatus} from '../slices/spotSlice'
+import {fetchSpots} from '../actions/spotActions'
 import ReactPaginate from 'react-paginate'
 
 const Spots = () => {

@@ -5,9 +5,9 @@ import LoginScreen from './pages/LoginScreen'
 import ProfileScreen from './pages/ProfileScreen'
 import HomeScreen from './pages/HomeScreen'
 import ProtectedRoute from './routing/ProtectedRoute'
-import CreateSpot from "./pages/spots/CreateSpot";
-import EditSpot from "./pages/spots/EditSpot";
-import Spots from "./pages/spots/Spots";
+import CreateSpot from "./pages/CreateSpot";
+import EditSpot from "./pages/EditSpot";
+import Spots from "./pages/Spots";
 import './styles/App.css'
 
 function App() {
