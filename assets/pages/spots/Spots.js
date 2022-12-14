@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getSpots, getPage, getPageCount, getSpotSuccessStatus, getSpotLoadingStatus} from '../../slices/spotSlice'
+import {getSpots, getPage, getPageCount, getSpotLoadingStatus} from '../../slices/spotSlice'
 import {fetchSpots} from '../../actions/spotActions'
 import ReactPaginate from 'react-paginate'
 
@@ -8,6 +8,7 @@ const Spots = () => {
   const spots = useSelector(getSpots);
   const page = useSelector(getPage);
   const pageCount = useSelector(getPageCount);
+  const loading = useSelector(getSpotLoadingStatus);
   const dispatch = useDispatch();
 
   function Spots({ currentSpots }) {
@@ -39,9 +40,13 @@ const Spots = () => {
               <h1>Spots Manager</h1>
           </div>
 
-          <div>
-              <Spots currentSpots={spots} />
-          </div>
+          {!loading ? (
+              <div>
+                  <Spots currentSpots={spots} />
+              </div>
+          ) : (
+              <div>Загрузка...</div>
+          )}
 
           <div>
               <ReactPaginate
